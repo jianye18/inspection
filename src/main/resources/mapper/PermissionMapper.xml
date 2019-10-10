@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.PermissionMapper">
+
+    <sql id="baseResult">
+        p.id as id,
+        p.name as name,
+        p.code as code,
+        p.description as description,
+        p.parent_id as paarenId,
+        p.create_id as createId,
+        p.create_time as createTime,
+        p.update_id as updateId,
+        p.update_time as updateTime
+        p.usable as usable
+    </sql>
+
+    <select id="getPermissionListByRoleId" resultType="com.zhuhong.inspection.model.Permission">
+        select
+            <include refid="baseResult"></include>
+        from
+            tb_permission p
+        where
+            p.usable = 1
+            and p.id in (
+                select parent_id from tb_role_permission where role_id = #{roleId}
+            )
+    </select>
+
+    <select id="getRolePermissionByRoleId" resultType="com.zhuhong.inspection.model.RolePermission">
+        select
+            id,
+            role_id as roleId,
+            permission_id as permissionId
+        from
+            tb_role_permission
+        where
+            role_id = #{roleId}
+    </select>
+
+</mapper>

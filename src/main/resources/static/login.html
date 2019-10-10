@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>登录页</title>
+    <!--<link rel="import" href="common/common.html">-->
+    <!-- 引入Vue -->
+    <script src="//v1.vuejs.org/js/vue.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="//unpkg.com/iview/dist/styles/iview.css">
+    <!-- 引入组件库 -->
+    <script src="//unpkg.com/iview@1.0.1/dist/iview.min.js"></script>
+    <style type="text/css">
+        .login_div{
+            height: 300px;
+            top: 200px;
+            background-color: white;
+            border-style: groove;
+            padding: 50px 30px 50px 30px;
+        }
+        .login_div p {
+            font-size: 36px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body style="background-color: rgba(217,217,217,.5)">
+<div id="app">
+    <i-row type="flex" justify="center" align="middle">
+        <i-col span="6" offset="9" class="login_div">
+            <i-form :model="loginForm">
+                <form-item>
+                    <p>
+                        <span><Icon type="logo-codepen" /></span>
+                        <span>后台管理系统</span>
+                    </p>
+                </form-item>
+                <form-item>
+                    <i-input v-model="formData.loginName" placeholder="请输入账号" clearable></i-input>
+                </form-item>
+                <form-item>
+                    <i-input v-model="formData.password" placeholder="请输入密码" clearable type="password"></i-input>
+                </form-item>
+                <form-item>
+                    <i-button type="primary" @click="" long>登录</i-button>
+                </form-item>
+            </i-form>
+        </i-col>
+    </i-row>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            formData:{
+                loginName: "",
+                password: ""
+            }
+        },
+        methods: {
+            show: function () {
+                this.visible = true;
+            }
+        }
+    })
+</script>
+</body>
+</html>
