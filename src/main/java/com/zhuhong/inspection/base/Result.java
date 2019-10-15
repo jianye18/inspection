@@ -62,6 +62,19 @@ public class Result<T>  implements Serializable {
                 .setData(data);
     }
 
+    public static Result genSuccessResultMsg(String message) {
+        return new Result()
+                .setCode(ResultCode.SUCCESS)
+                .setMessage(message);
+    }
+
+    public static <T> Result<T> genSuccessResult(T data, String message) {
+        return new Result()
+                .setCode(ResultCode.SUCCESS)
+                .setMessage(message)
+                .setData(data);
+    }
+
     public static Result genFailResult(String message) {
         return new Result()
                 .setCode(ResultCode.FAIL)

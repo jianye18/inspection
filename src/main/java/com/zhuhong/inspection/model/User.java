@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -32,6 +33,12 @@ public class User extends BaseModel {
     @ApiModelProperty(name = "gender", value = "性别：1-男，2-女", example = "1")
     @Column(name = "gender")
     private Integer gender;
+    @ApiModelProperty(name = "mobile", value = "手机号", example = "15212786971")
+    @Column(name = "mobile")
+    private String mobile;
+    @ApiModelProperty(name = "email", value = "邮箱", example = "jianye@qq.com")
+    @Column(name = "email")
+    private String email;
     @ApiModelProperty(name = "workPlace", value = "工作单位", example = "合肥市检")
     @Column(name = "work_place")
     private String workPlace;
@@ -45,8 +52,11 @@ public class User extends BaseModel {
     @Column(name = "expire_time")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date expireTime;
-    @ApiModelProperty(name = "userStatus", value = "账号状态：1-生效，2-禁用", hidden = true)
+    @ApiModelProperty(name = "userStatus", value = "账号状态：1-生效，2-禁用", example = "1")
     @Column(name = "user_status")
     private Integer userStatus;
+    @ApiModelProperty(name = "roleIds", value = "角色ID拼接字符串", hidden = true)
+    @Transient
+    private String roleIds;
 
 }

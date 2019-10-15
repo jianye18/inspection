@@ -1,0 +1,111 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50727
+ Source Host           : localhost:3306
+ Source Schema         : inspection
+
+ Target Server Type    : MySQL
+ Target Server Version : 50727
+ File Encoding         : 65001
+
+ Date: 10/10/2019 18:18:20
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for tb_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_permission`;
+CREATE TABLE `tb_permission`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限名称',
+  `code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限编码',
+  `description` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限描述',
+  `parent_id` int(11) NULL DEFAULT NULL COMMENT '上级权限ID',
+  `type` tinyint(4) NULL DEFAULT NULL COMMENT '权限类型：1-page,2-link,3-button',
+  `request_url` varchar(64) NULL DEFAULT NULL COMMENT '请求url',
+  `request_type` varchar(16) NULL DEFAULT NULL  COMMENT '请求方式：POST,GET,PUT,DELETE',
+  `icon_class` varchar(16) NULL DEFAULT NULL COMMENT '图标类',
+  `sort` int(11) NULL DEFAULT 1 COMMENT '排序字段',
+  `status` tinyint(1) DEFAULT NULL COMMENT '状态：1-启用，2-禁用',
+  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_role
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_role`;
+CREATE TABLE `tb_role`  (
+    `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `role_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
+    `role_code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色编码',
+    `description` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色描述',
+    `role_status` tinyint(4) DEFAULT '1' COMMENT '状态：1-启用，2-禁用',
+    `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+    `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+    `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+    `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_role_permission
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_role_permission`;
+CREATE TABLE `tb_role_permission`  (
+   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+   `role_id` int(11) NULL DEFAULT NULL COMMENT '角色ID',
+   `permission_id` int(11) NULL DEFAULT NULL COMMENT '权限ID',
+   PRIMARY KEY (`id`) USING BTREE,
+   UNIQUE KEY `idx_role_permission` (`role_id`,`permission_id`) COMMENT '唯一索引，角色ID和权限ID组合唯一性'
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色权限表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_user
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_user`;
+CREATE TABLE `tb_user`  (
+    `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `user_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
+    `nick_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '昵称',
+    `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'MD5加密密码',
+    `gender` tinyint(2) NULL DEFAULT NULL COMMENT '性别：1-男，2-女',
+    `mobile` varchar(16) DEFAULT NULL COMMENT '手机号',
+    `email` varchar(32) DEFAULT NULL COMMENT '邮箱',
+    `work_place` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '工作单位',
+    `job` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '职务',
+    `is_member` tinyint(2) NULL DEFAULT 0 COMMENT '是否会员：0-不是，1-是',
+    `expire_time` datetime(0) NULL DEFAULT NULL COMMENT '会员到期时间',
+    `user_status` tinyint(2) NULL DEFAULT 1 COMMENT '账号状态：1-生效，2-禁用',
+    `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+    `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+    `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+    `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+    `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_user_role`;
+CREATE TABLE `tb_user_role`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `user_id` int(11) NULL DEFAULT NULL COMMENT '用户ID',
+ `role_id` int(11) NULL DEFAULT NULL COMMENT '角色ID',
+ PRIMARY KEY (`id`) USING BTREE,
+ UNIQUE KEY `idx_user_role` (`user_id`,`role_id`) COMMENT '唯一索引，用户ID和角色ID组合唯一性'
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;

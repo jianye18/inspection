@@ -2,13 +2,18 @@ package com.zhuhong.inspection.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.UserCondition;
 import com.zhuhong.inspection.mapper.RoleMapper;
 import com.zhuhong.inspection.mapper.UserMapper;
+import com.zhuhong.inspection.mapper.UserRoleMapper;
 import com.zhuhong.inspection.model.Role;
 import com.zhuhong.inspection.model.User;
 import com.zhuhong.inspection.model.UserRole;
 import com.zhuhong.inspection.service.UserService;
+import com.zhuhong.inspection.utils.DateUtil;
+import com.zhuhong.inspection.utils.MD5;
+import com.zhuhong.inspection.utils.StringUtil;
 import com.zhuhong.inspection.vo.UserVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +37,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     @Override
     public User getUserByNickName(String nickName) {
@@ -45,7 +52,6 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setNickName(nickName);
         user = userMapper.selectOne(user);
-        //UserVo userVo = (UserVo) CloneUtil.clone(user);
         UserVo userVo = new UserVo();
         BeanUtils.copyProperties(userVo, user);
         Integer userId = user.getId();
@@ -73,10 +79,90 @@ public class UserServiceImpl implements UserService {
             criteria.andEqualTo("userStatus", userCondition.getStatus());
         }
         if (StringUtils.isNotEmpty(userCondition.getSearchPhrase())) {
-            criteria.andLike("userName", userCondition.getSearchPhrase());
+            criteria.andLike("userName", StringUtil.getLikeString(userCondition.getSearchPhrase()));
         }
         List<User> list = userMapper.selectByExample(example);
         return new PageInfo<>(list);
+    }
+
+    @Override
+    public boolean saveUser(User user, Integer currentUserId) {
+        boolean flag = false;
+        Integer userId = user.getId();
+        if (userId == null) {
+            user.setPassword(MD5.getMD5(Constants.DEFAULT_PASSWORD));
+            user.setCreateId(currentUserId);
+            user.setCreateTime(DateUtil.getCurrentDate());
+            user.setUserStatus(Constants.SYS_USER_STATUS_1);
+            if (userMapper.insertSelective(user) > 0) {
+                flag = true;
+                handleUserRole(userId, user.getRoleIds());
+            }
+        } else {
+            user.setUpdateId(currentUserId);
+            user.setUpdateTime(DateUtil.getCurrentDate());
+            if (userMapper.updateByPrimaryKey(user) > 0) {
+                flag = true;
+                handleUserRole(userId, user.getRoleIds());
+            }
+        }
+        return flag;
+    }
+
+    private void handleUserRole(Integer userId, String roleIds) {
+        if (userId != null) {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(userId);
+            userRoleMapper.delete(userRole);
+        }
+        if (StringUtils.isNotEmpty(roleIds)) {
+            String[] arr = roleIds.split(",");
+            for (String s : arr) {
+                UserRole userRole = new UserRole();
+                userRole.setUserId(userId);
+                userRole.setRoleId(Integer.parseInt(s));
+                userRoleMapper.insert(userRole);
+            }
+        }
+
+    }
+
+    @Override
+    public boolean deleteUser(Integer userId, Integer currentUserId) {
+        boolean flag = false;
+        User user = new User();
+        user.setUsable(User.ENABLE_0);
+        user.setUpdateId(currentUserId);
+        user.setUpdateTime(DateUtil.getCurrentDate());
+        flag = userMapper.updateByPrimaryKey(user) > 0;
+        if (flag) {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(userId);
+            userRoleMapper.delete(userRole);
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean judgeNickNameIsExist(String nickName, Integer userId) {
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("nickName", nickName);
+        if (userId != 0) {
+            criteria.andNotEqualTo("id", userId);
+        }
+        if (userMapper.selectByExample(example).size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<UserRole> getUserRoleListByUserId(Integer userId) {
+        UserRole userRole = new UserRole();
+        userRole.setUserId(userId);
+        return userRoleMapper.select(userRole);
     }
 
 }

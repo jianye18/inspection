@@ -5,11 +5,13 @@
     <sql id="baseResult">
         r.id as id,
         r.role_name as roleName,
+        r.role_code as roleCode,
         r.description as description,
+        r.role_status as roleStatus,
         r.create_id as createId,
         r.create_time as createTime,
         r.update_id as updateId,
-        r.update_time as updateTime
+        r.update_time as updateTime,
         r.usable as usable
     </sql>
 
@@ -17,7 +19,7 @@
         select
             <include refid="baseResult"></include>
         from
-            role r
+            tb_role r
         where
             r.usable = 1
             and r.id in (

@@ -44,7 +44,7 @@ public class LoginController {
             @ApiImplicitParam(name = "password", value = "用户登录密码", required = true, dataType = "String")
     })
     @RequestMapping(value = "loginIn", method = RequestMethod.POST)
-    public Result loginIn(String loginName, String password, HttpServletResponse response) {
+    public Result loginIn(String loginName, String password) {
         String LOG_MSG = "调用系统用户登录接口---loginIn()---，";
         Result result = Result.genSuccessResult();
         log.info(LOG_MSG + "上传参数{loginName=" + loginName + ",password=" + password + "}");
@@ -58,7 +58,7 @@ public class LoginController {
         currentUser.login(token);
         result.setData(currentUser.getSession().getId());
         System.out.println(currentUser.getSession().getId());
-        CookieUtil.addCookie(Constants.TOKEN, (String) currentUser.getSession().getId(), 30 * 60 * 1000, response);
+        //CookieUtil.addCookie(Constants.TOKEN, (String) currentUser.getSession().getId(), 30 * 60 * 1000, response);
         //验证是否登录成功
         if (!currentUser.isAuthenticated()) {
             result = Result.genFailResult("用户无权限");

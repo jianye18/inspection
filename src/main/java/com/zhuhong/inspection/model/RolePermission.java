@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 角色权限关联表
@@ -12,6 +13,7 @@ import javax.persistence.Id;
  * @Date: 2019/10/10 11:45
  */
 @Data
+@Table(name = "tb_role_permission")
 public class RolePermission {
 
     @ApiModelProperty(name = "id", value = "主键ID", hidden = true)

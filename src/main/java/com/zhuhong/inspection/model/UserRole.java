@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 用户角色关联表
@@ -12,6 +13,7 @@ import javax.persistence.Id;
  * @Date: 2019/10/10 11:44
  */
 @Data
+@Table(name = "tb_user_role")
 public class UserRole {
 
     @ApiModelProperty(name = "id", value = "主键ID", hidden = true)

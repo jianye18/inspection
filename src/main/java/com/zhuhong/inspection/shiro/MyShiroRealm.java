@@ -113,6 +113,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         //用户信息缓存到session里面
         Session session = SecurityUtils.getSubject().getSession();
         session.setAttribute(session.getId(), userVo);
+        session.setTimeout(24 * 60 * 60 * 1000);
         System.out.println("测试：" + SecurityUtils.getSubject().getSession().getId());
         return new SimpleAuthenticationInfo(userVo.getNickName(), userVo.getPassword(), userVo.getNickName());
     }
