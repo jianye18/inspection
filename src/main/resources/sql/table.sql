@@ -144,6 +144,7 @@ CREATE TABLE `tb_spot_check`  (
 DROP TABLE IF EXISTS `tb_system_data_type`;
 CREATE TABLE `tb_system_data_type`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `type` tinyint(2) NULL DEFAULT NULL COMMENT '类型：1-产品分类，2-公布机构',
  `code` varchar(16) NULL DEFAULT NULL COMMENT '编码',
  `name` varchar(32) NULL DEFAULT NULL COMMENT '名称', 
  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
@@ -152,7 +153,7 @@ CREATE TABLE `tb_system_data_type`  (
  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类关联数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
