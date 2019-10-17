@@ -47,7 +47,7 @@
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and (s.unit like concat('%', #{searchPhrase}, '%') or s.producer like concat('%', #{searchPhrase}, '%'))
             </if>
-        order by s.update_time desc
+        order by s.publish_date desc
     </select>
 
 </mapper>
