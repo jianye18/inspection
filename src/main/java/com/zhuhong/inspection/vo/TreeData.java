@@ -18,6 +18,8 @@ public class TreeData {
     private Integer id;
     @ApiModelProperty(name = "title", value = "节点名称", example = "用户管理")
     private String title;
+    @ApiModelProperty(name = "checked", value = "节点是否选中")
+    private boolean checked;
     @ApiModelProperty(name = "expand", value = "节点是否展开")
     private boolean expand;
     @ApiModelProperty(name = "children", value = "子节点集合")

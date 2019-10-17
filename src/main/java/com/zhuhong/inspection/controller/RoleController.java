@@ -7,6 +7,7 @@ import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.base.ResultCode;
 import com.zhuhong.inspection.condition.RoleCondition;
 import com.zhuhong.inspection.model.Role;
+import com.zhuhong.inspection.model.RolePermission;
 import com.zhuhong.inspection.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

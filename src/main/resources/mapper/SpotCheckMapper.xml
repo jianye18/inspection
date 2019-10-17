@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.SpotCheckMapper">
+
+    <sql id="baseSql">
+        s.id,
+        s.company,
+        s.producer,
+        s.unit,
+        s.sample,
+        s.specification,
+        s.expire_time as expireTime,
+        s.product_type as productType,
+        s.location,
+        s.check_result as checkResult,
+        s.subject,
+        s.institution,
+        s.publish_date as publishDate,
+        s.is_fake as isFake,
+        s.source_link as sourceLink,
+        s.create_id as createId,
+        s.create_time as createTime,
+        s.update_id as updateId,
+        s.update_time as updateTime,
+        s.usable
+    </sql>
+
+    <select id="getSpotCheckListByCondition" resultType="com.zhuhong.inspection.vo.SpotCheckVo"
+            parameterType="com.zhuhong.inspection.condition.SpotCheckCondition">
+        select
+            <include refid="baseSql"></include>,
+            t.name as productTypeName
+        from
+            tb_spot_check s
+        left join tb_system_data_type t on t.id = s.product_type
+        where
+            s.usable = 1
+            <if test="productType != null">
+                and s.product_type = #{productType}
+            </if>
+            <if test="institution != null and institution != '' ">
+                and s.institution = #{institution}
+            </if>
+            <if test="checkResult != null">
+                and s.check_result = #{checkResult}
+            </if>
+            <if test="searchPhrase != null and searchPhrase != '' ">
+                and (s.unit like concat('%', #{searchPhrase}, '%') or s.producer like concat('%', #{searchPhrase}, '%'))
+            </if>
+        order by s.update_time desc
+    </select>
+
+</mapper>

@@ -146,12 +146,13 @@ public class PermissionController extends BaseController {
      * @Date: 2019/10/13 22:19
      */
     @ApiOperation(value = "获取权限树数据集合", notes = "获取权限树数据集合")
-    @GetMapping("/getPermissionTreeData")
-    public Result<List<TreeData>> getPermissionTreeData() {
+    @GetMapping("/getPermissionTreeData/{roleId}")
+    public Result<List<TreeData>> getPermissionTreeData(@PathVariable(value = "roleId", required = true) Integer roleId) {
         String LOG_MSG = "调用获取权限树数据集合接口---getPermissionTreeData()---，";
+        log.debug(LOG_MSG + "上传参数：{roleId=" + roleId + "}");
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
-            List<TreeData> list = permissionService.getPermissionTreeData();
+            List<TreeData> list = permissionService.getPermissionTreeData(roleId);
             result = Result.genSuccessResult(list);
         } catch (Exception e) {
             e.printStackTrace();

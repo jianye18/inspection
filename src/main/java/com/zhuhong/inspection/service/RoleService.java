@@ -3,6 +3,7 @@ package com.zhuhong.inspection.service;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.RoleCondition;
 import com.zhuhong.inspection.model.Role;
+import com.zhuhong.inspection.model.RolePermission;
 
 import java.util.List;
 

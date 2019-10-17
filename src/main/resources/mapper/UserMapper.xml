@@ -2,4 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhuhong.inspection.mapper.UserMapper">
 
+    <sql id="baseSql">
+        u.id,
+        u.user_name as userName,
+        u.nick_name as nickName,
+        u.password,
+        u.gender,
+        u.mobile,
+        u.email,
+        u.work_place as workPlace,
+        u.job,
+        u.is_member as isMember,
+        u.expire_time as expireTime,
+        u.user_status as userStatus,
+        u.create_id as createId,
+        u.create_time as createTime,
+        u.update_id as updateId,
+        u.update_time as updateTime,
+        u.usable
+    </sql>
+
+    <select id="getUserListByCondition" resultType="com.zhuhong.inspection.vo.UserVo" parameterType="com.zhuhong.inspection.condition.UserCondition">
+        select
+            <include refid="baseSql"></include>,
+            GROUP_CONCAT(r.role_name) as roleNames
+        from
+            tb_user u
+        left join tb_user_role t on t.user_id = u.id
+        left join tb_role r on r.id = t.role_id and r.usable = 1
+        where
+            u.usable = 1
+            <if test="isMember != null">
+                and u.is_member = #{isMember}
+            </if>
+            <if test="gender != null">
+                and u.gender = #{gender}
+            </if>
+            <if test="userStatus != null">
+                and u.user_status = #{userStatus}
+            </if>
+            <if test="searchPhrase != null and searchPhrase != '' ">
+                and (u.user_name like concat('%', #{searchPhrase}, '%') or u.nick_name like concat('%', #{searchPhrase}, '%'))
+            </if>
+        GROUP BY u.id
+        order by u.update_time desc
+    </select>
+
 </mapper>

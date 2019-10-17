@@ -60,10 +60,11 @@ public interface PermissionService {
     /**
      * 获取权限树数据集合
      *
+     * @param roleId
      * @return List<TreeData>
      * @Author: jian.ye
      * @Date: 2019/10/13 21:59
      */
-    List<TreeData> getPermissionTreeData();
+    List<TreeData> getPermissionTreeData(Integer roleId);
 
 }

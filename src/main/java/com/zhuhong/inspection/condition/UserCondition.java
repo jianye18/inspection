@@ -16,15 +16,15 @@ public class UserCondition extends BaseCondition {
     private Integer isMember;
     @ApiModelProperty(name = "gender", value = "性别：1-男，2-女", example = "1")
     private Integer gender;
-    @ApiModelProperty(name = "status", value = "账号状态：1-生效，2-禁用", hidden = true)
-    private Integer status;
+    @ApiModelProperty(name = "userStatus", value = "账号状态：1-生效，2-禁用", hidden = true)
+    private Integer userStatus;
 
     @Override
     public String toString() {
         return "UserCondition{" +
                 "isMember=" + isMember +
                 ", gender=" + gender +
-                ", status=" + status +
+                ", userStatus=" + userStatus +
                 "} " + super.toString();
     }
 }

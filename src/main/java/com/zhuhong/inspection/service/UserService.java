@@ -39,7 +39,7 @@ public interface UserService {
      * @Author: jian.ye
      * @Date: 2019/10/10 13:56
      */
-    PageInfo<User> getUserPageListByCondition(UserCondition userCondition);
+    PageInfo<UserVo> getUserPageListByCondition(UserCondition userCondition);
 
     /**
      * 保存用户信息

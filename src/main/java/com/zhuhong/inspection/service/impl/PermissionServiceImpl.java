@@ -51,6 +51,8 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public boolean savePermission(Permission permission, Integer currentUserId) {
         Integer pId = permission.getId();
+        permission.setUpdateId(currentUserId);
+        permission.setUpdateTime(DateUtil.getCurrentDate());
         if (pId == null) {
             permission.setCreateId(currentUserId);
             permission.setCreateTime(DateUtil.getCurrentDate());
@@ -59,8 +61,6 @@ public class PermissionServiceImpl implements PermissionService {
             }
             return permissionMapper.insertSelective(permission) > 0;
         } else {
-            permission.setUpdateId(currentUserId);
-            permission.setUpdateTime(DateUtil.getCurrentDate());
             return permissionMapper.updateByPrimaryKey(permission) > 0;
         }
     }
@@ -104,27 +104,38 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<TreeData> getPermissionTreeData() {
+    public List<TreeData> getPermissionTreeData(Integer roleId) {
         Permission permission = new Permission();
         permission.setStatus(1);
         permission.setUsable(Permission.ENABLE_1);
         List<Permission> permissionList = permissionMapper.select(permission);
-        List<TreeData> list = handleToTreeData(permissionList, 0);
+        RolePermission rolePermission = new RolePermission();
+        rolePermission.setRoleId(roleId);
+        List<TreeData> list = handleToTreeData(permissionList, 0, rolePermissionMapper.select(rolePermission));
         return list;
     }
 
-    private List<TreeData> handleToTreeData(List<Permission> pList, Integer pId) {
+    private List<TreeData> handleToTreeData(List<Permission> pList, Integer pId, List<RolePermission> rolePermissionList) {
         List<TreeData> list = new ArrayList<>();
         for (Permission permission : pList) {
             TreeData treeData = new TreeData();
             treeData.setId(permission.getId());
             treeData.setTitle(permission.getName());
             treeData.setExpand(true);
+            if (rolePermissionList.size() > 0) {
+                for (RolePermission rolePermission : rolePermissionList) {
+                    if (rolePermission.getPermissionId().equals(permission.getId())) {
+                        treeData.setChecked(true);
+                        break;
+                    }
+                }
+            }
             if (pId.equals(permission.getParentId())) {
-                List<TreeData> treeDataList = handleToTreeData(pList, permission.getId());
+                List<TreeData> treeDataList = handleToTreeData(pList, permission.getId(), rolePermissionList);
                 treeData.setChildren(treeDataList);
                 list.add(treeData);
             }
+
         }
         return list;
     }

@@ -48,11 +48,6 @@ public class ShiroConfiguration {
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/login/loginIn", "anon");
         filterChainDefinitionMap.put("/login/loginOut", "anon");
-        filterChainDefinitionMap.put("/swagger-ui.html", "anon");
-        filterChainDefinitionMap.put("/swagger-resources", "anon");
-        filterChainDefinitionMap.put("/swagger-resources/*", "anon");
-        filterChainDefinitionMap.put("/v2/*", "anon");
-        filterChainDefinitionMap.put("/csrf", "anon");
         filterChainDefinitionMap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

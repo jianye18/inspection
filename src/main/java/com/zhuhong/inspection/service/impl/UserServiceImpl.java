@@ -64,31 +64,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageInfo getUserPageListByCondition(UserCondition userCondition) {
-        PageHelper.startPage(userCondition.getPageNum(), userCondition.getPageSize(), "create_time desc");
-        Example example = new Example(User.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("usable", 1);
-        if (userCondition.getIsMember() != null) {
-            criteria.andEqualTo("isMember", userCondition.getIsMember());
-        }
-        if (userCondition.getGender() != null) {
-            criteria.andEqualTo("gender", userCondition.getGender());
-        }
-        if (userCondition.getStatus() != null) {
-            criteria.andEqualTo("userStatus", userCondition.getStatus());
-        }
-        if (StringUtils.isNotEmpty(userCondition.getSearchPhrase())) {
-            criteria.andLike("userName", StringUtil.getLikeString(userCondition.getSearchPhrase()));
-        }
-        List<User> list = userMapper.selectByExample(example);
-        return new PageInfo<>(list);
+    public PageInfo<UserVo> getUserPageListByCondition(UserCondition userCondition) {
+        PageHelper.startPage(userCondition.getPageNum(), userCondition.getPageSize());
+        List<UserVo> list = userMapper.getUserListByCondition(userCondition);
+        return new PageInfo<UserVo>(list);
     }
 
     @Override
     public boolean saveUser(User user, Integer currentUserId) {
         boolean flag = false;
         Integer userId = user.getId();
+        user.setUpdateId(currentUserId);
+        user.setUpdateTime(DateUtil.getCurrentDate());
         if (userId == null) {
             user.setPassword(MD5.getMD5(Constants.DEFAULT_PASSWORD));
             user.setCreateId(currentUserId);
@@ -99,8 +86,6 @@ public class UserServiceImpl implements UserService {
                 handleUserRole(userId, user.getRoleIds());
             }
         } else {
-            user.setUpdateId(currentUserId);
-            user.setUpdateTime(DateUtil.getCurrentDate());
             if (userMapper.updateByPrimaryKey(user) > 0) {
                 flag = true;
                 handleUserRole(userId, user.getRoleIds());

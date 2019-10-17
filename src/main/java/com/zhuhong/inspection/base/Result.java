@@ -8,7 +8,7 @@ public class Result<T>  implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private int code;
-    private String message;
+    private String msg;
     private T data;
 
     public Result setCode(ResultCode resultCode) {
@@ -24,12 +24,12 @@ public class Result<T>  implements Serializable {
         return code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public Result setMessage(String message) {
-        this.message = message;
+    public Result setMsg(String msg) {
+        this.msg = msg;
         return this;
     }
 
@@ -52,40 +52,48 @@ public class Result<T>  implements Serializable {
     public static Result genSuccessResult() {
         return new Result()
                 .setCode(ResultCode.SUCCESS)
-                .setMessage(DEFAULT_SUCCESS_MESSAGE);
+                .setMsg(DEFAULT_SUCCESS_MESSAGE);
     }
 
     public static <T> Result<T> genSuccessResult(T data) {
         return new Result()
                 .setCode(ResultCode.SUCCESS)
-                .setMessage(DEFAULT_SUCCESS_MESSAGE)
+                .setMsg(DEFAULT_SUCCESS_MESSAGE)
                 .setData(data);
     }
 
     public static Result genSuccessResultMsg(String message) {
         return new Result()
                 .setCode(ResultCode.SUCCESS)
-                .setMessage(message);
+                .setMsg(message);
     }
 
     public static <T> Result<T> genSuccessResult(T data, String message) {
         return new Result()
                 .setCode(ResultCode.SUCCESS)
-                .setMessage(message)
+                .setMsg(message)
                 .setData(data);
     }
 
     public static Result genFailResult(String message) {
         return new Result()
                 .setCode(ResultCode.FAIL)
-                .setMessage(message);
+                .setMsg(message);
     }
 
     public static <T> Result<T> genResult(ResultCode resultCode, String message, T data) {
         return new Result()
                 .setCode(resultCode)
-                .setMessage(message)
+                .setMsg(message)
                 .setData(data);
+    }
+
+    public static Result error(ExceptionEnum exceptionEnum) {
+        Result result = new Result();
+        result.setCode(exceptionEnum.getCode());
+        result.setMsg(exceptionEnum.getMsg());
+        result.setData(null);
+        return result;
     }
 
 }

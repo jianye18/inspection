@@ -60,13 +60,13 @@ public class RoleServiceImpl implements RoleService {
     public boolean saveRole(Role role, Integer currentUserId) {
         boolean flag = false;
         Integer roleId = role.getId();
+        role.setUpdateId(currentUserId);
+        role.setUpdateTime(DateUtil.getCurrentDate());
         if (roleId == null) {
             role.setCreateId(currentUserId);
             role.setCreateTime(DateUtil.getCurrentDate());
             flag = roleMapper.insertSelective(role) > 0;
         } else {
-            role.setUpdateId(currentUserId);
-            role.setUpdateTime(DateUtil.getCurrentDate());
             flag = roleMapper.updateByPrimaryKey(role) > 0;
         }
         return flag;

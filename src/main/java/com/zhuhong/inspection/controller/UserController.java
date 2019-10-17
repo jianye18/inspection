@@ -9,6 +9,7 @@ import com.zhuhong.inspection.condition.UserCondition;
 import com.zhuhong.inspection.model.User;
 import com.zhuhong.inspection.model.UserRole;
 import com.zhuhong.inspection.service.UserService;
+import com.zhuhong.inspection.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -51,7 +52,7 @@ public class UserController extends BaseController {
         log.debug(LOG_MSG + "上传参数：" + userCondition.toString());
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
-            PageInfo<User> list = userService.getUserPageListByCondition(userCondition);
+            PageInfo<UserVo> list = userService.getUserPageListByCondition(userCondition);
             result = Result.genSuccessResult(list);
         } catch (Exception e) {
             e.printStackTrace();

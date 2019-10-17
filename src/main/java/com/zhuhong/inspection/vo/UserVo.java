@@ -22,5 +22,6 @@ public class UserVo extends User {
     private List<Role> roleList;
     @ApiModelProperty(name = "permissionList", value = "权限集合", hidden = true)
     private List<Permission> permissionList;
-
+    @ApiModelProperty(name = "roleNames", value = "角色集合", example = "角色拼接字符串")
+    private String roleNames;
 }

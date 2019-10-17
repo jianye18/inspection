@@ -94,7 +94,7 @@ CREATE TABLE `tb_user`  (
     `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
     `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tb_user_role
@@ -108,4 +108,51 @@ CREATE TABLE `tb_user_role`  (
  UNIQUE KEY `idx_user_role` (`user_id`,`role_id`) COMMENT '唯一索引，用户ID和角色ID组合唯一性'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户角色表' ROW_FORMAT = Dynamic;
 
+
+-- ----------------------------
+-- Table structure for tb_spot_check
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_spot_check`;
+CREATE TABLE `tb_spot_check`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `company` varchar(128) NULL DEFAULT NULL COMMENT '标称委托企业',
+ `producer` varchar(128) NULL DEFAULT NULL COMMENT '标称生产企业/进口代理商名称',
+ `unit` varchar(128) NULL DEFAULT NULL COMMENT '被采样单位名称', 
+ `sample` varchar(255) NULL DEFAULT NULL COMMENT '样品名称',
+ `specification` varchar(128) NULL DEFAULT NULL COMMENT '包装规格',
+ `expire_time` varchar(64) NULL DEFAULT NULL COMMENT '保质期',
+ `product_type` tinyint(2) NULL DEFAULT NULL COMMENT '产品分类：1-皮肤用化妆品，2-毛发用化妆品，3-指（趾）甲用化妆品，4-口唇用化妆品',
+ `location` varchar(16) NULL DEFAULT NULL COMMENT '产地',
+ `check_result` tinyint(2) NULL DEFAULT NULL COMMENT '抽检结果：0-不合格，1-合格',
+ `subject` varchar(255) NULL DEFAULT NULL COMMENT '不合格项目',
+ `institution` varchar(64) NULL DEFAULT NULL COMMENT '公布机构',
+ `publish_date` date NULL DEFAULT NULL COMMENT '公布日期',
+ `is_fake` tinyint(2) NULL DEFAULT NULL COMMENT '是否涉嫌假冒：0-否，1-是',
+ `source_link` varchar(128) NULL DEFAULT NULL COMMENT '来源链接',
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE,
+ KEY `idx_institution` (`institution`) USING BTREE COMMENT '公布机构索引'
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '抽检数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_system_data_type
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_system_data_type`;
+CREATE TABLE `tb_system_data_type`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `code` varchar(16) NULL DEFAULT NULL COMMENT '编码',
+ `name` varchar(32) NULL DEFAULT NULL COMMENT '名称', 
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类关联数据表' ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;
+
