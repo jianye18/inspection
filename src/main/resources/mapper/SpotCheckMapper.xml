@@ -35,7 +35,7 @@
         left join tb_system_data_type t on t.id = s.product_type
         where
             s.usable = 1
-            <if test="productType != null">
+            <if test="productType != null and productType != 0">
                 and s.product_type = #{productType}
             </if>
             <if test="institution != null and institution != '' ">
