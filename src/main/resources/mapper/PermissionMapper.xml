@@ -17,7 +17,7 @@
         p.create_id as createId,
         p.create_time as createTime,
         p.update_id as updateId,
-        p.update_time as updateTime
+        p.update_time as updateTime,
         p.usable as usable
     </sql>
 

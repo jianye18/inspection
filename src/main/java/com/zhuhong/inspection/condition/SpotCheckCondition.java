@@ -1,6 +1,7 @@
 package com.zhuhong.inspection.condition;
 
 import com.zhuhong.inspection.base.BaseCondition;
+import com.zhuhong.inspection.base.Constants;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -21,5 +22,7 @@ public class SpotCheckCondition extends BaseCondition {
     private Integer checkResult;
     @ApiModelProperty(name = "isFake", value = "是否涉嫌假冒：0-否，1-是", example = "0")
     private Integer isFake;
+    @ApiModelProperty(name = "typeCode", value = "产品分类Code", hidden = true)
+    private String typeCode = Constants.SPOT_CHECK_TYPE_CODE_1;
 
 }

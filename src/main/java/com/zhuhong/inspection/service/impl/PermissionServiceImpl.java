@@ -77,7 +77,7 @@ public class PermissionServiceImpl implements PermissionService {
             permission.setUsable(Permission.ENABLE_0);
             permission.setUpdateId(currentUserId);
             permission.setUpdateTime(DateUtil.getCurrentDate());
-            if (permissionMapper.updateByPrimaryKey(permission) > 0) {
+            if (permissionMapper.updateByPrimaryKeySelective(permission) > 0) {
                 flag = Constants.DELETE_USER_1;
             }
         }

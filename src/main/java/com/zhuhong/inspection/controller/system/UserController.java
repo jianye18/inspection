@@ -1,4 +1,4 @@
-package com.zhuhong.inspection.controller;
+package com.zhuhong.inspection.controller.system;
 
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.BaseController;

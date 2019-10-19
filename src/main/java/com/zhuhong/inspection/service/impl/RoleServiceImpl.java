@@ -85,7 +85,7 @@ public class RoleServiceImpl implements RoleService {
             role.setUsable(Role.ENABLE_0);
             role.setUpdateId(currentUserId);
             role.setUpdateTime(DateUtil.getCurrentDate());
-            if (roleMapper.updateByPrimaryKey(role) > 0) {
+            if (roleMapper.updateByPrimaryKeySelective(role) > 0) {
                 flag = Constants.DELETE_USER_1;
             }
         }

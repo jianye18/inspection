@@ -116,10 +116,11 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(Integer userId, Integer currentUserId) {
         boolean flag = false;
         User user = new User();
+        user.setId(userId);
         user.setUsable(User.ENABLE_0);
         user.setUpdateId(currentUserId);
         user.setUpdateTime(DateUtil.getCurrentDate());
-        flag = userMapper.updateByPrimaryKey(user) > 0;
+        flag = userMapper.updateByPrimaryKeySelective(user) > 0;
         if (flag) {
             UserRole userRole = new UserRole();
             userRole.setUserId(userId);

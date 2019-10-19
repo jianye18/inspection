@@ -32,7 +32,7 @@
             t.name as productTypeName
         from
             tb_spot_check s
-        left join tb_system_data_type t on t.id = s.product_type
+        left join tb_system_data_type t on t.value = s.product_type and t.code = #{typeCode}
         where
             s.usable = 1
             <if test="productType != null and productType != 0">

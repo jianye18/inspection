@@ -35,13 +35,14 @@ public class SystemDataController extends BaseController {
      * @Author: jian.ye
      * @Date: 2019/10/16 17:34
      */
-    @ApiOperation(value = "获取抽检数据分类数据", notes = "返回抽检数据分类数据列表")
-    @GetMapping("/getAllSystemDataTypeList")
-    public Result getAllSystemDataTypeList() {
-        String LOG_MSG = "获取抽检数据分类数据---getAllSystemDataTypeList()---，";
+    @ApiOperation(value = "获取分类数据", notes = "返回数据分类数据列表")
+    @ApiImplicitParam(name = "type", value = "类型：1-抽检、2-标准", example = "1")
+    @GetMapping("/getAllSystemDataTypeList/{type}")
+    public Result getAllSystemDataTypeList(@PathVariable(value = "type", required = true) Integer type) {
+        String LOG_MSG = "调用获取分类数据数据---getAllSystemDataTypeList()---，";
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
-            Map<String, List> map = systemDataService.getAllSystemDataTypeList();
+            Map<String, List> map = systemDataService.getAllSystemDataTypeList(type, null);
             result = Result.genSuccessResult(map);
         } catch (Exception e) {
             e.printStackTrace();

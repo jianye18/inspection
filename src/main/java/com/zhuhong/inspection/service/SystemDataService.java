@@ -15,11 +15,12 @@ public interface SystemDataService {
 
     /**
      * 根据类型获取系统分类数据
-     *
+     * @param type
+     * @param code
      * @return List<SystemDataType>
      * @Author: jian.ye
      * @Date: 2019/10/16 16:42
      */
-    Map<String, List> getAllSystemDataTypeList();
+    Map<String, List> getAllSystemDataTypeList(Integer type, String code);
 
 }

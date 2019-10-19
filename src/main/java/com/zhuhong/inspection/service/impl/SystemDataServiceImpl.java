@@ -1,5 +1,6 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.mapper.SystemDataTypeMapper;
 import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
@@ -26,35 +27,87 @@ public class SystemDataServiceImpl implements SystemDataService {
     private SystemDataTypeMapper systemDataTypeMapper;
 
     @Override
-    public Map<String, List> getAllSystemDataTypeList() {
+    public Map<String, List> getAllSystemDataTypeList(Integer type, String code) {
         Map<String, List> map = new HashMap<>();
         SystemDataType systemDataType = new SystemDataType();
         systemDataType.setUsable(SystemDataType.ENABLE_1);
-        // 获取产品分类下拉数据
-        systemDataType.setType(1);
-        List<SystemDataType> list1 = systemDataTypeMapper.select(systemDataType);
-        if (list1.size() > 0) {
+        systemDataType.setType(type);
+        if (StringUtils.isNotEmpty(code)) {
+            systemDataType.setCode(code);
+        }
+        List<SystemDataType> list = systemDataTypeMapper.select(systemDataType);
+        if (Constants.BASE_TYPE_1.equals(type)) {
+            map = getSpotCheckType(map, list);
+        }
+        if (Constants.BASE_TYPE_2.equals(type)) {
+            map = getCriterionType(map, list);
+        }
+        return map;
+    }
+
+    /**
+     * 获取抽检分类的数据
+     * @Author: jian.ye
+     * @Date: 2019/10/19 13:58
+     */
+    private Map<String, List> getSpotCheckType(Map<String, List> map, List<SystemDataType> list) {
+        if (list.size() > 0) {
             List<SelectionLabel> productTypeList = new ArrayList<>();
-            for (SystemDataType dataType : list1) {
-                SelectionLabel label = new SelectionLabel();
-                label.setValue(String.valueOf(dataType.getId()));
-                label.setLabel(dataType.getName());
-                productTypeList.add(label);
+            List<SelectionLabel> institutionList = new ArrayList<>();
+            for (SystemDataType dataType : list) {
+                if (Constants.SPOT_CHECK_TYPE_CODE_1.equals(dataType.getCode())) {
+                    // 获取产品分类下拉数据
+                    SelectionLabel label = new SelectionLabel();
+                    label.setValue(String.valueOf(dataType.getValue()));
+                    label.setLabel(dataType.getName());
+                    productTypeList.add(label);
+                } else if (Constants.SPOT_CHECK_TYPE_CODE_2.equals(dataType.getCode())) {
+                    // 获取公布机构下拉数据
+                    SelectionLabel label = new SelectionLabel();
+                    label.setValue(dataType.getName());
+                    label.setLabel(dataType.getName());
+                    institutionList.add(label);
+                }
             }
             map.put("productTypeList", productTypeList);
-        }
-        // 获取公布机构下拉数据
-        systemDataType.setType(2);
-        List<SystemDataType> list2 = systemDataTypeMapper.select(systemDataType);
-        if (list2.size() > 0) {
-            List<SelectionLabel> institutionList = new ArrayList<>();
-            for (SystemDataType dataType : list2) {
-                SelectionLabel label = new SelectionLabel();
-                label.setValue(dataType.getName());
-                label.setLabel(dataType.getName());
-                institutionList.add(label);
-            }
             map.put("institutionList", institutionList);
+        }
+        return map;
+    }
+    /**
+     * 获取标准分类的数据
+     * @Author: jian.ye
+     * @Date: 2019/10/19 13:58
+     */
+    private Map<String, List> getCriterionType(Map<String, List> map, List<SystemDataType> list) {
+        if (list.size() > 0) {
+            List<SelectionLabel> categoryList = new ArrayList<>();
+            List<SelectionLabel> typeList = new ArrayList<>();
+            List<SelectionLabel> publishUnitList = new ArrayList<>();
+            for (SystemDataType dataType : list) {
+                if (Constants.CRITERION_TYPE_CODE_1.equals(dataType.getCode())) {
+                    // 获取标准一级分类下拉数据
+                    SelectionLabel label = new SelectionLabel();
+                    label.setValue(String.valueOf(dataType.getValue()));
+                    label.setLabel(dataType.getName());
+                    categoryList.add(label);
+                } else if (Constants.CRITERION_TYPE_CODE_2.equals(dataType.getCode())) {
+                    // 获取标准二级分类下拉数据
+                    SelectionLabel label = new SelectionLabel();
+                    label.setValue(String.valueOf(dataType.getValue()));
+                    label.setLabel(dataType.getName());
+                    typeList.add(label);
+                } else if (Constants.CRITERION_TYPE_CODE_3.equals(dataType.getCode())) {
+                    // 获取标准发布单位下拉数据
+                    SelectionLabel label = new SelectionLabel();
+                    label.setValue(String.valueOf(dataType.getValue()));
+                    label.setLabel(dataType.getName());
+                    publishUnitList.add(label);
+                }
+            }
+            map.put("categoryList", categoryList);
+            map.put("typeList", typeList);
+            map.put("publishUnitList", publishUnitList);
         }
         return map;
     }

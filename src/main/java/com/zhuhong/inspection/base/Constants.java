@@ -40,4 +40,23 @@ public class Constants {
     public static final Integer PERMISSION_TYPE_2 = 2;
     public static final Integer PERMISSION_TYPE_3 = 3;
 
+    /**
+     * 基础分类：1-抽检、2-标准
+     */
+    public static final Integer BASE_TYPE_1 = 1;
+    public static final Integer BASE_TYPE_2 = 2;
+
+    /**
+     * 抽检数据分类编码
+     */
+    public static final String SPOT_CHECK_TYPE_CODE_1 = "product_type";
+    public static final String SPOT_CHECK_TYPE_CODE_2 = "institution";
+
+    /**
+     * 标准数据分类编码
+     */
+    public static final String CRITERION_TYPE_CODE_1 = "criterion_category";
+    public static final String CRITERION_TYPE_CODE_2 = "criterion_type";
+    public static final String CRITERION_TYPE_CODE_3 = "criterion_publish_unit";
+
 }

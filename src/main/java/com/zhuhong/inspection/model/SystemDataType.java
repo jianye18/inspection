@@ -20,6 +20,9 @@ public class SystemDataType extends BaseModel {
     @ApiModelProperty(name = "type", value = "类型：1-产品分类，2-公布机构", example = "1")
     @Column(name = "type")
     private Integer type;
+    @ApiModelProperty(name = "value", value = "值", example = "1")
+    @Column(name = "value")
+    private Integer value;
     @ApiModelProperty(name = "code", value = "编码", example = "")
     @Column(name = "code")
     private String code;
