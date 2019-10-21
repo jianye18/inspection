@@ -1,7 +1,9 @@
 package com.zhuhong.inspection.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
+import com.zhuhong.inspection.condition.SystemDataTypeCondition;
 import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
 import io.swagger.annotations.Api;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +47,55 @@ public class SystemDataController extends BaseController {
         try {
             Map<String, List> map = systemDataService.getAllSystemDataTypeList(type, null);
             result = Result.genSuccessResult(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
+     * 分页查询分类数据
+     * @Author: jian.ye
+     * @Date: 2019/10/21 15:45
+     */
+    @ApiOperation(value = "分页查询分类数据", notes = "分页查询分类数据")
+    @ApiImplicitParam(name = "condition", value = "分类数据查询条件类", dataType = "SystemDataTypeCondition")
+    @PostMapping("/getSystemDataTypePageList")
+    public Result<SystemDataType> getSystemDataTypePageList(@RequestBody SystemDataTypeCondition condition) {
+        String LOG_MSG = "调用分页查询分类数据接口---getSystemDataTypePageList()---，";
+        log.debug(LOG_MSG + "参数：" + condition.toString());
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            PageInfo<SystemDataType> list = systemDataService.getSystemDataTypePageList(condition);
+            result = Result.genSuccessResult(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
+     * 保存分类数据
+     * @Author: jian.ye
+     * @Date: 2019/10/21 15:35
+     */
+    @ApiOperation(value = "保存分类数据", notes = "保存分类数据")
+    @ApiImplicitParam(name = "systemDataType", value = "分类数据实体", dataType = "SystemDataType")
+    @PostMapping("/saveSystemDataType")
+    public Result saveSystemDataType(@RequestBody SystemDataType systemDataType, HttpServletRequest request) {
+        String LOG_MSG = "调用保存分类数据接口---saveSystemDataType()---，";
+        log.debug(LOG_MSG + "参数：" + systemDataType.toString());
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            if (systemDataService.saveSystemDataType(systemDataType, getCurrentUser(request).getId())) {
+                result = Result.genFailResult("保存分类数据成功");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error(LOG_MSG + "返回错误信息：", e);

@@ -1,5 +1,7 @@
 package com.zhuhong.inspection.service;
 
+import com.github.pagehelper.PageInfo;
+import com.zhuhong.inspection.condition.SystemDataTypeCondition;
 import com.zhuhong.inspection.model.SystemDataType;
 
 import java.util.List;
@@ -22,5 +24,24 @@ public interface SystemDataService {
      * @Date: 2019/10/16 16:42
      */
     Map<String, List> getAllSystemDataTypeList(Integer type, String code);
+
+    /**
+     * 保存系统相关分类数据
+     * @param systemDataType
+     * @param currentUserId
+     * @return boolean
+     * @Author: jian.ye
+     * @Date: 2019/10/21 15:28
+     */
+    boolean saveSystemDataType(SystemDataType systemDataType, Integer currentUserId);
+
+    /**
+     * 根据条件分页查询分类数据
+     * @param condition
+     * @return PageInfo<SystemDataType>
+     * @Author: jian.ye
+     * @Date: 2019/10/21 15:36
+     */
+    PageInfo<SystemDataType> getSystemDataTypePageList(SystemDataTypeCondition condition);
 
 }

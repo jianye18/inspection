@@ -1,13 +1,18 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
+import com.zhuhong.inspection.condition.SystemDataTypeCondition;
 import com.zhuhong.inspection.mapper.SystemDataTypeMapper;
 import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
+import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.SelectionLabel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +48,31 @@ public class SystemDataServiceImpl implements SystemDataService {
             map = getCriterionType(map, list);
         }
         return map;
+    }
+
+    @Override
+    public boolean saveSystemDataType(SystemDataType systemDataType, Integer currentUserId) {
+        systemDataType.setUpdateId(currentUserId);
+        systemDataType.setUpdateTime(DateUtil.getCurrentDate());
+        if (systemDataType.getId() != null) {
+            return systemDataTypeMapper.updateByPrimaryKeySelective(systemDataType) > 0;
+        } else {
+            systemDataType.setCreateId(currentUserId);
+            systemDataType.setCreateTime(DateUtil.getCurrentDate());
+            return systemDataTypeMapper.insertSelective(systemDataType) > 0;
+        }
+    }
+
+    @Override
+    public PageInfo<SystemDataType> getSystemDataTypePageList(SystemDataTypeCondition condition) {
+        PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), "update_time desc");
+        Example example = new Example(SystemDataType.class);
+        example.createCriteria()
+                .andEqualTo("usable", SystemDataType.ENABLE_1)
+                .andEqualTo("type", condition.getType())
+                .andLike("name", condition.getSearchPhrase());
+        List<SystemDataType> list = systemDataTypeMapper.selectByExample(example);
+        return new PageInfo<>(list);
     }
 
     /**
