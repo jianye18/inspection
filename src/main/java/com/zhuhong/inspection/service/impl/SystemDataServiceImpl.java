@@ -67,10 +67,14 @@ public class SystemDataServiceImpl implements SystemDataService {
     public PageInfo<SystemDataType> getSystemDataTypePageList(SystemDataTypeCondition condition) {
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), "update_time desc");
         Example example = new Example(SystemDataType.class);
-        example.createCriteria()
-                .andEqualTo("usable", SystemDataType.ENABLE_1)
-                .andEqualTo("type", condition.getType())
-                .andLike("name", condition.getSearchPhrase());
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("usable", SystemDataType.ENABLE_1);
+        if (condition.getType() != null) {
+            criteria.andEqualTo("type", condition.getType());
+        }
+        if (StringUtils.isNotEmpty(condition.getSearchPhrase())) {
+            criteria.andLike("name", condition.getSearchPhrase());
+        }
         List<SystemDataType> list = systemDataTypeMapper.selectByExample(example);
         return new PageInfo<>(list);
     }

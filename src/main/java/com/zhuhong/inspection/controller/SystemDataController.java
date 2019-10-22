@@ -94,7 +94,7 @@ public class SystemDataController extends BaseController {
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
             if (systemDataService.saveSystemDataType(systemDataType, getCurrentUser(request).getId())) {
-                result = Result.genFailResult("保存分类数据成功");
+                result = Result.genSuccessResultMsg("保存分类数据成功");
             }
         } catch (Exception e) {
             e.printStackTrace();
