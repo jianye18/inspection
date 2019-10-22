@@ -12,8 +12,6 @@
         c.publish_date as publishDate,
         c.implement_date as implementDate,
         c.summary as summary,
-        c.annex_name as annexName,
-        c.annex_path as annexPath,
         c.create_id as createId,
         c.create_time as createTime,
         c.update_id as updateId,

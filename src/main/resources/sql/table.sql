@@ -166,12 +166,10 @@ CREATE TABLE `tb_criterion`  (
  `category` tinyint(2) NULL DEFAULT NULL COMMENT '一级分类', 
  `type` tinyint(2) NULL DEFAULT NULL COMMENT '二级分类', 
  `status` tinyint(2) NULL DEFAULT NULL COMMENT '状态',
- `publish_unit` varchar(64) NULL DEFAULT NULL COMMENT '发布单位',
+ `publish_unit` tinyint(2) NULL DEFAULT NULL COMMENT '发布单位',
  `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
  `implement_date` date NULL DEFAULT NULL COMMENT '实施日期',
  `summary` varchar(255) NULL DEFAULT NULL COMMENT '摘要',
- `annex_name` varchar(32) NULL DEFAULT NULL COMMENT '附件名称',
- `annex_path` varchar(128) NULL DEFAULT NULL COMMENT '附件路径',
  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
@@ -179,6 +177,43 @@ CREATE TABLE `tb_criterion`  (
  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '标准数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_annex
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_annex`;
+CREATE TABLE `tb_annex`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id', 
+ `business_id` int(11) NULL DEFAULT NULL COMMENT '业务ID',
+ `name` varchar(32) NULL DEFAULT NULL COMMENT '附件名称', 
+ `path` varchar(128) NULL DEFAULT NULL COMMENT '附件路径',
+ `type` tinyint(2) NULL DEFAULT NULL COMMENT '分类：1-标准，2-法规', 
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_law
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_law`;
+CREATE TABLE `tb_law`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `name` varchar(32) NULL DEFAULT NULL COMMENT '名称', 
+ `category` tinyint(2) NULL DEFAULT NULL COMMENT '一级分类', 
+ `type` tinyint(2) NULL DEFAULT NULL COMMENT '二级分类', 
+ `status` tinyint(2) NULL DEFAULT NULL COMMENT '状态',
+ `publish_unit` tinyint(2) NULL DEFAULT NULL COMMENT '发布单位',
+ `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
+ `implement_date` date NULL DEFAULT NULL COMMENT '实施日期',
+ `process` tinyint(2) NULL DEFAULT NULL COMMENT '环节', 
+ `content` MEDIUMTEXT NULL DEFAULT NULL COMMENT '法规内容',
+ `source` tinyint(2) NULL DEFAULT NULL COMMENT '来源', 
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
 

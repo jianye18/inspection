@@ -10,16 +10,15 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * 标准数据实体类
+ * 法规实体类
  *
  * @Author: jian.ye
- * @Date: 2019/10/19 10:15
+ * @Date: 2019/10/22 23:08
  */
 @Data
-@Table(name = "tb_criterion")
-public class Criterion extends BaseModel {
-
-    @ApiModelProperty(name = "name", value = "标准名称", example = "标准名称")
+@Table(name = "tb_law")
+public class Law extends BaseModel {
+    @ApiModelProperty(name = "name", value = "法规名称", example = "法规名称")
     @Column(name = "name")
     private String name;
     @ApiModelProperty(name = "category", value = "一级分类", example = "1")
@@ -42,8 +41,13 @@ public class Criterion extends BaseModel {
     @Column(name = "implement_date")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     private Date implementDate;
-    @ApiModelProperty(name = "summary", value = "摘要", example = "摘要")
-    @Column(name = "summary")
-    private String summary;
-
+    @ApiModelProperty(name = "process", value = "环节", example = "1")
+    @Column(name = "process")
+    private Integer process;
+    @ApiModelProperty(name = "content", value = "法规内容", example = "法规内容")
+    @Column(name = "content")
+    private String content;
+    @ApiModelProperty(name = "source", value = "来源", example = "1")
+    @Column(name = "source")
+    private Integer source;
 }
