@@ -3,6 +3,7 @@ package com.zhuhong.inspection.service;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.SystemDataTypeCondition;
 import com.zhuhong.inspection.model.SystemDataType;
+import com.zhuhong.inspection.vo.SystemDataTypeVo;
 
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,6 @@ public interface SystemDataService {
      * @Author: jian.ye
      * @Date: 2019/10/21 15:36
      */
-    PageInfo<SystemDataType> getSystemDataTypePageList(SystemDataTypeCondition condition);
+    PageInfo<SystemDataTypeVo> getSystemDataTypePageList(SystemDataTypeCondition condition);
 
 }

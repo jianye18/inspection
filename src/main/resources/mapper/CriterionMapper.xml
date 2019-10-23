@@ -48,6 +48,9 @@
             <if test="startDate != null">
                 and c.implement_date between #{startDate} and #{endDate}
             </if>
+            <if test="searchPhrase != null and searchPhrase != '' ">
+                and c.name like concat('%', #{searchPhrase}, '%')
+            </if>
         order by c.update_time desc
     </select>
 

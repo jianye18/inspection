@@ -1,8 +1,11 @@
 package com.zhuhong.inspection.vo;
 
+import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.Criterion;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * 标准数据展示类
@@ -18,5 +21,6 @@ public class CriterionVo extends Criterion {
     private String typeName;
     @ApiModelProperty(name = "publishUnitName", value = "发布单位名称", example = "单位1")
     private String publishUnitName;
-
+    @ApiModelProperty(name = "annexList", value = "附件集合")
+    private List<Annex> annexList;
 }

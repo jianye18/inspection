@@ -2,13 +2,14 @@ package com.zhuhong.inspection.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.CriterionCondition;
 import com.zhuhong.inspection.mapper.CriterionMapper;
 import com.zhuhong.inspection.model.Criterion;
+import com.zhuhong.inspection.service.AnnexService;
 import com.zhuhong.inspection.service.CriterionService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.CriterionVo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -26,18 +27,30 @@ public class CriterionServiceImpl implements CriterionService {
 
     @Autowired
     private CriterionMapper criterionMapper;
+    @Autowired
+    private AnnexService annexService;
 
     @Override
     public boolean saveCriterion(Criterion criterion, Integer currentUserId) {
+        boolean flag = false;
         criterion.setUpdateId(currentUserId);
         criterion.setUpdateTime(DateUtil.getCurrentDate());
-        if (criterion.getImplementDate() != null) {
+        if (criterion.getId() != null) {
             criterion.setCreateId(currentUserId);
             criterion.setCreateTime(DateUtil.getCurrentDate());
-            return criterionMapper.insertSelective(criterion) > 0;
+            int r = criterionMapper.insertSelective(criterion);
+            if (r > 0) {
+                flag = true;
+                annexService.handleAnnex(false, criterion.getAnnexs(), criterion.getId(), Constants.BASE_TYPE_2);
+            }
         } else {
-            return criterionMapper.updateByPrimaryKey(criterion) > 0;
+            int r = criterionMapper.updateByPrimaryKey(criterion);
+            if (r > 0) {
+                flag = true;
+                annexService.handleAnnex(true, criterion.getAnnexs(), criterion.getId(), Constants.BASE_TYPE_2);
+            }
         }
+        return flag;
     }
 
     @Override
@@ -69,7 +82,11 @@ public class CriterionServiceImpl implements CriterionService {
         criterion.setUpdateId(currentUserId);
         criterion.setUpdateTime(DateUtil.getCurrentDate());
         criterion.setUsable(Criterion.ENABLE_0);
-        return criterionMapper.updateByPrimaryKeySelective(criterion) > 0;
+        boolean flag = criterionMapper.updateByPrimaryKeySelective(criterion) > 0;
+        if (flag) {
+            annexService.deleteAnnex(criterionId, Constants.BASE_TYPE_2);
+        }
+        return flag;
     }
 
 }

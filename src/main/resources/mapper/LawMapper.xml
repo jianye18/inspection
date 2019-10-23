@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.LawMapper">
+
+    <sql id="baseResult">
+        l.id as id,
+        l.name as name,
+        l.category as category,
+        l.type as type,
+        l.status as status,
+        l.publish_unit as publishUnit,
+        l.publish_date as publishDate,
+        l.implement_date as implementDate,
+        l.process as process,
+        l.content as content,
+        l.source as source,
+        l.create_id as createId,
+        l.create_time as createTime,
+        l.update_id as updateId,
+        l.update_time as updateTime,
+        l.usable as usable
+    </sql>
+
+    <select id="getLawListByCondition" resultType="com.zhuhong.inspection.vo.LawVo"
+            parameterType="com.zhuhong.inspection.condition.LawCondition">
+        select
+            <include refid="baseResult"></include>,
+            s.name as categoryName,
+            d.name as typeName,
+            t.name as publishUnitName,
+            b.name as sourceName
+        from
+            tb_law l
+        left join tb_system_data_type s on s.type = 3 and s.value = l.category and s.code = #{categoryCode}
+        left join tb_system_data_type d on d.type = 3 and d.value = l.type and d.code = #{categoryCode}
+        left join tb_system_data_type t on t.type = 3 and t.value = l.publish_unit and t.code = #{publishUnitCode}
+        left join tb_system_data_type b on b.type = 3 and b.value = l.source and b.code = #{sourceCode}
+        where
+            l.usable = 1
+            <if test="category != null and category != 0">
+                and l.category = #{category}
+            </if>
+            <if test="type != null and type != 0">
+                and l.type = #{type}
+            </if>
+            <if test="publishUnit != null and publishUnit != 0">
+                and l.publish_unit = #{publishUnit}
+            </if>
+            <if test="status != null">
+                and l.status = #{status}
+            </if>
+            <if test="startDate != null">
+                and l.implement_date between #{startDate} and #{endDate}
+            </if>
+            <if test="searchPhrase != null and searchPhrase != '' ">
+                and l.name like concat('%', #{searchPhrase}, '%')
+            </if>
+        order by l.update_time desc
+    </select>
+
+</mapper>

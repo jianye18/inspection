@@ -144,10 +144,12 @@ CREATE TABLE `tb_spot_check`  (
 DROP TABLE IF EXISTS `tb_system_data_type`;
 CREATE TABLE `tb_system_data_type`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
- `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型：1-抽检、2-标准',
+ `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型：1-抽检、2-标准、3-法规',
  `value` int(11) NULL DEFAULT NULL COMMENT '值'
  `code` varchar(32) NULL DEFAULT NULL COMMENT '编码',
+ `param` varchar(32) NULL DEFAULT NULL COMMENT '参数',
  `name` varchar(64) NULL DEFAULT NULL COMMENT '名称', 
+ `parent_id` int(11) NULL DEFAULT NULL COMMENT '父级', 
  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
@@ -187,7 +189,7 @@ CREATE TABLE `tb_annex`  (
  `business_id` int(11) NULL DEFAULT NULL COMMENT '业务ID',
  `name` varchar(32) NULL DEFAULT NULL COMMENT '附件名称', 
  `path` varchar(128) NULL DEFAULT NULL COMMENT '附件路径',
- `type` tinyint(2) NULL DEFAULT NULL COMMENT '分类：1-标准，2-法规', 
+ `type` tinyint(2) NULL DEFAULT NULL COMMENT '分类：1-抽检，2-标准，3-法规', 
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件数据表' ROW_FORMAT = Dynamic;
 

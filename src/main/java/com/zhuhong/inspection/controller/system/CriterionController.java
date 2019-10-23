@@ -126,7 +126,7 @@ public class CriterionController extends BaseController {
         try {
             boolean flag = criterionService.deleteCriterion(criterionId, getCurrentUser(request).getId());
             if (flag) {
-                result = Result.genSuccessResultMsg("保存标准数据成功");
+                result = Result.genSuccessResultMsg("删除标准数据成功");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,11 +11,24 @@
  Target Server Version : 50727
  File Encoding         : 65001
 
- Date: 21/10/2019 21:01:50
+ Date: 23/10/2019 20:37:38
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for tb_annex
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_annex`;
+CREATE TABLE `tb_annex`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `business_id` int(11) NULL DEFAULT NULL COMMENT '业务ID',
+  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件名称',
+  `path` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件路径',
+  `type` tinyint(2) NULL DEFAULT NULL COMMENT '分类：1-抽检，2-标准，3-法规',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tb_criterion
@@ -31,8 +44,6 @@ CREATE TABLE `tb_criterion`  (
   `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
   `implement_date` date NULL DEFAULT NULL COMMENT '实施日期',
   `summary` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '摘要',
-  `annex_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件名称',
-  `annex_path` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件路径',
   `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
@@ -44,10 +55,34 @@ CREATE TABLE `tb_criterion`  (
 -- ----------------------------
 -- Records of tb_criterion
 -- ----------------------------
-INSERT INTO `tb_criterion` VALUES (1, '标准数据001', 1, 2, 1, 1, '2019-09-30', '2019-10-03', '摘要', NULL, NULL, 1, '2019-10-19 14:30:35', 1, '2019-10-19 15:29:26', 1);
-INSERT INTO `tb_criterion` VALUES (2, '标准数据002', 1, 2, 1, 1, '2019-09-30', '2019-10-03', '摘要', NULL, NULL, 1, '2019-10-10 16:46:39', 1, '2019-10-19 16:46:19', 0);
-INSERT INTO `tb_criterion` VALUES (3, '标准数据003', 1, 2, 1, 1, '2019-10-01', '2019-10-04', '摘要', NULL, NULL, 1, '2019-10-17 16:46:44', 1, '2019-10-19 15:57:08', 1);
-INSERT INTO `tb_criterion` VALUES (4, '标准数据004', 1, 2, 1, 1, '2019-10-03', '2019-10-08', '摘要', NULL, NULL, 1, '2019-10-16 16:46:46', 1, '2019-10-19 15:57:45', 1);
+INSERT INTO `tb_criterion` VALUES (1, '标准数据001', 1, 2, 1, 1, '2019-09-30', '2019-10-03', '摘要', 1, '2019-10-19 14:30:35', 1, '2019-10-19 15:29:26', 1);
+INSERT INTO `tb_criterion` VALUES (2, '标准数据002', 1, 2, 1, 1, '2019-09-30', '2019-10-03', '摘要', 1, '2019-10-10 16:46:39', 1, '2019-10-19 16:46:19', 0);
+INSERT INTO `tb_criterion` VALUES (3, '标准数据003', 1, 2, 1, 1, '2019-10-01', '2019-10-04', '摘要', 1, '2019-10-17 16:46:44', 1, '2019-10-19 15:57:08', 1);
+INSERT INTO `tb_criterion` VALUES (4, '标准数据004', 1, 2, 1, 1, '2019-10-03', '2019-10-08', '摘要', 1, '2019-10-16 16:46:46', 1, '2019-10-19 15:57:45', 1);
+
+-- ----------------------------
+-- Table structure for tb_law
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_law`;
+CREATE TABLE `tb_law`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `category` tinyint(2) NULL DEFAULT NULL COMMENT '一级分类',
+  `type` tinyint(2) NULL DEFAULT NULL COMMENT '二级分类',
+  `status` tinyint(2) NULL DEFAULT NULL COMMENT '状态',
+  `publish_unit` tinyint(2) NULL DEFAULT NULL COMMENT '发布单位',
+  `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
+  `implement_date` date NULL DEFAULT NULL COMMENT '实施日期',
+  `process` tinyint(2) NULL DEFAULT NULL COMMENT '环节',
+  `content` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '法规内容',
+  `source` tinyint(2) NULL DEFAULT NULL COMMENT '来源',
+  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tb_permission
@@ -203,44 +238,60 @@ CREATE TABLE `tb_system_data_type`  (
   `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型：1-抽检、2-标准',
   `value` int(11) NULL DEFAULT NULL COMMENT '值',
   `code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码',
+  `param` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `parent_id` int(11) NULL DEFAULT NULL COMMENT '父级',
   `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_system_data_type
 -- ----------------------------
-INSERT INTO `tb_system_data_type` VALUES (1, 1, 1, 'product_type', '皮肤用化妆品', NULL, 1, '2019-10-16 16:01:23', 1, '2019-10-16 16:01:28', 1);
-INSERT INTO `tb_system_data_type` VALUES (2, 1, 2, 'product_type', '毛发用化妆品', NULL, 1, '2019-10-16 16:01:47', 1, '2019-10-16 16:01:52', 1);
-INSERT INTO `tb_system_data_type` VALUES (3, 1, 3, 'product_type', '指（趾）甲用化妆品', NULL, 1, '2019-10-16 16:02:08', 1, '2019-10-16 16:02:10', 1);
-INSERT INTO `tb_system_data_type` VALUES (4, 1, 4, 'product_type', '口唇用化妆品', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (5, 1, 1, 'institution', '宁波市海曙区市场监督管理局', NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (6, 1, 2, 'institution', '北京市药品监督管理局', NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (7, 1, 3, 'institution', '山西省药品监督管理局', NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (8, 1, 4, 'institution', '国家药品监督管理局', NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (9, 1, 5, 'institution', '江西省药品监督管理局', NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (10, 2, 1, 'criterion_category', '国际标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (11, 2, 2, 'criterion_category', '国家标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (12, 2, 3, 'criterion_category', '行业标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (13, 2, 4, 'criterion_category', '地方标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (14, 2, 5, 'criterion_category', '团体标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (15, 2, 6, 'criterion_category', '其他标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (16, 2, 1, 'criterion_type', '基础标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (17, 2, 2, 'criterion_type', '产品标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (18, 2, 3, 'criterion_type', '方法标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (19, 2, 4, 'criterion_type', '安全标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (20, 2, 5, 'criterion_type', '卫生标准', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (21, 2, 1, 'criterion_publish_unit', '单位1', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (22, 2, 2, 'criterion_publish_unit', '单位2', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (23, 2, 3, 'criterion_publish_unit', '单位3', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (24, 2, 4, 'criterion_publish_unit', '单位4', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (25, 2, 5, 'criterion_publish_unit', '单位5', NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (1, 1, 1, 'product_type', NULL, '皮肤用化妆品', NULL, NULL, 1, '2019-10-16 16:01:23', 1, '2019-10-16 16:01:28', 1);
+INSERT INTO `tb_system_data_type` VALUES (2, 1, 2, 'product_type', NULL, '毛发用化妆品', NULL, NULL, 1, '2019-10-16 16:01:47', 1, '2019-10-16 16:01:52', 1);
+INSERT INTO `tb_system_data_type` VALUES (3, 1, 3, 'product_type', NULL, '指（趾）甲用化妆品', NULL, NULL, 1, '2019-10-16 16:02:08', 1, '2019-10-16 16:02:10', 1);
+INSERT INTO `tb_system_data_type` VALUES (4, 1, 4, 'product_type', NULL, '口唇用化妆品', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (5, 1, 1, 'institution', NULL, '宁波市海曙区市场监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (6, 1, 2, 'institution', NULL, '北京市药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (7, 1, 3, 'institution', NULL, '山西省药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (8, 1, 4, 'institution', NULL, '国家药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (9, 1, 5, 'institution', NULL, '江西省药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (10, 2, 1, 'criterion_category', NULL, '国际标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (11, 2, 2, 'criterion_category', NULL, '国家标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (12, 2, 3, 'criterion_category', NULL, '行业标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (13, 2, 4, 'criterion_category', NULL, '地方标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (14, 2, 5, 'criterion_category', NULL, '团体标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (15, 2, 6, 'criterion_category', NULL, '其他标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (16, 2, 1, 'criterion_type', NULL, '基础标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (17, 2, 2, 'criterion_type', NULL, '产品标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (18, 2, 3, 'criterion_type', NULL, '方法标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (19, 2, 4, 'criterion_type', NULL, '安全标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (20, 2, 5, 'criterion_type', NULL, '卫生标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (21, 2, 1, 'criterion_publish_unit', NULL, '单位1', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (22, 2, 2, 'criterion_publish_unit', NULL, '单位2', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (23, 2, 3, 'criterion_publish_unit', NULL, '单位3', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (24, 2, 4, 'criterion_publish_unit', NULL, '单位4', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (25, 2, 5, 'criterion_publish_unit', NULL, '单位5', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (26, 3, 1, 'law_category', NULL, '国际法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (27, 3, 2, 'law_category', NULL, '国家法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (28, 3, 3, 'law_category', NULL, '地方法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (29, 3, 4, 'law_category', NULL, '其他法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (30, 3, 5, 'law_category', NULL, '美国', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (31, 3, 6, 'law_category', NULL, '日本', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (32, 3, 7, 'law_category', NULL, '韩国', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (33, 3, 8, 'law_category', NULL, '欧盟', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (34, 3, 9, 'law_category', NULL, '其他', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (35, 3, 10, 'law_category', NULL, '广东省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (36, 3, 11, 'law_category', NULL, '江苏省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (37, 3, 12, 'law_category', NULL, '浙江省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (38, 3, 13, 'law_category', NULL, '上海市', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (39, 3, 14, 'law_category', NULL, '其他省市', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
 
 -- ----------------------------
 -- Table structure for tb_user

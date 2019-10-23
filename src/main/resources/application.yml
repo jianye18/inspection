@@ -1,7 +1,7 @@
 spring:
   application:
     name: inspection
-  # Êı¾İ¿âÅäÖÃ
+  # æ•°æ®åº“é…ç½®
   datasource:
     name: inspection
     type: com.alibaba.druid.pool.DruidDataSource
@@ -22,11 +22,16 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
 
+  # æ–‡ä»¶ä¸Šä¼ çš„å¤§å°é…ç½®
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
 #  mvc:
 #    view:
 #      prefix: /
 #      suffix: .html
-# ¶Ë¿ÚºÅÅäÖÃ
+# ç«¯å£å·é…ç½®
 server:
  port: 8080
 
@@ -38,9 +43,11 @@ mybatis:
 swagger:
  enable: true
 
-# ÈÕÖ¾ÅäÖÃ
+# æ—¥å¿—é…ç½®
 logging:
   path: logs
   level:
     root: info
     com.zhuhong.inspection: debug
+
+upload_path: E:/inspection/docs/

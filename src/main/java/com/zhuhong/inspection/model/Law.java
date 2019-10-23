@@ -50,4 +50,7 @@ public class Law extends BaseModel {
     @ApiModelProperty(name = "source", value = "来源", example = "1")
     @Column(name = "source")
     private Integer source;
+
+    @ApiModelProperty(name = "annexs", value = "附件集合", example = "[{\"111_20191023.txt\", \"112_20191023.txt\"}]")
+    private String annexs;
 }

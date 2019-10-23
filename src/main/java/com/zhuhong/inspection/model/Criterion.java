@@ -46,4 +46,6 @@ public class Criterion extends BaseModel {
     @Column(name = "summary")
     private String summary;
 
+    @ApiModelProperty(name = "annexs", value = "附件集合", example = "[{\"111_20191023.txt\", \"112_20191023.txt\"}]")
+    private String annexs;
 }

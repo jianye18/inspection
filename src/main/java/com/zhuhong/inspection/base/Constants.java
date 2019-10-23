@@ -41,10 +41,11 @@ public class Constants {
     public static final Integer PERMISSION_TYPE_3 = 3;
 
     /**
-     * 基础分类：1-抽检、2-标准
+     * 基础分类：1-抽检、2-标准、3-法规
      */
     public static final Integer BASE_TYPE_1 = 1;
     public static final Integer BASE_TYPE_2 = 2;
+    public static final Integer BASE_TYPE_3 = 3;
 
     /**
      * 抽检数据分类编码

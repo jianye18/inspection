@@ -26,11 +26,17 @@ public class SystemDataType extends BaseModel {
     @ApiModelProperty(name = "code", value = "编码", example = "")
     @Column(name = "code")
     private String code;
+    @ApiModelProperty(name = "param", value = "参数", example = "")
+    @Column(name = "param")
+    private String param;
     @ApiModelProperty(name = "name", value = "名称", example = "皮肤用化妆品")
     @Column(name = "name")
     private String name;
     @ApiModelProperty(name = "description", value = "描述", example = "产品分类")
     @Column(name = "description")
     private String description;
+    @ApiModelProperty(name = "parentId", value = "父级", example = "1")
+    @Column(name = "parent_id")
+    private Integer parentId;
 
 }

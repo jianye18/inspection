@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.SystemDataTypeMapper">
+
+    <sql id="baseResult">
+        s.id as id,
+        s.name as name,
+        s.code as code,
+        s.type as type,
+        s.value as value,
+        s.parent_id as parentId,
+        s.create_id as createId,
+        s.create_time as createTime,
+        s.update_id as updateId,
+        s.update_time as updateTime,
+        s.usable as usable
+    </sql>
+
+    <select id="getSystemDataTypeList" resultType="com.zhuhong.inspection.vo.SystemDataTypeVo"
+            parameterType="com.zhuhong.inspection.condition.SystemDataTypeCondition">
+        select
+            <include refid="baseResult"></include>,
+            d.name as parentName,
+        from
+            tb_system_data_type s
+        left join tb_system_data_type d on d.id = s.parent_id
+        where
+            s.usable = 1
+            <if test="type != null and type != 0">
+                and s.type = #{type}
+            </if>
+            <if test="searchPhrase != null and searchPhrase != '' ">
+                and s.name like concat('%', #{searchPhrase}, '%')
+            </if>
+            order by s.update_time desc
+    </select>
+
+</mapper>

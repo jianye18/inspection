@@ -6,6 +6,7 @@ import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.condition.SystemDataTypeCondition;
 import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
+import com.zhuhong.inspection.vo.SystemDataTypeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -64,12 +65,12 @@ public class SystemDataController extends BaseController {
     @ApiOperation(value = "分页查询分类数据", notes = "分页查询分类数据")
     @ApiImplicitParam(name = "condition", value = "分类数据查询条件类", dataType = "SystemDataTypeCondition")
     @PostMapping("/getSystemDataTypePageList")
-    public Result<SystemDataType> getSystemDataTypePageList(@RequestBody SystemDataTypeCondition condition) {
+    public Result<SystemDataTypeVo> getSystemDataTypePageList(@RequestBody SystemDataTypeCondition condition) {
         String LOG_MSG = "调用分页查询分类数据接口---getSystemDataTypePageList()---，";
         log.debug(LOG_MSG + "参数：" + condition.toString());
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
-            PageInfo<SystemDataType> list = systemDataService.getSystemDataTypePageList(condition);
+            PageInfo<SystemDataTypeVo> list = systemDataService.getSystemDataTypePageList(condition);
             result = Result.genSuccessResult(list);
         } catch (Exception e) {
             e.printStackTrace();

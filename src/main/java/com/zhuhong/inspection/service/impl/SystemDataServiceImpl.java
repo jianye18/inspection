@@ -9,6 +9,7 @@ import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.SelectionLabel;
+import com.zhuhong.inspection.vo.SystemDataTypeVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,18 +65,9 @@ public class SystemDataServiceImpl implements SystemDataService {
     }
 
     @Override
-    public PageInfo<SystemDataType> getSystemDataTypePageList(SystemDataTypeCondition condition) {
-        PageHelper.startPage(condition.getPageNum(), condition.getPageSize(), "update_time desc");
-        Example example = new Example(SystemDataType.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("usable", SystemDataType.ENABLE_1);
-        if (condition.getType() != null) {
-            criteria.andEqualTo("type", condition.getType());
-        }
-        if (StringUtils.isNotEmpty(condition.getSearchPhrase())) {
-            criteria.andLike("name", condition.getSearchPhrase());
-        }
-        List<SystemDataType> list = systemDataTypeMapper.selectByExample(example);
+    public PageInfo<SystemDataTypeVo> getSystemDataTypePageList(SystemDataTypeCondition condition) {
+        PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
+        List<SystemDataTypeVo> list = systemDataTypeMapper.getSystemDataTypeList(condition);
         return new PageInfo<>(list);
     }
 

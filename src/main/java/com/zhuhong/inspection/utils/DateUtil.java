@@ -19,6 +19,7 @@ import java.util.Date;
 public class DateUtil {
 
     public static final String DATE_FORMATER = "yyyy-MM-dd";
+    public static final String DATE_FORMATER_1 = "yyyyMMdd";
     public static final String DATE_TIME_FORMATER = "yyyy-MM-dd HH:mm:ss";
     public static final String SECONDS = "Seconds";
     public static final String MINUTES = "Minutes";
@@ -68,6 +69,28 @@ public class DateUtil {
             log.debug("指定时间转字符串：{localDateTime=" + localDateTime + ",patter" + patter + "}");
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patter);
             String str = formatter.format(localDateTime);
+            log.debug("指定时间转字符串，返回的字符串：" + str);
+            return str;
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("指定时间转字符串，异常信息:", e);
+            return "";
+        }
+    }
+
+    /**
+     * 时间类型转字符串
+     * @param localDate 待转时间
+     * @param patter 格式
+     * @return String
+     * @Author: jian.ye
+     * @Date: 2019/10/8 15:35
+     */
+    public static String toDateString(LocalDate localDate, String patter) {
+        try {
+            log.debug("指定时间转字符串：{localDate=" + localDate + ",patter" + patter + "}");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(patter);
+            String str = formatter.format(localDate);
             log.debug("指定时间转字符串，返回的字符串：" + str);
             return str;
         } catch (Exception e) {
