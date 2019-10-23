@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -47,5 +48,6 @@ public class Criterion extends BaseModel {
     private String summary;
 
     @ApiModelProperty(name = "annexs", value = "附件集合", example = "[{\"111_20191023.txt\", \"112_20191023.txt\"}]")
+    @Transient
     private String annexs;
 }

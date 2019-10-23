@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -52,5 +53,6 @@ public class Law extends BaseModel {
     private Integer source;
 
     @ApiModelProperty(name = "annexs", value = "附件集合", example = "[{\"111_20191023.txt\", \"112_20191023.txt\"}]")
+    @Transient
     private String annexs;
 }

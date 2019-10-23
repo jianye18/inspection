@@ -51,9 +51,10 @@ public class CommonController extends BaseController {
                 //获得文件的字节流
                 byte[] bytes=file.getBytes();
                 //获得path对象，也即是文件保存的路径对象
-                String fileName = file.getOriginalFilename().split(".")[0];
-                String suffix = file.getOriginalFilename().split(".")[1];
-                String name = fileName + "_" + DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER_1) + suffix;
+                String[] arr = file.getOriginalFilename().split("\\.");
+                String fileName = arr[0];
+                String suffix = arr[1];
+                String name = fileName + "_" + DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER_1) + "." + suffix;
                 Path path= Paths.get(FILE_DIR + name);
                 //调用静态方法完成将文件写入到目标路径
                 Files.write(path,bytes);

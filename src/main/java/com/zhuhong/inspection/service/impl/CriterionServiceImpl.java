@@ -35,7 +35,7 @@ public class CriterionServiceImpl implements CriterionService {
         boolean flag = false;
         criterion.setUpdateId(currentUserId);
         criterion.setUpdateTime(DateUtil.getCurrentDate());
-        if (criterion.getId() != null) {
+        if (criterion.getId() == null) {
             criterion.setCreateId(currentUserId);
             criterion.setCreateTime(DateUtil.getCurrentDate());
             int r = criterionMapper.insertSelective(criterion);
