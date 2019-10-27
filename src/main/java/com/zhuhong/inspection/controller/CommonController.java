@@ -4,15 +4,14 @@ import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.utils.DateUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,6 +42,7 @@ public class CommonController extends BaseController {
     @PostMapping("uploadSingleFile")
     public Result uploadSingleFile(@RequestParam("file") MultipartFile file) {
         Result result = Result.genFailResult(FAIL_MESSAGE);
+        log.debug("上传文件名：" + file.getOriginalFilename());
         try{
             //判断文件是否为空
             if(file.isEmpty()){
@@ -64,6 +64,31 @@ public class CommonController extends BaseController {
             e.printStackTrace();
             result = Result.genFailResult(e.getMessage());
             log.error("上传文件返回错误信息：", e);
+        }
+        return result;
+    }
+
+    /**
+     * 根据文件名删除文件
+     *
+     * @Author: jian.ye
+     * @Date: 2019/10/27 17:38
+     */
+    @ApiOperation(value = "删除文件", notes = "返回删除结果")
+    @ApiImplicitParam(name = "fileName", value = "文件名")
+    @DeleteMapping("deleteFile/{fileName}")
+    public Result deleteFile(@PathVariable(value = "fileName", required = true) String fileName) {
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        log.debug("删除文件的文件名：" + fileName);
+        try{
+            //判断文件是否为空
+            File file = new File(FILE_DIR + fileName);
+            file.delete();
+            result = Result.genSuccessResultMsg("删除文件成功！");
+        }catch (Exception e){
+            e.printStackTrace();
+            result = Result.genFailResult(e.getMessage());
+            log.error("删除文件返回错误信息：", e);
         }
         return result;
     }

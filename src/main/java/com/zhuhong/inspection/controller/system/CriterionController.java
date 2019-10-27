@@ -39,7 +39,7 @@ public class CriterionController extends BaseController {
      */
     @ApiOperation(value = "分页获取标准数据", notes = "返回标准数据列表")
     @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "CriterionCondition")
-    @PostMapping("/getCriterionPageList")
+    @PostMapping("getCriterionPageList")
     public Result<CriterionVo> getCriterionPageList(@RequestBody CriterionCondition condition) {
         String LOG_MSG = "调用分页获取标准数据接口---getSpotCheckPageList()---，";
         log.debug(LOG_MSG + "上传参数：" + condition.toString());
@@ -66,7 +66,7 @@ public class CriterionController extends BaseController {
             @ApiImplicitParam(name = "name", value = "标准数据名称"),
             @ApiImplicitParam(name = "criterionId", value = "标准数据ID")
     })
-    @GetMapping("/judgeCriterionNameIsExist")
+    @GetMapping("judgeCriterionNameIsExist")
     public Result<Criterion> judgeCriterionNameIsExist(String name, Integer criterionId) {
         String LOG_MSG = "调用判断标准数据名称是否存在接口---judgeCriterionNameIsExist()---，";
         log.debug(LOG_MSG + "上传参数：{name=" + name + "&criterionId=" + criterionId + "}");
@@ -92,7 +92,7 @@ public class CriterionController extends BaseController {
      */
     @ApiOperation(value = "保存标准数据", notes = "保存标准数据")
     @ApiImplicitParam(name = "criterion", value = "标准数据", dataType = "Criterion")
-    @PostMapping("/saveCriterion")
+    @PostMapping("saveCriterion")
     public Result saveCriterion(@RequestBody Criterion criterion, HttpServletRequest request) {
         String LOG_MSG = "调用保存标准数据接口---saveCriterion()---，";
         log.debug(LOG_MSG + "上传参数：" + criterion.toString());
@@ -118,7 +118,7 @@ public class CriterionController extends BaseController {
      */
     @ApiOperation(value = "删除标准数据", notes = "删除标准数据")
     @ApiImplicitParam(name = "criterionId", value = "标准数据ID", example = "1")
-    @DeleteMapping("/deleteCriterion/{criterionId}")
+    @DeleteMapping("deleteCriterion/{criterionId}")
     public Result deleteCriterion(@PathVariable(value = "criterionId", required = true) Integer criterionId, HttpServletRequest request) {
         String LOG_MSG = "调用删除标准数据接口---deleteCriterion()---，";
         log.debug(LOG_MSG + "上传参数：criterionId=" + criterionId);

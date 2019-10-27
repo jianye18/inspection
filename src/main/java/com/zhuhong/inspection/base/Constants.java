@@ -60,4 +60,10 @@ public class Constants {
     public static final String CRITERION_TYPE_CODE_2 = "criterion_type";
     public static final String CRITERION_TYPE_CODE_3 = "criterion_publish_unit";
 
+    /**
+     * 法规数据分类编码
+     */
+    public static final String LAW_TYPE = "law";
+    public static final String LAW_CATEGORYE = "law_category";
+
 }

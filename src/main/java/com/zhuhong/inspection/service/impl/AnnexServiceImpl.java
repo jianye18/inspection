@@ -52,4 +52,12 @@ public class AnnexServiceImpl implements AnnexService {
         annexMapper.delete(annex);
     }
 
+    @Override
+    public List<Annex> getAnnexList(Integer businessId, Integer type) {
+        Annex annex = new Annex();
+        annex.setBusinessId(businessId);
+        annex.setType(type);
+        return annexMapper.select(annex);
+    }
+
 }

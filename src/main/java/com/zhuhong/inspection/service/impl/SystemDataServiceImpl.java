@@ -8,6 +8,7 @@ import com.zhuhong.inspection.mapper.SystemDataTypeMapper;
 import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
 import com.zhuhong.inspection.utils.DateUtil;
+import com.zhuhong.inspection.vo.CascaderData;
 import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SystemDataTypeVo;
 import org.apache.commons.lang3.StringUtils;
@@ -47,6 +48,9 @@ public class SystemDataServiceImpl implements SystemDataService {
         }
         if (Constants.BASE_TYPE_2.equals(type)) {
             map = getCriterionType(map, list);
+        }
+        if (Constants.BASE_TYPE_3.equals(type)) {
+            map = getLawType(map, list);
         }
         return map;
     }
@@ -136,6 +140,53 @@ public class SystemDataServiceImpl implements SystemDataService {
             map.put("publishUnitList", publishUnitList);
         }
         return map;
+    }
+
+    private Map<String, List> getLawType(Map<String, List> map, List<SystemDataType> list) {
+        if (list.size() > 0) {
+            List<SystemDataType> typeList = new ArrayList<>();
+            List<SelectionLabel> publishUnitList = new ArrayList<>();
+            for (SystemDataType dataType : list) {
+                if (Constants.LAW_CATEGORYE.equals(dataType.getParam())) {
+                    // 获取法规级联选择数据
+                    typeList.add(dataType);
+                } else {
+                    // 获取标准发布单位下拉数据
+                    SelectionLabel label = new SelectionLabel();
+                    label.setValue(String.valueOf(dataType.getValue()));
+                    label.setLabel(dataType.getName());
+                    publishUnitList.add(label);
+                }
+            }
+            map.put("publishUnitList", publishUnitList);
+            if (typeList.size() > 0) {
+                List<CascaderData> categoryList = new ArrayList<>();
+                for (SystemDataType systemDataType : typeList) {
+                    if (systemDataType.getParentId() == null) {
+                        CascaderData cascaderData = new CascaderData();
+                        cascaderData.setValue(String.valueOf(systemDataType.getValue()));
+                        cascaderData.setLabel(systemDataType.getName());
+                        cascaderData.setChildren(initChildren(typeList, systemDataType.getValue()));
+                        categoryList.add(cascaderData);
+                    }
+                }
+                map.put("categoryList", categoryList);
+            }
+        }
+        return map;
+    }
+
+    private List<CascaderData> initChildren(List<SystemDataType> typeList, Integer parentId) {
+        List<CascaderData> list = new ArrayList<>();
+        for (SystemDataType systemDataType : typeList) {
+            if (parentId.equals(systemDataType.getParentId())) {
+                CascaderData cascaderData = new CascaderData();
+                cascaderData.setValue(String.valueOf(systemDataType.getValue()));
+                cascaderData.setLabel(systemDataType.getName());
+                list.add(cascaderData);
+            }
+        }
+        return list;
     }
 
 }

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.CriterionCondition;
 import com.zhuhong.inspection.mapper.CriterionMapper;
+import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.Criterion;
 import com.zhuhong.inspection.service.AnnexService;
 import com.zhuhong.inspection.service.CriterionService;
@@ -57,6 +58,11 @@ public class CriterionServiceImpl implements CriterionService {
     public PageInfo<CriterionVo> getCriterionPageList(CriterionCondition condition) {
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
         List<CriterionVo> list = criterionMapper.getCriterionListByCondition(condition);
+        if (list.size() > 0) {
+            for (CriterionVo criterionVo : list) {
+                criterionVo.setAnnexList(annexService.getAnnexList(criterionVo.getId(), Constants.BASE_TYPE_2));
+            }
+        }
         return new PageInfo<>(list);
     }
 

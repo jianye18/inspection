@@ -1,5 +1,9 @@
 package com.zhuhong.inspection.service;
 
+import com.zhuhong.inspection.model.Annex;
+
+import java.util.List;
+
 /**
  * 附件业务接口类
  * @Author: jian.ye
@@ -26,5 +30,16 @@ public interface AnnexService {
      * @Date: 2019/10/23 20:11
      */
     void deleteAnnex(Integer businessId, Integer type);
+
+    /**
+     * 根据业务ID和类型获取附件内容
+     *
+     * @param businessId
+     * @param type
+     * @return List<Annex>
+     * @Author: jian.ye
+     * @Date: 2019/10/27 18:35
+     */
+    List<Annex> getAnnexList(Integer businessId, Integer type);
 
 }
