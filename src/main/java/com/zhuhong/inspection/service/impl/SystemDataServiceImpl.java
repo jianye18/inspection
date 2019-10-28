@@ -150,7 +150,7 @@ public class SystemDataServiceImpl implements SystemDataService {
                 if (Constants.LAW_CATEGORYE.equals(dataType.getParam())) {
                     // 获取法规级联选择数据
                     typeList.add(dataType);
-                } else {
+                } else if (Constants.LAW_PUBLISH_UNIT.equals(dataType.getParam())) {
                     // 获取标准发布单位下拉数据
                     SelectionLabel label = new SelectionLabel();
                     label.setValue(String.valueOf(dataType.getValue()));

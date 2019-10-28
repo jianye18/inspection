@@ -65,5 +65,6 @@ public class Constants {
      */
     public static final String LAW_TYPE = "law";
     public static final String LAW_CATEGORYE = "law_category";
+    public static final String LAW_PUBLISH_UNIT = "law_publish_unit";
 
 }
