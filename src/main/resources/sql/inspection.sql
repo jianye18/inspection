@@ -11,7 +11,7 @@
  Target Server Version : 50727
  File Encoding         : 65001
 
- Date: 23/10/2019 20:37:38
+ Date: 29/10/2019 17:50:50
 */
 
 SET NAMES utf8mb4;
@@ -82,7 +82,13 @@ CREATE TABLE `tb_law`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_law
+-- ----------------------------
+INSERT INTO `tb_law` VALUES (1, '法规名称1', 1, 7, 1, 2, '2019-10-09', '2019-10-31', NULL, '<p>法规内容都是编出来的，随便写写都行，不要太介意，你们看写些什么好呢，我这是纯粹 练打字速度</p>', 1, 1, '2019-10-29 11:07:42', 1, '2019-10-29 11:32:14', 1);
+INSERT INTO `tb_law` VALUES (2, '法规名称2', 3, 12, 2, 1, '2019-10-09', '2019-10-30', NULL, '<p><span style=\"font-size: x-large; font-weight: bold;\">法规内容</span>都是编出来的，<span style=\"font-style: italic;\">随便写写都行</span>，不要太介意，</p><p>你们看写些什么好呢，我这是纯粹 练打字速度</p>', 2, 1, '2019-10-29 11:13:32', 1, '2019-10-29 14:52:42', 1);
 
 -- ----------------------------
 -- Table structure for tb_permission
@@ -248,7 +254,7 @@ CREATE TABLE `tb_system_data_type`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_system_data_type
@@ -278,20 +284,24 @@ INSERT INTO `tb_system_data_type` VALUES (22, 2, 2, 'criterion_publish_unit', NU
 INSERT INTO `tb_system_data_type` VALUES (23, 2, 3, 'criterion_publish_unit', NULL, '单位3', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
 INSERT INTO `tb_system_data_type` VALUES (24, 2, 4, 'criterion_publish_unit', NULL, '单位4', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
 INSERT INTO `tb_system_data_type` VALUES (25, 2, 5, 'criterion_publish_unit', NULL, '单位5', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (26, 3, 1, 'law_category', NULL, '国际法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (27, 3, 2, 'law_category', NULL, '国家法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (28, 3, 3, 'law_category', NULL, '地方法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (29, 3, 4, 'law_category', NULL, '其他法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (30, 3, 5, 'law_category', NULL, '美国', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (31, 3, 6, 'law_category', NULL, '日本', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (32, 3, 7, 'law_category', NULL, '韩国', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (33, 3, 8, 'law_category', NULL, '欧盟', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (34, 3, 9, 'law_category', NULL, '其他', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (35, 3, 10, 'law_category', NULL, '广东省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (36, 3, 11, 'law_category', NULL, '江苏省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (37, 3, 12, 'law_category', NULL, '浙江省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (38, 3, 13, 'law_category', NULL, '上海市', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (39, 3, 14, 'law_category', NULL, '其他省市', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (26, 3, 1, 'law', 'law_category', '国际法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (27, 3, 2, 'law', 'law_category', '国家法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (28, 3, 3, 'law', 'law_category', '地方法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (29, 3, 4, 'law', 'law_category', '其他法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (30, 3, 5, 'law', 'law_category', '美国', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (31, 3, 6, 'law', 'law_category', '日本', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (32, 3, 7, 'law', 'law_category', '韩国', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (33, 3, 8, 'law', 'law_category', '欧盟', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (34, 3, 9, 'law', 'law_category', '其他', NULL, 1, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (35, 3, 10, 'law', 'law_category', '广东省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (36, 3, 11, 'law', 'law_category', '江苏省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (37, 3, 12, 'law', 'law_category', '浙江省', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (38, 3, 13, 'law', 'law_category', '上海市', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (39, 3, 14, 'law', 'law_category', '其他省市', NULL, 3, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (40, 3, 1, 'law', 'law_publish_unit', '发布单位1', NULL, NULL, 1, '2019-10-29 10:29:07', 1, '2019-10-29 10:29:11', 1);
+INSERT INTO `tb_system_data_type` VALUES (41, 3, 2, 'law', 'law_publish_unit', '发布单位2', NULL, NULL, 1, '2019-10-29 10:29:33', 1, '2019-10-29 10:29:37', 1);
+INSERT INTO `tb_system_data_type` VALUES (42, 3, 1, 'law', 'law_source', '来源1', NULL, NULL, 1, '2019-10-29 10:30:08', 1, '2019-10-29 10:30:11', 1);
+INSERT INTO `tb_system_data_type` VALUES (43, 3, 2, 'law', 'law_source', '来源2', NULL, NULL, 1, '2019-10-29 10:30:32', 1, '2019-10-29 10:30:35', 1);
 
 -- ----------------------------
 -- Table structure for tb_user
