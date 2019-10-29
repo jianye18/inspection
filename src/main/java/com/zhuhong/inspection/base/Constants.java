@@ -64,7 +64,8 @@ public class Constants {
      * 法规数据分类编码
      */
     public static final String LAW_TYPE = "law";
-    public static final String LAW_CATEGORYE = "law_category";
+    public static final String LAW_CATEGORY = "law_category";
     public static final String LAW_PUBLISH_UNIT = "law_publish_unit";
+    public static final String LAW_SOURCE = "law_source";
 
 }

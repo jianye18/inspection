@@ -85,17 +85,14 @@ public class SystemDataServiceImpl implements SystemDataService {
             List<SelectionLabel> productTypeList = new ArrayList<>();
             List<SelectionLabel> institutionList = new ArrayList<>();
             for (SystemDataType dataType : list) {
+                SelectionLabel label = new SelectionLabel();
+                label.setValue(String.valueOf(dataType.getValue()));
+                label.setLabel(dataType.getName());
                 if (Constants.SPOT_CHECK_TYPE_CODE_1.equals(dataType.getCode())) {
                     // 获取产品分类下拉数据
-                    SelectionLabel label = new SelectionLabel();
-                    label.setValue(String.valueOf(dataType.getValue()));
-                    label.setLabel(dataType.getName());
                     productTypeList.add(label);
                 } else if (Constants.SPOT_CHECK_TYPE_CODE_2.equals(dataType.getCode())) {
                     // 获取公布机构下拉数据
-                    SelectionLabel label = new SelectionLabel();
-                    label.setValue(dataType.getName());
-                    label.setLabel(dataType.getName());
                     institutionList.add(label);
                 }
             }
@@ -115,23 +112,17 @@ public class SystemDataServiceImpl implements SystemDataService {
             List<SelectionLabel> typeList = new ArrayList<>();
             List<SelectionLabel> publishUnitList = new ArrayList<>();
             for (SystemDataType dataType : list) {
+                SelectionLabel label = new SelectionLabel();
+                label.setValue(String.valueOf(dataType.getValue()));
+                label.setLabel(dataType.getName());
                 if (Constants.CRITERION_TYPE_CODE_1.equals(dataType.getCode())) {
                     // 获取标准一级分类下拉数据
-                    SelectionLabel label = new SelectionLabel();
-                    label.setValue(String.valueOf(dataType.getValue()));
-                    label.setLabel(dataType.getName());
                     categoryList.add(label);
                 } else if (Constants.CRITERION_TYPE_CODE_2.equals(dataType.getCode())) {
                     // 获取标准二级分类下拉数据
-                    SelectionLabel label = new SelectionLabel();
-                    label.setValue(String.valueOf(dataType.getValue()));
-                    label.setLabel(dataType.getName());
                     typeList.add(label);
                 } else if (Constants.CRITERION_TYPE_CODE_3.equals(dataType.getCode())) {
                     // 获取标准发布单位下拉数据
-                    SelectionLabel label = new SelectionLabel();
-                    label.setValue(String.valueOf(dataType.getValue()));
-                    label.setLabel(dataType.getName());
                     publishUnitList.add(label);
                 }
             }
@@ -142,23 +133,36 @@ public class SystemDataServiceImpl implements SystemDataService {
         return map;
     }
 
+    /**
+     * 获取法规分类的数据
+     * @Author: jian.ye
+     * @Date: 2019/10/19 13:58
+     */
     private Map<String, List> getLawType(Map<String, List> map, List<SystemDataType> list) {
         if (list.size() > 0) {
             List<SystemDataType> typeList = new ArrayList<>();
             List<SelectionLabel> publishUnitList = new ArrayList<>();
+            List<SelectionLabel> sourceList = new ArrayList<>();
             for (SystemDataType dataType : list) {
-                if (Constants.LAW_CATEGORYE.equals(dataType.getParam())) {
+                if (Constants.LAW_CATEGORY.equals(dataType.getParam())) {
                     // 获取法规级联选择数据
                     typeList.add(dataType);
-                } else if (Constants.LAW_PUBLISH_UNIT.equals(dataType.getParam())) {
-                    // 获取标准发布单位下拉数据
+                } else {
+                    // 获取法规相关下拉数据
                     SelectionLabel label = new SelectionLabel();
                     label.setValue(String.valueOf(dataType.getValue()));
                     label.setLabel(dataType.getName());
-                    publishUnitList.add(label);
+                    if (Constants.LAW_PUBLISH_UNIT.equals(dataType.getParam())) {
+                        // 入发布单位集合
+                        publishUnitList.add(label);
+                    } else if (Constants.LAW_SOURCE.equals(dataType.getParam())) {
+                        // 入法规来源集合
+                        sourceList.add(label);
+                    }
                 }
             }
             map.put("publishUnitList", publishUnitList);
+            map.put("sourceList", sourceList);
             if (typeList.size() > 0) {
                 List<CascaderData> categoryList = new ArrayList<>();
                 for (SystemDataType systemDataType : typeList) {
@@ -176,6 +180,14 @@ public class SystemDataServiceImpl implements SystemDataService {
         return map;
     }
 
+    /**
+     * 递归生成子节点数据集合
+     * @param  typeList 待递归集合
+     * @param  parentId 父级节点ID
+     * @return List<CascaderData> 返回递归后生成的集合
+     * @Author: jian.ye
+     * @Date: 2019/10/29 10:02
+     */
     private List<CascaderData> initChildren(List<SystemDataType> typeList, Integer parentId) {
         List<CascaderData> list = new ArrayList<>();
         for (SystemDataType systemDataType : typeList) {
