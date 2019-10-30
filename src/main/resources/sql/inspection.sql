@@ -11,7 +11,7 @@
  Target Server Version : 50727
  File Encoding         : 65001
 
- Date: 29/10/2019 17:50:50
+ Date: 30/10/2019 20:31:31
 */
 
 SET NAMES utf8mb4;
@@ -259,31 +259,31 @@ CREATE TABLE `tb_system_data_type`  (
 -- ----------------------------
 -- Records of tb_system_data_type
 -- ----------------------------
-INSERT INTO `tb_system_data_type` VALUES (1, 1, 1, 'product_type', NULL, '皮肤用化妆品', NULL, NULL, 1, '2019-10-16 16:01:23', 1, '2019-10-16 16:01:28', 1);
-INSERT INTO `tb_system_data_type` VALUES (2, 1, 2, 'product_type', NULL, '毛发用化妆品', NULL, NULL, 1, '2019-10-16 16:01:47', 1, '2019-10-16 16:01:52', 1);
-INSERT INTO `tb_system_data_type` VALUES (3, 1, 3, 'product_type', NULL, '指（趾）甲用化妆品', NULL, NULL, 1, '2019-10-16 16:02:08', 1, '2019-10-16 16:02:10', 1);
-INSERT INTO `tb_system_data_type` VALUES (4, 1, 4, 'product_type', NULL, '口唇用化妆品', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (5, 1, 1, 'institution', NULL, '宁波市海曙区市场监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (6, 1, 2, 'institution', NULL, '北京市药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (7, 1, 3, 'institution', NULL, '山西省药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (8, 1, 4, 'institution', NULL, '国家药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (9, 1, 5, 'institution', NULL, '江西省药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
-INSERT INTO `tb_system_data_type` VALUES (10, 2, 1, 'criterion_category', NULL, '国际标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (11, 2, 2, 'criterion_category', NULL, '国家标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (12, 2, 3, 'criterion_category', NULL, '行业标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (13, 2, 4, 'criterion_category', NULL, '地方标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (14, 2, 5, 'criterion_category', NULL, '团体标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (15, 2, 6, 'criterion_category', NULL, '其他标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (16, 2, 1, 'criterion_type', NULL, '基础标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (17, 2, 2, 'criterion_type', NULL, '产品标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (18, 2, 3, 'criterion_type', NULL, '方法标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (19, 2, 4, 'criterion_type', NULL, '安全标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (20, 2, 5, 'criterion_type', NULL, '卫生标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (21, 2, 1, 'criterion_publish_unit', NULL, '单位1', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (22, 2, 2, 'criterion_publish_unit', NULL, '单位2', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (23, 2, 3, 'criterion_publish_unit', NULL, '单位3', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (24, 2, 4, 'criterion_publish_unit', NULL, '单位4', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
-INSERT INTO `tb_system_data_type` VALUES (25, 2, 5, 'criterion_publish_unit', NULL, '单位5', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (1, 1, 1, 'spot_check', 'product_type', '皮肤用化妆品', NULL, NULL, 1, '2019-10-16 16:01:23', 1, '2019-10-16 16:01:28', 1);
+INSERT INTO `tb_system_data_type` VALUES (2, 1, 2, 'spot_check', 'product_type', '毛发用化妆品', NULL, NULL, 1, '2019-10-16 16:01:47', 1, '2019-10-16 16:01:52', 1);
+INSERT INTO `tb_system_data_type` VALUES (3, 1, 3, 'spot_check', 'product_type', '指（趾）甲用化妆品', NULL, NULL, 1, '2019-10-16 16:02:08', 1, '2019-10-16 16:02:10', 1);
+INSERT INTO `tb_system_data_type` VALUES (4, 1, 4, 'spot_check', 'product_type', '口唇用化妆品', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (5, 1, 1, 'spot_check', 'institution', '宁波市海曙区市场监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (6, 1, 2, 'spot_check', 'institution', '北京市药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (7, 1, 3, 'spot_check', 'institution', '山西省药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (8, 1, 4, 'spot_check', 'institution', '国家药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (9, 1, 5, 'spot_check', 'institution', '江西省药品监督管理局', NULL, NULL, 1, '2019-10-16 17:29:43', 1, '2019-10-16 17:29:46', 1);
+INSERT INTO `tb_system_data_type` VALUES (10, 2, 1, 'criterion', 'criterion_category', '国际标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (11, 2, 2, 'criterion', 'criterion_category', '国家标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (12, 2, 3, 'criterion', 'criterion_category', '行业标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (13, 2, 4, 'criterion', 'criterion_category', '地方标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (14, 2, 5, 'criterion', 'criterion_category', '团体标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (15, 2, 6, 'criterion', 'criterion_category', '其他标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (16, 2, 1, 'criterion', 'criterion_type', '基础标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (17, 2, 2, 'criterion', 'criterion_type', '产品标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (18, 2, 3, 'criterion', 'criterion_type', '方法标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (19, 2, 4, 'criterion', 'criterion_type', '安全标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (20, 2, 5, 'criterion', 'criterion_type', '卫生标准', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (21, 2, 1, 'criterion', 'criterion_publish_unit', '单位1', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (22, 2, 2, 'criterion', 'criterion_publish_unit', '单位2', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (23, 2, 3, 'criterion', 'criterion_publish_unit', '单位3', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (24, 2, 4, 'criterion', 'criterion_publish_unit', '单位4', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
+INSERT INTO `tb_system_data_type` VALUES (25, 2, 5, 'criterion', 'criterion_publish_unit', '单位5', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
 INSERT INTO `tb_system_data_type` VALUES (26, 3, 1, 'law', 'law_category', '国际法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
 INSERT INTO `tb_system_data_type` VALUES (27, 3, 2, 'law', 'law_category', '国家法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
 INSERT INTO `tb_system_data_type` VALUES (28, 3, 3, 'law', 'law_category', '地方法规', NULL, NULL, 1, '2019-10-16 16:02:29', 1, '2019-10-16 16:02:33', 1);
