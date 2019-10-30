@@ -50,15 +50,17 @@ public class Constants {
     /**
      * 抽检数据分类编码
      */
-    public static final String SPOT_CHECK_TYPE_CODE_1 = "product_type";
-    public static final String SPOT_CHECK_TYPE_CODE_2 = "institution";
+    public static final String SPOT_CHECK = "spot_check";
+    public static final String PRODUCT_TYPE = "product_type";
+    public static final String INSTITUTION = "institution";
 
     /**
      * 标准数据分类编码
      */
-    public static final String CRITERION_TYPE_CODE_1 = "criterion_category";
-    public static final String CRITERION_TYPE_CODE_2 = "criterion_type";
-    public static final String CRITERION_TYPE_CODE_3 = "criterion_publish_unit";
+    public static final String CRITERION = "criterion";
+    public static final String CRITERION_CATEGORY = "criterion_category";
+    public static final String CRITERION_TYPE = "criterion_type";
+    public static final String CRITERION_PUBLISH_UNIT = "criterion_publish_unit";
 
     /**
      * 法规数据分类编码

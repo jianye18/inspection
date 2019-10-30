@@ -34,13 +34,16 @@ public class SystemDataServiceImpl implements SystemDataService {
     private SystemDataTypeMapper systemDataTypeMapper;
 
     @Override
-    public Map<String, List> getAllSystemDataTypeList(Integer type, String code) {
+    public Map<String, List> getAllSystemDataTypeList(Integer type, String code, String param) {
         Map<String, List> map = new HashMap<>();
         SystemDataType systemDataType = new SystemDataType();
         systemDataType.setUsable(SystemDataType.ENABLE_1);
         systemDataType.setType(type);
         if (StringUtils.isNotEmpty(code)) {
             systemDataType.setCode(code);
+        }
+        if (StringUtils.isNotEmpty(param)) {
+            systemDataType.setParam(param);
         }
         List<SystemDataType> list = systemDataTypeMapper.select(systemDataType);
         if (Constants.BASE_TYPE_1.equals(type)) {
@@ -75,6 +78,49 @@ public class SystemDataServiceImpl implements SystemDataService {
         return new PageInfo<>(list);
     }
 
+    @Override
+    public List<Map<String, Object>> getHomePageFilterItem() {
+        List<Map<String, Object>> mapList = new ArrayList<>();
+        SystemDataType systemDataType = new SystemDataType();
+        systemDataType.setUsable(SystemDataType.ENABLE_1);
+        List<SystemDataType> list = systemDataTypeMapper.select(systemDataType);
+        if (list.size() > 0) {
+            List<SystemDataType> spotCheckTypeList = new ArrayList<>();
+            List<SystemDataType> criterionTypeList = new ArrayList<>();
+            List<SystemDataType> lawTypeList = new ArrayList<>();
+            for (SystemDataType dataType : list) {
+                if (Constants.BASE_TYPE_1.equals(dataType.getType())) {
+                    if (Constants.PRODUCT_TYPE.equals(dataType.getParam())) {
+                        spotCheckTypeList.add(dataType);
+                    }
+                }
+                if (Constants.BASE_TYPE_2.equals(dataType.getType())) {
+                    if (Constants.CRITERION_CATEGORY.equals(dataType.getParam()) || Constants.CRITERION_TYPE.equals(dataType.getParam())) {
+                        criterionTypeList.add(dataType);
+                    }
+                }
+                if (Constants.BASE_TYPE_3.equals(dataType.getType())) {
+                    if (Constants.LAW_CATEGORY.equals(dataType.getParam()) || Constants.LAW_SOURCE.equals(dataType.getParam())) {
+                        lawTypeList.add(dataType);
+                    }
+                }
+            }
+            Map<String, Object> spotCheckMap = new HashMap<>();
+            spotCheckMap.put("type", Constants.BASE_TYPE_1);
+            spotCheckMap.put("list", spotCheckTypeList);
+            mapList.add(spotCheckMap);
+            Map<String, Object> criterionMap = new HashMap<>();
+            criterionMap.put("type", Constants.BASE_TYPE_2);
+            criterionMap.put("list", criterionTypeList);
+            mapList.add(criterionMap);
+            Map<String, Object> lawMap = new HashMap<>();
+            lawMap.put("type", Constants.BASE_TYPE_3);
+            lawMap.put("list", lawTypeList);
+            mapList.add(lawMap);
+        }
+        return mapList;
+    }
+
     /**
      * 获取抽检分类的数据
      * @Author: jian.ye
@@ -88,10 +134,10 @@ public class SystemDataServiceImpl implements SystemDataService {
                 SelectionLabel label = new SelectionLabel();
                 label.setValue(String.valueOf(dataType.getValue()));
                 label.setLabel(dataType.getName());
-                if (Constants.SPOT_CHECK_TYPE_CODE_1.equals(dataType.getCode())) {
+                if (Constants.PRODUCT_TYPE.equals(dataType.getParam())) {
                     // 获取产品分类下拉数据
                     productTypeList.add(label);
-                } else if (Constants.SPOT_CHECK_TYPE_CODE_2.equals(dataType.getCode())) {
+                } else if (Constants.INSTITUTION.equals(dataType.getParam())) {
                     // 获取公布机构下拉数据
                     institutionList.add(label);
                 }
@@ -115,13 +161,13 @@ public class SystemDataServiceImpl implements SystemDataService {
                 SelectionLabel label = new SelectionLabel();
                 label.setValue(String.valueOf(dataType.getValue()));
                 label.setLabel(dataType.getName());
-                if (Constants.CRITERION_TYPE_CODE_1.equals(dataType.getCode())) {
+                if (Constants.CRITERION_CATEGORY.equals(dataType.getParam())) {
                     // 获取标准一级分类下拉数据
                     categoryList.add(label);
-                } else if (Constants.CRITERION_TYPE_CODE_2.equals(dataType.getCode())) {
+                } else if (Constants.CRITERION_TYPE.equals(dataType.getParam())) {
                     // 获取标准二级分类下拉数据
                     typeList.add(label);
-                } else if (Constants.CRITERION_TYPE_CODE_3.equals(dataType.getCode())) {
+                } else if (Constants.CRITERION_PUBLISH_UNIT.equals(dataType.getParam())) {
                     // 获取标准发布单位下拉数据
                     publishUnitList.add(label);
                 }

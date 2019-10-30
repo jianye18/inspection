@@ -20,11 +20,12 @@ public interface SystemDataService {
      * 根据类型获取系统分类数据
      * @param type
      * @param code
+     * @param param
      * @return List<SystemDataType>
      * @Author: jian.ye
      * @Date: 2019/10/16 16:42
      */
-    Map<String, List> getAllSystemDataTypeList(Integer type, String code);
+    Map<String, List> getAllSystemDataTypeList(Integer type, String code, String param);
 
     /**
      * 保存系统相关分类数据
@@ -44,5 +45,13 @@ public interface SystemDataService {
      * @Date: 2019/10/21 15:36
      */
     PageInfo<SystemDataTypeVo> getSystemDataTypePageList(SystemDataTypeCondition condition);
+
+    /**
+     * 获取首页筛选项
+     * @return List<Map<String, Object>>
+     * @Author: jian.ye
+     * @Date: 2019/10/30 14:00
+     */
+    List<Map<String, Object>> getHomePageFilterItem();
 
 }

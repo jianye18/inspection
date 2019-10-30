@@ -40,13 +40,13 @@ public class SystemDataController extends BaseController {
      * @Date: 2019/10/16 17:34
      */
     @ApiOperation(value = "获取分类数据", notes = "返回数据分类数据列表")
-    @ApiImplicitParam(name = "type", value = "类型：1-抽检、2-标准", example = "1")
+    @ApiImplicitParam(name = "type", value = "类型：1-抽检、2-标准、3-法规", example = "1")
     @GetMapping("/getAllSystemDataTypeList/{type}")
     public Result getAllSystemDataTypeList(@PathVariable(value = "type", required = true) Integer type) {
         String LOG_MSG = "调用获取分类数据数据---getAllSystemDataTypeList()---，";
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
-            Map<String, List> map = systemDataService.getAllSystemDataTypeList(type, null);
+            Map<String, List> map = systemDataService.getAllSystemDataTypeList(type, null, null);
             result = Result.genSuccessResult(map);
         } catch (Exception e) {
             e.printStackTrace();
@@ -97,6 +97,27 @@ public class SystemDataController extends BaseController {
             if (systemDataService.saveSystemDataType(systemDataType, getCurrentUser(request).getId())) {
                 result = Result.genSuccessResultMsg("保存分类数据成功");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
+     * 获取首页筛选项
+     * @Author: jian.ye
+     * @Date: 2019/10/30 14:12
+     */
+    @ApiOperation(value = "获取首页筛选项", notes = "获取首页筛选项")
+    @GetMapping("/getHomePageFilterItem")
+    public Result getHomePageFilterItem() {
+        String LOG_MSG = "调用获取首页筛选项接口---getHomePageFilterItem()---，";
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            result = Result.genSuccessResult(systemDataService.getHomePageFilterItem());
         } catch (Exception e) {
             e.printStackTrace();
             log.error(LOG_MSG + "返回错误信息：", e);

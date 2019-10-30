@@ -22,7 +22,8 @@ public class SpotCheckCondition extends BaseCondition {
     private Integer checkResult;
     @ApiModelProperty(name = "isFake", value = "是否涉嫌假冒：0-否，1-是", example = "0")
     private Integer isFake;
-    @ApiModelProperty(name = "typeCode", value = "产品分类Code", hidden = true)
-    private String typeCode = Constants.SPOT_CHECK_TYPE_CODE_1;
+
+    private String code = Constants.SPOT_CHECK;
+    private String param = Constants.PRODUCT_TYPE;
 
 }
