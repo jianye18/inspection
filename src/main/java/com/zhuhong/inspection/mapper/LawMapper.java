@@ -26,4 +26,13 @@ public interface LawMapper extends Mapper<Law> {
      */
     List<LawVo> getLawListByCondition(LawCondition condition);
 
+    /**
+     * 根据ID获取法规数据
+     * @param condition
+     * @return LawVo
+     * @Author: jian.ye
+     * @Date: 2019/11/1 14:10
+     */
+    LawVo getLawById(LawCondition condition);
+
 }

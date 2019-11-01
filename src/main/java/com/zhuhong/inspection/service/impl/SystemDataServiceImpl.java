@@ -67,6 +67,7 @@ public class SystemDataServiceImpl implements SystemDataService {
         } else {
             systemDataType.setCreateId(currentUserId);
             systemDataType.setCreateTime(DateUtil.getCurrentDate());
+            systemDataType.setValue(systemDataTypeMapper.getMaxValueByParam(systemDataType.getCode(), systemDataType.getParam()));
             return systemDataTypeMapper.insertSelective(systemDataType) > 0;
         }
     }
@@ -188,11 +189,18 @@ public class SystemDataServiceImpl implements SystemDataService {
         if (list.size() > 0) {
             List<SystemDataType> typeList = new ArrayList<>();
             List<SelectionLabel> publishUnitList = new ArrayList<>();
+            List<SelectionLabel> ctList = new ArrayList<>();
             List<SelectionLabel> sourceList = new ArrayList<>();
             for (SystemDataType dataType : list) {
-                if (Constants.LAW_CATEGORY.equals(dataType.getParam())) {
+                if (Constants.LAW_CATEGORY.equals(dataType.getParam()) || Constants.LAW_TYPE.equals(dataType.getParam())) {
                     // 获取法规级联选择数据
                     typeList.add(dataType);
+                    // 获取分类相关下拉数据
+                    SelectionLabel label = new SelectionLabel();
+                    label.setValue(String.valueOf(dataType.getValue()));
+                    label.setLabel(dataType.getName());
+                    label.setCode(dataType.getParam());
+                    ctList.add(label);
                 } else {
                     // 获取法规相关下拉数据
                     SelectionLabel label = new SelectionLabel();
@@ -207,6 +215,7 @@ public class SystemDataServiceImpl implements SystemDataService {
                     }
                 }
             }
+            map.put("typeList", ctList);
             map.put("publishUnitList", publishUnitList);
             map.put("sourceList", sourceList);
             if (typeList.size() > 0) {

@@ -30,27 +30,27 @@ public class LawController extends BaseController {
     @Autowired
     private LawService lawService;
 
-        /**
-         * 分页获取法规数据
-         * @Author: jian.ye
-         * @Date: 2019/10/19 12:57
-         */
-        @ApiOperation(value = "分页获取法规数据", notes = "返回法规数据列表")
-        @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "LawCondition")
-        @PostMapping("/getLawPageList")
-        public Result<LawVo> getLawPageList(@RequestBody LawCondition condition) {
-            String LOG_MSG = "调用分页获取法规数据接口---getLawPageList()---，";
-            log.debug(LOG_MSG + "上传参数：" + condition.toString());
-            Result result = Result.genFailResult(FAIL_MESSAGE);
-            try {
-                PageInfo<LawVo> list = lawService.getLawPageList(condition);
-                result = Result.genSuccessResult(list);
-            } catch (Exception e) {
-                e.printStackTrace();
-                log.error(LOG_MSG + "返回错误信息：", e);
-                result = Result.genFailResult(e.getMessage());
-            }
-            log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+    /**
+     * 分页获取法规数据
+     * @Author: jian.ye
+     * @Date: 2019/10/19 12:57
+     */
+    @ApiOperation(value = "分页获取法规数据", notes = "返回法规数据列表")
+    @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "LawCondition")
+    @PostMapping("/getLawPageList")
+    public Result<LawVo> getLawPageList(@RequestBody LawCondition condition) {
+        String LOG_MSG = "调用分页获取法规数据接口---getLawPageList()---，";
+        log.debug(LOG_MSG + "上传参数：" + condition.toString());
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            PageInfo<LawVo> list = lawService.getLawPageList(condition);
+            result = Result.genSuccessResult(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
         return result;
     }
 

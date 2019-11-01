@@ -5,6 +5,7 @@
     <sql id="baseResult">
         l.id as id,
         l.name as name,
+        l.code_number as codeNumber,
         l.category as category,
         l.type as type,
         l.status as status,
@@ -32,11 +33,14 @@
         from
             tb_law l
         left join tb_system_data_type s on s.type = 3 and s.value = l.category and s.code = #{code} and s.param = #{categoryCode}
-        left join tb_system_data_type d on d.type = 3 and d.value = l.type and d.code = #{code} and d.param = #{categoryCode}
+        left join tb_system_data_type d on d.type = 3 and d.value = l.type and d.code = #{code} and d.param = #{typeCode}
         left join tb_system_data_type t on t.type = 3 and t.value = l.publish_unit and t.code = #{code} and t.param = #{publishUnitCode}
         left join tb_system_data_type b on b.type = 3 and b.value = l.source and b.code = #{code} and b.param = #{sourceCode}
         where
             l.usable = 1
+            <if test="currentId != null and currentId != 0">
+                and l.id != #{currentId}
+            </if>
             <if test="category != null and category != 0">
                 and l.category = #{category}
             </if>
@@ -59,6 +63,25 @@
                 and l.name like concat('%', #{searchPhrase}, '%')
             </if>
         order by l.update_time desc
+    </select>
+
+    <select id="getLawById" resultType="com.zhuhong.inspection.vo.LawVo"
+            parameterType="com.zhuhong.inspection.condition.LawCondition">
+        select
+            <include refid="baseResult"></include>,
+            s.name as categoryName,
+            d.name as typeName,
+            t.name as publishUnitName,
+            b.name as sourceName
+        from
+            tb_law l
+        left join tb_system_data_type s on s.type = 3 and s.value = l.category and s.code = #{code} and s.param = #{categoryCode}
+        left join tb_system_data_type d on d.type = 3 and d.value = l.type and d.code = #{code} and d.param = #{categoryCode}
+        left join tb_system_data_type t on t.type = 3 and t.value = l.publish_unit and t.code = #{code} and t.param = #{publishUnitCode}
+        left join tb_system_data_type b on b.type = 3 and b.value = l.source and b.code = #{code} and b.param = #{sourceCode}
+        where
+            l.usable = 1
+            and l.id = #{id}
     </select>
 
 </mapper>

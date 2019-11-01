@@ -33,4 +33,13 @@ public interface SpotCheckService {
      */
     PageInfo<SpotCheckVo> getSpotCheckPageList(SpotCheckCondition spotCheckCondition);
 
+    /**
+     * 根据ID获取抽检数据
+     * @param id
+     * @return SpotCheckVo
+     * @Author: jian.ye
+     * @Date: 2019/10/31 16:12
+     */
+    SpotCheckVo getSpotCheckById(Integer id);
+
 }

@@ -41,4 +41,11 @@ public class SpotCheckServiceImpl implements SpotCheckService {
         return new PageInfo<>(list);
     }
 
+    @Override
+    public SpotCheckVo getSpotCheckById(Integer id) {
+        SpotCheckCondition condition = new SpotCheckCondition();
+        condition.setId(id);
+        return spotCheckMapper.getSpotCheckById(condition);
+    }
+
 }

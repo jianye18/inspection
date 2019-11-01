@@ -6,6 +6,7 @@
         s.id as id,
         s.name as name,
         s.code as code,
+        s.param as param,
         s.type as type,
         s.value as value,
         s.parent_id as parentId,
@@ -33,6 +34,21 @@
                 and s.name like concat('%', #{searchPhrase}, '%')
             </if>
             order by s.update_time desc
+    </select>
+
+    <select id="getMaxValueByParam" resultType="java.lang.Integer">
+        select
+            max(value)
+        from
+            tb_system_data_type
+        where
+            usable = 1
+            <if test="code != null and code != '' ">
+                and code = #{code}
+            </if>
+            <if test="param != null and param != '' ">
+                and param = #{param}
+            </if>
     </select>
 
 </mapper>

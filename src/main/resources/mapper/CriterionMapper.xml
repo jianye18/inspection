@@ -33,6 +33,9 @@
         left join tb_system_data_type t on t.type = 2 and t.value = c.publish_unit and t.code = #{code} and t.param = #{publishUnitCode}
         where
             c.usable = 1
+            <if test="currentId != null and currentId != 0">
+                and c.id != #{currentId}
+            </if>
             <if test="category != null and category != 0">
                 and c.category = #{category}
             </if>
@@ -52,6 +55,23 @@
                 and c.name like concat('%', #{searchPhrase}, '%')
             </if>
         order by c.update_time desc
+    </select>
+
+    <select id="getCriterionById" resultType="com.zhuhong.inspection.vo.CriterionVo"
+            parameterType="com.zhuhong.inspection.condition.CriterionCondition">
+        select
+            <include refid="baseResult"></include>,
+            s.name as categoryName,
+            d.name as typeName,
+            t.name as publishUnitName
+        from
+            tb_criterion c
+        left join tb_system_data_type s on s.type = 2 and s.value = c.category and s.code = #{code} and s.param = #{categoryCode}
+        left join tb_system_data_type d on d.type = 2 and d.value = c.type and d.code = #{code} and d.param = #{typeCode}
+        left join tb_system_data_type t on t.type = 2 and t.value = c.publish_unit and t.code = #{code} and t.param = #{publishUnitCode}
+        where
+            c.usable = 1
+            and c.id = #{id}
     </select>
 
 </mapper>

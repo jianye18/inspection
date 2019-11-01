@@ -70,4 +70,11 @@ public class LawServiceImpl implements LawService {
         }
         return flag;
     }
+
+    @Override
+    public LawVo getLawById(Integer id) {
+        LawCondition condition = new LawCondition();
+        condition.setId(id);
+        return lawMapper.getLawById(condition);
+    }
 }

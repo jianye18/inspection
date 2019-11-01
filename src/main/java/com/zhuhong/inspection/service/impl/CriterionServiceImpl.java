@@ -95,4 +95,11 @@ public class CriterionServiceImpl implements CriterionService {
         return flag;
     }
 
+    @Override
+    public CriterionVo getCriterionById(Integer id) {
+        CriterionCondition condition = new CriterionCondition();
+        condition.setId(id);
+        return criterionMapper.getCriterionById(condition);
+    }
+
 }

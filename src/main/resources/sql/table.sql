@@ -200,6 +200,7 @@ DROP TABLE IF EXISTS `tb_law`;
 CREATE TABLE `tb_law`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
  `name` varchar(32) NULL DEFAULT NULL COMMENT '名称', 
+ `code_number` varchar(255) NULL DEFAULT NULL COMMENT '法规文号',
  `category` tinyint(2) NULL DEFAULT NULL COMMENT '一级分类', 
  `type` tinyint(2) NULL DEFAULT NULL COMMENT '二级分类', 
  `status` tinyint(2) NULL DEFAULT NULL COMMENT '状态',

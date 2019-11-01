@@ -11,6 +11,8 @@ import lombok.Data;
  */
 @Data
 public class SelectionLabel {
+    @ApiModelProperty(name = "code", value = "下拉框-编码", example = "1")
+    private String code;
     @ApiModelProperty(name = "value", value = "下拉框-值", example = "1")
     private String value;
     @ApiModelProperty(name = "label", value = "下拉框-文本", example = "用户管理")

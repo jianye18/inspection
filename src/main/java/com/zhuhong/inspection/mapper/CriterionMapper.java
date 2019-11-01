@@ -26,4 +26,13 @@ public interface CriterionMapper extends Mapper<Criterion> {
      */
     List<CriterionVo> getCriterionListByCondition(CriterionCondition condition);
 
+    /**
+     * 根据ID获取标准数据
+     * @param condition
+     * @return CriterionVo
+     * @Author: jian.ye
+     * @Date: 2019/10/31 16:17
+     */
+    CriterionVo getCriterionById(CriterionCondition condition);
+
 }

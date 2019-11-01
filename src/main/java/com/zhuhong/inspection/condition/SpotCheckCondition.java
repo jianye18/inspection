@@ -14,6 +14,10 @@ import lombok.Data;
 @Data
 public class SpotCheckCondition extends BaseCondition {
 
+    @ApiModelProperty(name = "id", value = "1",hidden = true)
+    private Integer id;
+    @ApiModelProperty(name = "currentId", value = "1",hidden = true)
+    private Integer currentId;
     @ApiModelProperty(name = "productType", value = "产品分类：1-皮肤用化妆品，2-毛发用化妆品，3-指（趾）甲用化妆品，4-口唇用化妆品", example = "1")
     private Integer productType;
     @ApiModelProperty(name = "institution", value = "公布机构", example = "国家药品监督管理局")

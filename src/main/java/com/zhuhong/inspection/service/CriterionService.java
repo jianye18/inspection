@@ -51,4 +51,13 @@ public interface CriterionService {
      */
     boolean deleteCriterion(Integer criterionId, Integer currentUserId);
 
+    /**
+     * 根据ID获取标准数据
+     * @param id
+     * @return CriterionVo
+     * @Author: jian.ye
+     * @Date: 2019/10/31 16:17
+     */
+    CriterionVo getCriterionById(Integer id);
+
 }

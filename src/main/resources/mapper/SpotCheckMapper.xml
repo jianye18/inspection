@@ -35,6 +35,9 @@
         left join tb_system_data_type t on t.value = s.product_type and t.code = #{code} and t.param = #{param}
         where
             s.usable = 1
+            <if test="currentId != null and currentId != 0">
+                and s.id != #{currentId}
+            </if>
             <if test="productType != null and productType != 0">
                 and s.product_type = #{productType}
             </if>
@@ -48,6 +51,19 @@
                 and (s.unit like concat('%', #{searchPhrase}, '%') or s.producer like concat('%', #{searchPhrase}, '%'))
             </if>
         order by s.publish_date desc
+    </select>
+
+    <select id="getSpotCheckById" resultType="com.zhuhong.inspection.vo.SpotCheckVo"
+            parameterType="com.zhuhong.inspection.condition.SpotCheckCondition">
+        select
+            <include refid="baseSql"></include>,
+            t.name as productTypeName
+        from
+            tb_spot_check s
+        left join tb_system_data_type t on t.value = s.product_type and t.code = #{code} and t.param = #{param}
+        where
+            s.usable = 1
+            and s.id = #{id}
     </select>
 
 </mapper>

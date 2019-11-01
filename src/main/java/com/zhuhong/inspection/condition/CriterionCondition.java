@@ -13,6 +13,10 @@ import lombok.Data;
 @Data
 public class CriterionCondition extends BaseCondition {
 
+    @ApiModelProperty(name = "id", value = "1",hidden = true)
+    private Integer id;
+    @ApiModelProperty(name = "currentId", value = "1",hidden = true)
+    private Integer currentId;
     @ApiModelProperty(name = "category", value = "一级分类", example = "1")
     private Integer category;
     @ApiModelProperty(name = "type", value = "二级分类", example = "1")

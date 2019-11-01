@@ -22,6 +22,9 @@ public class Law extends BaseModel {
     @ApiModelProperty(name = "name", value = "法规名称", example = "法规名称")
     @Column(name = "name")
     private String name;
+    @ApiModelProperty(name = "codeNumber", value = "法规文号", example = "法规文号")
+    @Column(name = "code_number")
+    private String codeNumber;
     @ApiModelProperty(name = "category", value = "一级分类", example = "1")
     @Column(name = "category")
     private Integer category;

@@ -40,4 +40,13 @@ public interface LawService {
      */
     boolean deleteLaw(Integer lawId, Integer currentUserId);
 
+    /**
+     * 根据ID获取法规数据
+     * @param id
+     * @return LawVo
+     * @Author: jian.ye
+     * @Date: 2019/11/1 14:09
+     */
+    LawVo getLawById(Integer id);
+
 }

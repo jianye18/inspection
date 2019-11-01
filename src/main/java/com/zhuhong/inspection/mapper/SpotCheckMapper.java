@@ -27,4 +27,13 @@ public interface SpotCheckMapper extends Mapper<SpotCheck> {
      */
     List<SpotCheckVo> getSpotCheckListByCondition(SpotCheckCondition condition);
 
+    /**
+     * 根据ID获取抽检数据
+     * @param condition
+     * @return SpotCheckVo
+     * @Author: jian.ye
+     * @Date: 2019/10/31 16:13
+     */
+    SpotCheckVo getSpotCheckById(SpotCheckCondition condition);
+
 }
