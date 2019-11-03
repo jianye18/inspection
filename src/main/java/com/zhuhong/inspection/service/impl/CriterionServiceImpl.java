@@ -99,7 +99,12 @@ public class CriterionServiceImpl implements CriterionService {
     public CriterionVo getCriterionById(Integer id) {
         CriterionCondition condition = new CriterionCondition();
         condition.setId(id);
-        return criterionMapper.getCriterionById(condition);
+        CriterionVo criterionVo = criterionMapper.getCriterionById(condition);
+        List<Annex> annexList = annexService.getAnnexList(criterionVo.getId(), Constants.BASE_TYPE_2);
+        if (annexList.size() > 0) {
+            criterionVo.setAnnexList(annexList);
+        }
+        return criterionVo;
     }
 
 }

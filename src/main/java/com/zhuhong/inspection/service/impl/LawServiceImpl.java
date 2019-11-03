@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.LawCondition;
 import com.zhuhong.inspection.mapper.LawMapper;
+import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.Law;
 import com.zhuhong.inspection.service.AnnexService;
 import com.zhuhong.inspection.service.LawService;
@@ -75,6 +76,11 @@ public class LawServiceImpl implements LawService {
     public LawVo getLawById(Integer id) {
         LawCondition condition = new LawCondition();
         condition.setId(id);
-        return lawMapper.getLawById(condition);
+        LawVo lawVo = lawMapper.getLawById(condition);
+        List<Annex> annexList = annexService.getAnnexList(lawVo.getId(), Constants.BASE_TYPE_3);
+        if (annexList.size() > 0) {
+            lawVo.setAnnexList(annexList);
+        }
+        return lawVo;
     }
 }

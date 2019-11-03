@@ -101,7 +101,7 @@ public class SystemDataServiceImpl implements SystemDataService {
                     }
                 }
                 if (Constants.BASE_TYPE_3.equals(dataType.getType())) {
-                    if (Constants.LAW_CATEGORY.equals(dataType.getParam()) || Constants.LAW_SOURCE.equals(dataType.getParam())) {
+                    if (Constants.LAW_CATEGORY.equals(dataType.getParam()) || Constants.LAW_SOURCE.equals(dataType.getParam()) || Constants.LAW_TYPE.equals(dataType.getParam())) {
                         lawTypeList.add(dataType);
                     }
                 }
