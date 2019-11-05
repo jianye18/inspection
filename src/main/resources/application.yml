@@ -50,4 +50,4 @@ logging:
     root: info
     com.zhuhong.inspection: debug
 
-upload_path: E:/inspection/docs/
+upload_path: E:\inspection\docs\

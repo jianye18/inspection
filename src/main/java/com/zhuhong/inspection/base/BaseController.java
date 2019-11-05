@@ -9,6 +9,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * 基础controller
@@ -35,6 +37,22 @@ public class BaseController {
         UserVo userVo = (UserVo) session.getAttribute(accessToken);
         log.debug("获取当前用户信息：" + userVo.toString());
         return userVo;
+    }
+
+    /**
+     * 下载文件进行编码格式化
+     * @Author: jian.ye
+     * @Date: 2019/11/4 14:16
+     */
+    public static String encodeFileName(HttpServletRequest request,
+                                        String fileName) throws UnsupportedEncodingException {
+        String agent = request.getHeader("USER-AGENT");
+
+        if (null != agent && -1 != agent.toUpperCase().indexOf("MSIE")) {
+            return URLEncoder.encode(fileName, "UTF8");
+        } else {
+            return new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+        }
     }
 
 }

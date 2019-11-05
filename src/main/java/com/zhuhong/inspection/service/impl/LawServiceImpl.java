@@ -48,7 +48,7 @@ public class LawServiceImpl implements LawService {
             int r = lawMapper.updateByPrimaryKeySelective(law);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(false, law.getAnnexs(), law.getId(), Constants.BASE_TYPE_3);
+                annexService.handleAnnex(true, law.getAnnexs(), law.getId(), Constants.BASE_TYPE_3);
             }
         }
         return flag;
@@ -58,6 +58,11 @@ public class LawServiceImpl implements LawService {
     public PageInfo<LawVo> getLawPageList(LawCondition lawCondition) {
         PageHelper.startPage(lawCondition.getPageNum(), lawCondition.getPageSize());
         List<LawVo> list = lawMapper.getLawListByCondition(lawCondition);
+        if (list.size() > 0) {
+            for (LawVo lawVo : list) {
+                initAnnex(lawVo);
+            }
+        }
         return new PageInfo<>(list);
     }
 
@@ -77,10 +82,14 @@ public class LawServiceImpl implements LawService {
         LawCondition condition = new LawCondition();
         condition.setId(id);
         LawVo lawVo = lawMapper.getLawById(condition);
+        initAnnex(lawVo);
+        return lawVo;
+    }
+
+    private void initAnnex(LawVo lawVo) {
         List<Annex> annexList = annexService.getAnnexList(lawVo.getId(), Constants.BASE_TYPE_3);
         if (annexList.size() > 0) {
             lawVo.setAnnexList(annexList);
         }
-        return lawVo;
     }
 }
