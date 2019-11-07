@@ -3,6 +3,7 @@ package com.zhuhong.inspection.service;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.SystemDataTypeCondition;
 import com.zhuhong.inspection.model.SystemDataType;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SystemDataTypeVo;
 
 import java.util.List;
@@ -53,5 +54,14 @@ public interface SystemDataService {
      * @Date: 2019/10/30 14:00
      */
     List<Map<String, Object>> getHomePageFilterItem();
+
+    /**
+     * 根据条件查询分类数据
+     * @param systemDataType
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2019/11/7 20:37
+     */
+    List<SelectionLabel> getLawCategoryData(SystemDataType systemDataType);
 
 }

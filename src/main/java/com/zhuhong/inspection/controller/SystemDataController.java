@@ -127,4 +127,27 @@ public class SystemDataController extends BaseController {
         return result;
     }
 
+    /**
+     * 根据条件查询分类数据
+     * @Author: jian.ye
+     * @Date: 2019/11/7 20:40
+     */
+    @ApiOperation(value = "根据条件查询分类数据", notes = "根据条件查询分类数据")
+    @ApiImplicitParam(name = "systemDataType", value = "查询条件", dataType = "SystemDataType")
+    @PostMapping("/getLawCategoryData")
+    public Result getLawCategoryData(@RequestBody SystemDataType systemDataType) {
+        String LOG_MSG = "调用根据条件查询分类数据接口---getLawCategoryData()---，";
+        log.debug(LOG_MSG + "参数：" + systemDataType.toString());
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            result = Result.genSuccessResult(systemDataService.getLawCategoryData(systemDataType));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
 }

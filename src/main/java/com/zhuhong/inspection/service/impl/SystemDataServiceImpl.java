@@ -67,7 +67,7 @@ public class SystemDataServiceImpl implements SystemDataService {
         } else {
             systemDataType.setCreateId(currentUserId);
             systemDataType.setCreateTime(DateUtil.getCurrentDate());
-            systemDataType.setValue(systemDataTypeMapper.getMaxValueByParam(systemDataType.getCode(), systemDataType.getParam()));
+            systemDataType.setValue(systemDataTypeMapper.getMaxValueByParam(systemDataType.getCode(), systemDataType.getParam()) + 1);
             return systemDataTypeMapper.insertSelective(systemDataType) > 0;
         }
     }
@@ -120,6 +120,22 @@ public class SystemDataServiceImpl implements SystemDataService {
             mapList.add(lawMap);
         }
         return mapList;
+    }
+
+    @Override
+    public List<SelectionLabel> getLawCategoryData(SystemDataType systemDataType) {
+        List<SelectionLabel> labelList = new ArrayList<>();
+        systemDataType.setUsable(SystemDataType.ENABLE_1);
+        List<SystemDataType> list = systemDataTypeMapper.select(systemDataType);
+        if (list.size() > 0) {
+            for (SystemDataType dataType : list) {
+                SelectionLabel label = new SelectionLabel();
+                label.setValue(String.valueOf(dataType.getValue()));
+                label.setLabel(dataType.getName());
+                labelList.add(label);
+            }
+        }
+        return labelList;
     }
 
     /**

@@ -10,6 +10,7 @@
         s.type as type,
         s.value as value,
         s.parent_id as parentId,
+        s.description as description,
         s.create_id as createId,
         s.create_time as createTime,
         s.update_id as updateId,
@@ -21,10 +22,10 @@
             parameterType="com.zhuhong.inspection.condition.SystemDataTypeCondition">
         select
             <include refid="baseResult"></include>,
-            d.name as parentName,
+            d.name as parentName
         from
             tb_system_data_type s
-        left join tb_system_data_type d on d.id = s.parent_id
+        left join tb_system_data_type d on d.value = s.parent_id and d.type = s.type and d.code = s.code and d.param = 'law_category'
         where
             s.usable = 1
             <if test="type != null and type != 0">
