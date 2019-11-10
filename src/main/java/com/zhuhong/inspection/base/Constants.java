@@ -41,14 +41,15 @@ public class Constants {
     public static final Integer PERMISSION_TYPE_3 = 3;
 
     /**
-     * 基础分类：1-抽检、2-标准、3-法规
+     * 基础分类：1-抽检、2-标准、3-法规、4-飞检
      */
     public static final Integer BASE_TYPE_1 = 1;
     public static final Integer BASE_TYPE_2 = 2;
     public static final Integer BASE_TYPE_3 = 3;
+    public static final Integer BASE_TYPE_4 = 4;
 
     /**
-     * 抽检数据分类编码
+     * 数据分类编码
      */
     public static final String SPOT_CHECK = "spot_check";
     public static final String PRODUCT_TYPE = "product_type";
@@ -70,5 +71,11 @@ public class Constants {
     public static final String LAW_TYPE = "law_type";
     public static final String LAW_PUBLISH_UNIT = "law_publish_unit";
     public static final String LAW_SOURCE = "law_source";
+
+    /**
+     * 飞检数据分类编码
+     */
+    public static final String FLIGHT_CHECK = "flight_check";
+    public static final String PRECAUTIONS = "precautions";
 
 }

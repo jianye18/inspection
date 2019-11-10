@@ -144,7 +144,7 @@ CREATE TABLE `tb_spot_check`  (
 DROP TABLE IF EXISTS `tb_system_data_type`;
 CREATE TABLE `tb_system_data_type`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
- `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型：1-抽检、2-标准、3-法规',
+ `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型：1-抽检、2-标准、3-法规、4-飞检',
  `value` int(11) NULL DEFAULT NULL COMMENT '值'
  `code` varchar(32) NULL DEFAULT NULL COMMENT '编码',
  `param` varchar(32) NULL DEFAULT NULL COMMENT '参数',
@@ -217,6 +217,29 @@ CREATE TABLE `tb_law`  (
  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_law
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_flight_check`;
+CREATE TABLE `tb_flight_check`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `business_name` varchar(128) NULL DEFAULT NULL COMMENT '企业名称',
+ -- `summary` varchar(128) NULL DEFAULT NULL COMMENT '问题概要',
+ `problem` MEDIUMTEXT NULL DEFAULT NULL COMMENT '缺陷问题',
+ `precautions` tinyint(2) NULL DEFAULT NULL COMMENT '处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改',
+ `type` tinyint(2) NULL DEFAULT NULL COMMENT '飞检类型：1-国家飞检，2-地方飞检',
+ `publish_unit` varchar(128) NULL DEFAULT NULL COMMENT '发布单位',
+ `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
+ `is_defect` tinyint(2) NULL DEFAULT NULL COMMENT '是否有缺陷：0-否，1-是',
+ `source_link` varchar(128) NULL DEFAULT NULL COMMENT '来源链接', 
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '飞检数据表' ROW_FORMAT = Dynamic; 
 
 SET FOREIGN_KEY_CHECKS = 1;
 

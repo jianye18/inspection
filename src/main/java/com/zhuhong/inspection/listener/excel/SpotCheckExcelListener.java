@@ -71,9 +71,6 @@ public class SpotCheckExcelListener extends AnalysisEventListener<SpotCheck> {
         log.info("{}条数据，开始存储数据库！", list.size());
         log.info("存储数据库成功！");
         if (list.size() > 0) {
-            /*String accessToken = CookieUtil.getCookieValue(Constants.TOKEN, request);
-            Session session = SecurityUtils.getSubject().getSession();
-            UserVo userVo = (UserVo) session.getAttribute(accessToken);*/
             for (SpotCheck spotCheck : list) {
                 boolean flag = spotCheckService.insertSpotCheck(spotCheck, userVo.getId());
                 if (flag) {

@@ -5,15 +5,14 @@ import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.condition.CriterionCondition;
+import com.zhuhong.inspection.condition.FlightCheckCondition;
 import com.zhuhong.inspection.condition.LawCondition;
 import com.zhuhong.inspection.condition.SpotCheckCondition;
 import com.zhuhong.inspection.model.Annex;
-import com.zhuhong.inspection.service.AnnexService;
-import com.zhuhong.inspection.service.CriterionService;
-import com.zhuhong.inspection.service.LawService;
-import com.zhuhong.inspection.service.SpotCheckService;
+import com.zhuhong.inspection.service.*;
 import com.zhuhong.inspection.utils.FileUtil;
 import com.zhuhong.inspection.vo.CriterionVo;
+import com.zhuhong.inspection.vo.FlightCheckVo;
 import com.zhuhong.inspection.vo.LawVo;
 import com.zhuhong.inspection.vo.SpotCheckVo;
 import io.swagger.annotations.Api;
@@ -54,6 +53,9 @@ public class ShowPageController extends BaseController {
     private LawService lawService;
     @Autowired
     private AnnexService annexService;
+    @Autowired
+    private FlightCheckService flightCheckService;
+
     @Value("${upload_path}")
     private String FILE_DIR;
 
@@ -131,6 +133,31 @@ public class ShowPageController extends BaseController {
     }
 
     /**
+     * 分页获取飞检数据
+     *
+     * @Author: jian.ye
+     * @Date: 2019/11/09 16:08
+     */
+    @ApiOperation(value = "分页获取飞检数据", notes = "返回分页获取飞检数据列表")
+    @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "FlightCheckCondition")
+    @PostMapping("getFlightCheckPageList")
+    public Result<FlightCheckVo> getFlightCheckPageList(@RequestBody FlightCheckCondition condition) {
+        String LOG_MSG = "调用分页获取飞检数据接口---getFlightCheckPageList()---，";
+        log.debug(LOG_MSG + "上传参数：" + condition.toString());
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            PageInfo<FlightCheckVo> list = flightCheckService.getFlightCheckPageList(condition);
+            result = Result.genSuccessResult(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
      * 根据ID获取抽检数据
      * @Author: jian.ye
      * @Date: 2019/10/31 16:15
@@ -190,6 +217,29 @@ public class ShowPageController extends BaseController {
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
             result = Result.genSuccessResult(lawService.getLawById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
+     * 根据ID获取飞检数据
+     * @Author: jian.ye
+     * @Date: 2019/11/09 14:08
+     */
+    @ApiOperation(value = "根据ID获取飞检数据", notes = "根据ID获取飞检数据")
+    @ApiImplicitParam(name = "id", value = "飞检数据ID", example = "1")
+    @GetMapping("getFlightCheckById/{id}")
+    public Result<FlightCheckVo> getFlightCheckById(@PathVariable(value = "id", required = true) Integer id) {
+        String LOG_MSG = "调用根据ID获取飞检数据接口---getFlightCheckById()---，";
+        log.debug(LOG_MSG + "上传参数：" + id);
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            result = Result.genSuccessResult(flightCheckService.getFlightCheckById(id));
         } catch (Exception e) {
             e.printStackTrace();
             log.error(LOG_MSG + "返回错误信息：", e);

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.FlightCheckMapper">
+
+    <sql id="baseResult">
+        f.id as id,
+        f.business_name as businessName,
+        f.problem as problem,
+        f.precautions as precautions,
+        f.type as type,
+        f.publish_unit as publishUnit,
+        f.publish_date as publishDate,
+        f.is_defect as isDefect,
+        f.source_link as sourceLink,
+        f.create_id as createId,
+        f.create_time as createTime,
+        f.update_id as updateId,
+        f.update_time as updateTime,
+        f.usable as usable
+    </sql>
+
+    <select id="getFlightCheckPageList" resultType="com.zhuhong.inspection.vo.FlightCheckVo"
+            parameterType="com.zhuhong.inspection.condition.FlightCheckCondition">
+        select
+            <include refid="baseResult"/>,
+            s.name as precautionsName
+        from
+            tb_flight_check f
+        left join tb_system_data_type s on s.type = 4 and s.value = f.precautions and s.code = #{code} and s.param = #{param}
+        where
+            f.usable = 1
+            <if test="currentId != null and currentId != 0">
+                and f.id != #{currentId}
+            </if>
+            <if test="precautions != null and precautions != 0">
+                and f.precautions = #{precautions}
+            </if>
+            <if test="type != null and type != 0">
+                and f.type = #{type}
+            </if>
+            <if test="publishUnit != null and publishUnit != 0">
+                and f.publish_unit = #{publishUnit}
+            </if>
+            <if test="startDate != null">
+                and f.publish_date between #{startDate} and #{endDate}
+            </if>
+            <if test="searchPhrase != null and searchPhrase != '' ">
+                and f.name like concat('%', #{searchPhrase}, '%')
+            </if>
+        order by f.update_time desc
+    </select>
+
+    <select id="getFlightCheckById" resultType="com.zhuhong.inspection.vo.FlightCheckVo"
+            parameterType="com.zhuhong.inspection.condition.FlightCheckCondition">
+        select
+            <include refid="baseResult"/>,
+            s.name as precautionsName
+        from
+            tb_flight_check f
+        left join tb_system_data_type s on s.type = 4 and s.value = f.precautions and s.code = #{code} and s.param = #{param}
+        where
+            f.usable = 1
+            and f.id = #{id}
+    </select>
+
+</mapper>
