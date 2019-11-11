@@ -25,6 +25,17 @@ public interface FlightCheckService {
     boolean saveFlightCheck(FlightCheck flightCheck, Integer currentUserId);
 
     /**
+     * 插入飞检数据
+     *
+     * @param flightCheck
+     * @param currentUserId
+     * @return boolean
+     * @Author: jian.ye
+     * @Date: 2019/11/11 9:23
+     */
+    boolean insertFlightCheck(FlightCheck flightCheck, Integer currentUserId);
+
+    /**
      * 根据ID获取飞检数据
      *
      * @param id

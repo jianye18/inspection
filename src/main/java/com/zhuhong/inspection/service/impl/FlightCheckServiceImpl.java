@@ -39,6 +39,15 @@ public class FlightCheckServiceImpl implements FlightCheckService {
     }
 
     @Override
+    public boolean insertFlightCheck(FlightCheck flightCheck, Integer currentUserId) {
+        flightCheck.setCreateId(currentUserId);
+        flightCheck.setCreateTime(DateUtil.getCurrentDate());
+        flightCheck.setUpdateId(currentUserId);
+        flightCheck.setUpdateTime(DateUtil.getCurrentDate());
+        return flightCheckMapper.insertSelective(flightCheck) > 0;
+    }
+
+    @Override
     public FlightCheckVo getFlightCheckById(Integer id) {
         FlightCheckCondition condition = new FlightCheckCondition();
         condition.setId(id);

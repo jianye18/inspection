@@ -145,7 +145,7 @@ DROP TABLE IF EXISTS `tb_system_data_type`;
 CREATE TABLE `tb_system_data_type`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
  `type` tinyint(4) NULL DEFAULT NULL COMMENT '类型：1-抽检、2-标准、3-法规、4-飞检',
- `value` int(11) NULL DEFAULT NULL COMMENT '值'
+ `value` int(11) NULL DEFAULT NULL COMMENT '值',
  `code` varchar(32) NULL DEFAULT NULL COMMENT '编码',
  `param` varchar(32) NULL DEFAULT NULL COMMENT '参数',
  `name` varchar(64) NULL DEFAULT NULL COMMENT '名称', 
