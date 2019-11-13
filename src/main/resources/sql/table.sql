@@ -219,13 +219,12 @@ CREATE TABLE `tb_law`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Table structure for tb_law
+-- Table structure for tb_flight_check
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_flight_check`;
 CREATE TABLE `tb_flight_check`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
  `business_name` varchar(128) NULL DEFAULT NULL COMMENT '企业名称',
- -- `summary` varchar(128) NULL DEFAULT NULL COMMENT '问题概要',
  `problem` MEDIUMTEXT NULL DEFAULT NULL COMMENT '缺陷问题',
  `precautions` tinyint(2) NULL DEFAULT NULL COMMENT '处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改',
  `type` tinyint(2) NULL DEFAULT NULL COMMENT '飞检类型：1-国家飞检，2-地方飞检',
@@ -240,6 +239,22 @@ CREATE TABLE `tb_flight_check`  (
  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '飞检数据表' ROW_FORMAT = Dynamic; 
+
+-- ----------------------------
+-- Table structure for tb_multi_media
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_multi_media`;
+CREATE TABLE `tb_multi_media`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `business_id` int(11) NULL DEFAULT NULL COMMENT '业务ID',
+ `business_type` tinyint(2) NULL DEFAULT NULL COMMENT '业务类型',
+ `category` tinyint(2) NULL DEFAULT NULL COMMENT '多媒体类型：1-图片，2-视频',
+ `thumbnail` varchar(64) NULL DEFAULT NULL COMMENT '缩略图/视频展示图名称',
+ `media_name` varchar(64) NULL DEFAULT NULL COMMENT '原图片/视频存储名称',
+ `media_type` varchar(16) NULL DEFAULT NULL COMMENT '数据类型，例：image/jpeg',
+ `size` double DEFAULT NULL COMMENT '大小(KB)',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '多媒体数据表' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
 

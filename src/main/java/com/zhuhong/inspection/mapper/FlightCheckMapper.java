@@ -3,6 +3,7 @@ package com.zhuhong.inspection.mapper;
 import com.zhuhong.inspection.condition.FlightCheckCondition;
 import com.zhuhong.inspection.model.FlightCheck;
 import com.zhuhong.inspection.vo.FlightCheckVo;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -36,5 +37,12 @@ public interface FlightCheckMapper extends Mapper<FlightCheck> {
      * @Date: 2019/11/9 19:47
      */
     List<FlightCheckVo> getFlightCheckPageList(FlightCheckCondition condition);
+
+    /**
+     * 获取发布单位集合
+     * @Author: jian.ye
+     * @Date: 2019/11/13 20:59
+     */
+    List<SelectionLabel> getPublishUnitList();
 
 }

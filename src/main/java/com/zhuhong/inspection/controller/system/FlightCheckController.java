@@ -6,17 +6,22 @@ import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.listener.excel.FlightCheckExcelListener;
 import com.zhuhong.inspection.listener.excel.SpotCheckExcelListener;
 import com.zhuhong.inspection.model.FlightCheck;
+import com.zhuhong.inspection.model.MultiMedia;
 import com.zhuhong.inspection.model.SpotCheck;
 import com.zhuhong.inspection.service.FlightCheckService;
+import com.zhuhong.inspection.utils.ImageUtil;
+import com.zhuhong.inspection.utils.VideoUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 
 /**
@@ -33,6 +38,9 @@ public class FlightCheckController extends BaseController {
 
     @Autowired
     private FlightCheckService flightCheckService;
+
+    @Value("${upload_path}")
+    private String FILE_DIR;
 
     /**
      * 上传飞检结果数据
@@ -56,6 +64,33 @@ public class FlightCheckController extends BaseController {
             result = Result.genFailResult(line + "行数据有问题，请确认后再上传！");
         }
         log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
+     * 上传缺陷问题图片
+     * @Author: jian.ye
+     * @Date: 2019/11/13 15:26
+     */
+    @ApiOperation(value = "上传缺陷问题图片", notes = "返回上传结果")
+    @PostMapping("uploadMediaFile")
+    public Result uploadMediaFile(@RequestParam("file") MultipartFile file) {
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try{
+            //Map<String, String> map = ImageUtil.saveImage(file, FILE_DIR, String.valueOf(System.currentTimeMillis()), true);
+            Map<String, String> map = VideoUtil.uploadVideo(file, FILE_DIR, String.valueOf(System.currentTimeMillis()));
+            log.debug("上传图片返回结果：" + map.toString());
+            MultiMedia multiMedia = new MultiMedia();
+            multiMedia.setMediaName(map.get("mediaName"));
+            multiMedia.setThumbnail(map.get("thumbnail"));
+            multiMedia.setSize(file.getSize());
+            multiMedia.setMediaType(file.getContentType());
+            result = Result.genSuccessResult(multiMedia);
+        }catch (Exception e){
+            e.printStackTrace();
+            result = Result.genFailResult(e.getMessage());
+            log.error("上传媒体文件返回错误信息：", e);
+        }
         return result;
     }
 

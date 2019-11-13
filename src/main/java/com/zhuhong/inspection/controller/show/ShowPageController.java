@@ -273,20 +273,21 @@ public class ShowPageController extends BaseController {
                 headers.add("Pragma", "no-cache");
                 headers.add("Expires", "0");
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+                String path = FILE_DIR + "docs\\";
                 if (l == 1) {
                     fileName = list.get(0).getName();
                 } else {
                     fileName = System.currentTimeMillis() + ".zip";
                     List<String> filePaths = new ArrayList<>();
                     list.forEach(annex -> filePaths.add(annex.getPath()));
-                    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(FILE_DIR + fileName));
+                    ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(path + fileName));
                     FileUtil.zipFile(filePaths, zos);
                 }
                 headers.add("Content-Disposition", String.format("attachment; filename=\"%s\"", fileName));
-                File file = new File(FILE_DIR + fileName);
+                File file = new File(path + fileName);
                 byte[] b = FileUtils.readFileToByteArray(file);
                 if (l > 1) {
-                    FileUtil.delAllFile(FILE_DIR + fileName);
+                    FileUtil.delAllFile(path + fileName);
                 }
                 return new ResponseEntity<byte[]>(b, headers, HttpStatus.OK);
             }  catch (Exception e) {

@@ -34,6 +34,12 @@ public class Constants {
     public static final String DEFAULT_PASSWORD = "123456";
 
     /**
+     * 压缩宽高
+     */
+    public static final Integer YS_WIDTH = 250;
+    public static final Integer YS_HEIGHT = 250;
+
+    /**
      * 权限类型：1-page,2-link,3-button
      */
     public static final Integer PERMISSION_TYPE_1 = 1;

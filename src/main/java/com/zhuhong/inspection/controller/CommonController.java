@@ -3,6 +3,7 @@ package com.zhuhong.inspection.controller;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.utils.DateUtil;
+import com.zhuhong.inspection.utils.ImageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -53,7 +54,7 @@ public class CommonController extends BaseController {
                 String fileName = arr[0];
                 String suffix = arr[1];
                 String name = fileName + "_" + DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER_1) + "." + suffix;
-                Path path= Paths.get(FILE_DIR + name);
+                Path path= Paths.get(FILE_DIR + "docs\\" + name);
                 //调用静态方法完成将文件写入到目标路径
                 Files.write(path,bytes);
                 result = Result.genSuccessResult(name);
@@ -80,7 +81,7 @@ public class CommonController extends BaseController {
         log.debug("删除文件的文件名：" + fileName);
         try{
             //判断文件是否为空
-            File file = new File(FILE_DIR + fileName);
+            File file = new File(FILE_DIR + "docs\\" + fileName);
             file.delete();
             result = Result.genSuccessResultMsg("删除文件成功！");
         }catch (Exception e){

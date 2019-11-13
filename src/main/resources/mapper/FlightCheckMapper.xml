@@ -22,11 +22,9 @@
     <select id="getFlightCheckPageList" resultType="com.zhuhong.inspection.vo.FlightCheckVo"
             parameterType="com.zhuhong.inspection.condition.FlightCheckCondition">
         select
-            <include refid="baseResult"/>,
-            s.name as precautionsName
+            <include refid="baseResult"/>
         from
             tb_flight_check f
-        left join tb_system_data_type s on s.type = 4 and s.value = f.precautions and s.code = #{code} and s.param = #{param}
         where
             f.usable = 1
             <if test="currentId != null and currentId != 0">
@@ -38,14 +36,17 @@
             <if test="type != null and type != 0">
                 and f.type = #{type}
             </if>
+            <if test="isDefect != null">
+                and f.is_defect = #{isDefect}
+            </if>
             <if test="publishUnit != null and publishUnit != 0">
                 and f.publish_unit = #{publishUnit}
             </if>
-            <if test="startDate != null">
+            <!--<if test="startDate != null">
                 and f.publish_date between #{startDate} and #{endDate}
-            </if>
+            </if>-->
             <if test="searchPhrase != null and searchPhrase != '' ">
-                and f.name like concat('%', #{searchPhrase}, '%')
+                and f.business_name like concat('%', #{searchPhrase}, '%')
             </if>
         order by f.update_time desc
     </select>
@@ -53,14 +54,23 @@
     <select id="getFlightCheckById" resultType="com.zhuhong.inspection.vo.FlightCheckVo"
             parameterType="com.zhuhong.inspection.condition.FlightCheckCondition">
         select
-            <include refid="baseResult"/>,
-            s.name as precautionsName
+            <include refid="baseResult"/>
         from
             tb_flight_check f
-        left join tb_system_data_type s on s.type = 4 and s.value = f.precautions and s.code = #{code} and s.param = #{param}
         where
             f.usable = 1
             and f.id = #{id}
+    </select>
+
+    <select id="getPublishUnitList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            id as code,
+            publish_unit as value,
+            publish_unit as label
+        from
+            tb_flight_check
+        group by
+            publish_unit
     </select>
 
 </mapper>
