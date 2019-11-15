@@ -21,7 +21,7 @@ public interface FlightCheckMapper extends Mapper<FlightCheck> {
     /**
      * 根据ID获取飞检数据
      *
-     * @param id
+     * @param condition
      * @return FlightCheckVo
      * @Author: jian.ye
      * @Date: 2019/11/9 19:47
