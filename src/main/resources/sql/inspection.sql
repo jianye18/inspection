@@ -11,7 +11,7 @@
  Target Server Version : 50727
  File Encoding         : 65001
 
- Date: 01/11/2019 17:50:45
+ Date: 19/11/2019 18:22:52
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,13 @@ CREATE TABLE `tb_annex`  (
   `path` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '附件路径',
   `type` tinyint(2) NULL DEFAULT NULL COMMENT '分类：1-抽检，2-标准，3-法规',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_annex
+-- ----------------------------
+INSERT INTO `tb_annex` VALUES (5, 3, '激活码_20191104.txt', 'E:/inspection/docs/激活码_20191104.txt', 3);
+INSERT INTO `tb_annex` VALUES (6, 3, '叶竹洪博客设计_20191104.xlsx', 'E:/inspection/docs/叶竹洪博客设计_20191104.xlsx', 3);
 
 -- ----------------------------
 -- Table structure for tb_criterion
@@ -61,6 +67,33 @@ INSERT INTO `tb_criterion` VALUES (3, '标准数据003', 1, 2, 1, 1, '2019-10-01
 INSERT INTO `tb_criterion` VALUES (4, '标准数据004', 1, 2, 1, 1, '2019-10-03', '2019-10-08', '摘要', 1, '2019-10-16 16:46:46', 1, '2019-10-19 15:57:45', 1);
 
 -- ----------------------------
+-- Table structure for tb_flight_check
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_flight_check`;
+CREATE TABLE `tb_flight_check`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `business_name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '企业名称',
+  `problem` mediumtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '缺陷问题',
+  `precautions` tinyint(2) NULL DEFAULT NULL COMMENT '处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改',
+  `type` tinyint(2) NULL DEFAULT NULL COMMENT '飞检类型：1-国家飞检，2-地方飞检',
+  `publish_unit` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发布单位',
+  `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
+  `is_defect` tinyint(2) NULL DEFAULT NULL COMMENT '是否有缺陷：0-否，1-是',
+  `source_link` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源链接',
+  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '飞检数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_flight_check
+-- ----------------------------
+INSERT INTO `tb_flight_check` VALUES (1, '被飞检企业', '有问题', 2, 2, '飞检单位01', '2019-11-05', 1, NULL, 1, '2019-11-13 20:39:07', 1, '2019-11-13 20:39:07', 1);
+
+-- ----------------------------
 -- Table structure for tb_law
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_law`;
@@ -83,13 +116,63 @@ CREATE TABLE `tb_law`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_law
 -- ----------------------------
 INSERT INTO `tb_law` VALUES (1, '法规名称1', NULL, 1, 7, 1, 2, '2019-10-09', '2019-10-31', NULL, '<p>法规内容都是编出来的，随便写写都行，不要太介意，你们看写些什么好呢，我这是纯粹 练打字速度</p>', 1, 1, '2019-10-29 11:07:42', 1, '2019-10-29 11:32:14', 1);
 INSERT INTO `tb_law` VALUES (2, '法规名称2', NULL, 3, 12, 2, 1, '2019-10-09', '2019-10-30', NULL, '<p><span style=\"font-size: x-large; font-weight: bold;\">法规内容</span>都是编出来的，<span style=\"font-style: italic;\">随便写写都行</span>，不要太介意，</p><p>你们看写些什么好呢，我这是纯粹 练打字速度</p>', 2, 1, '2019-10-29 11:13:32', 1, '2019-10-29 14:52:42', 1);
+INSERT INTO `tb_law` VALUES (3, '交通法', NULL, 1, 7, 2, 1, '2019-11-05', '2019-11-13', NULL, '<p>第一章 总则<br></p><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第一条&nbsp;</td><td><p>　　根据《中华人民共和国道路交通安全法》（以下简称道路交通安全法）的规定，制定本条例。</p></td></tr></tbody></table><hr><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第二条&nbsp;</td><td><p>　　中华人民共和国境内的车辆驾驶人、行人、乘车人以及与道路交通活动有关的单位和个人，应当遵守道路交通安全法和本条例。</p></td></tr></tbody></table><hr><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第三条&nbsp;</td><td><p>　　县级以上地方各级人民政府应当建立、健全道路交通安全工作协调机制，组织有关部门对城市建设项目进行交通影响评价，制定道路交通安全管理规划，确定管理目标，制定实施方案。</p></td></tr></tbody></table><hr><p id=\"150882992842700\">第二章 车辆和驾驶人</p><p id=\"150882992842700\">第一节 机动车</p><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第四条&nbsp;</td><td><p>　　机动车的登记，分为注册登记、变更登记、转移登记、抵押登记和注销登记。</p></td></tr></tbody></table><hr><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第五条&nbsp;</td><td><p>　　初次申领机动车号牌、行驶证的，应当向机动车所有人住所地的公安机关交通管理部门申请注册登记。申请机动车注册登记，应当交验机动车，并提交以下证明、凭证：</p><p>　　（一）机动车所有人的身份证明；</p><p>　　（二）购车发票等机动车来历证明；</p><p>　　（三）机动车整车出厂合格证明或者进口机动车进口凭证；</p><p>　　（四）车辆购置税完税证明或者免税凭证；</p><p>　　（五）机动车第三者责任强制保险凭证；</p><p>　　（六）法律、行政法规规定应当在机动车注册登记时提交的其他证明、凭证。</p><p>　　不属于国务院机动车产品主管部门规定免予安全技术检验的车型的，还应当提供机动车安全技术检验合格证明。</p></td></tr></tbody></table><hr><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第六条&nbsp;</td><td><p>　　已注册登记的机动车有下列情形之一的，机动车所有人应当向登记该机动车的公安机关交通管理部门申请变更登记：</p><p>　　（一）改变机动车车身颜色的；</p><p>　　（二）更换发动机的；</p><p>　　（三）更换车身或者车架的；</p><p>　　（四）因质量有问题，制造厂更换整车的；</p><p>　　（五）营运机动车改为非营运机动车或者非营运机动车改为营运机动车的；</p><p>　　（六）机动车所有人的住所迁出或者迁入公安机关交通管理部门管辖区域的。</p><p>　　申请机动车变更登记，应当提交下列证明、凭证，属于前款第（一）项、第（二）项、第（三）项、第（四）项、第（五）项情形之一的，还应当交验机动车；属于前款第（二）项、第（三）项情形之一的，还应当同时提交机动车安全技术检验合格证明：</p><p>　　（一）机动车所有人的身份证明；</p><p>　　（二）机动车登记证书；</p><p>　　（三）机动车行驶证。</p><p>　　机动车所有人的住所在公安机关交通管理部门管辖区域内迁移、机动车所有人的姓名（单位名称）或者联系方式变更的，应当向登记该机动车的公安机关交通管理部门备案。</p></td></tr></tbody></table><hr><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第七条&nbsp;</td><td><p>　　已注册登记的机动车所有权发生转移的，应当及时办理转移登记。</p><p>　　申请机动车转移登记，当事人应当向登记该机动车的公安机关交通管理部门交验机动车，并提交以下证明、凭证：</p><p>　　（一）当事人的身份证明；</p><p>　　（二）机动车所有权转移的证明、凭证；</p><p>　　（三）机动车登记证书；</p><p>　　（四）机动车行驶证。</p></td></tr></tbody></table><hr><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第八条&nbsp;</td><td><p>　　机动车所有人将机动车作为抵押物抵押的，机动车所有人应当向登记该机动车的公安机关交通管理部门申请抵押登记。</p></td></tr></tbody></table><hr><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第九条&nbsp;</td><td><p>　　已注册登记的机动车达到国家规定的强制报废标准的，公安机关交通管理部门应当在报废期满的2个月前通知机动车所有人办理注销登记。机动车所有人应当在报废期满前将机动车交售给机动车回收企业，由机动车回收企业将报废的机动车登记证书、号牌、行驶证交公安机关交通管理部门注销。机动车所有人逾期不办理注销登记的，公安机关交通管理部门应当公告该机动车登记证书、号牌、行驶证作废。</p><p>　　因机动车灭失申请注销登记的，机动车所有人应当向公安机关交通管理部门提交本人身份证明，交回机动车登记证书。</p></td></tr></tbody></table><hr><table border=\"0\"><tbody><tr valign=\"top\"><td nowrap=\"\">第十条&nbsp;</td><td><p>　　办理机动车登记的申请人提交的证明、凭证齐全、有效的，公安机关交通管理部门应当当场办理登记手续。</p><p>　　人民法院、人民<font color=\"red\">检察</font>院以及行政执法部门依法查封、扣押的机动车，公安机关交通管理部门不予办理机动车登记。</p></td></tr></tbody></table><p><br></p>', 2, 1, '2019-11-04 09:38:44', 1, '2019-11-04 17:11:21', 1);
+
+-- ----------------------------
+-- Table structure for tb_law_type
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_law_type`;
+CREATE TABLE `tb_law_type`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码,关联数据常量表\"',
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `value` int(11) NULL DEFAULT NULL COMMENT '值',
+  `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
+  `remark` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典说明',
+  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法规二级分类表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_law_type
+-- ----------------------------
+INSERT INTO `tb_law_type` VALUES (1, '1574147128849', '美国', 1, 1, '国际分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (2, '1574147128849', '日本', 2, 2, '国际分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (3, '1574147128849', '韩国', 3, 3, '国际分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (4, '1574147128849', '欧盟', 4, 4, '国际分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (5, '1574147128849', '其他', 5, 5, '国际分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (6, '1574147128851', '广东省', 1, 1, '地方分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (7, '1574147128851', '江苏省', 2, 2, '地方分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (8, '1574147128851', '浙江省', 3, 3, '地方分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (9, '1574147128851', '上海市', 4, 4, '地方分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+INSERT INTO `tb_law_type` VALUES (10, '1574147128851', '其他省市', 5, 5, '地方分类', 1, '2019-11-19 16:45:56', 1, '2019-11-19 16:45:59', 1);
+
+-- ----------------------------
+-- Table structure for tb_multi_media
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_multi_media`;
+CREATE TABLE `tb_multi_media`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `business_id` int(11) NULL DEFAULT NULL COMMENT '业务ID',
+  `business_type` tinyint(2) NULL DEFAULT NULL COMMENT '业务类型',
+  `category` tinyint(2) NULL DEFAULT NULL COMMENT '多媒体类型：1-图片，2-视频',
+  `thumbnail` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '缩略图/视频展示图名称',
+  `media_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '原图片/视频存储名称',
+  `media_type` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '数据类型，例：image/jpeg',
+  `size` double NULL DEFAULT NULL COMMENT '大小(KB)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '多媒体数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for tb_permission
@@ -237,6 +320,62 @@ INSERT INTO `tb_spot_check` VALUES (29, '/', '深圳市兰亭科技股份有限�
 INSERT INTO `tb_spot_check` VALUES (30, '/', '上海家化联合股份有限公司', '南昌高新技术产业开发区万事达超市', '水润滢亮洁面乳', '100g', 'AAJZS/20230219', 1, '上海', 1, '/', '江西省药品监督管理局', '2019-10-09', 0, 'http://mpa.jiangxi.gov.cn/xwzx/zwtg/jdcj/hzpqxjdcj/32492549.html', 1, '2019-10-16 15:25:15', 1, '2019-10-16 15:25:15', 1);
 
 -- ----------------------------
+-- Table structure for tb_system_data
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_system_data`;
+CREATE TABLE `tb_system_data`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码',
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `type_code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父级',
+  `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
+  `remark` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典说明',
+  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `idx_code`(`code`) USING BTREE COMMENT '编码唯一索引'
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_system_data
+-- ----------------------------
+INSERT INTO `tb_system_data` VALUES (1, '01', '皮肤用化妆品', 'ZJCPLX', 1, '质检产品分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (2, '02', '毛发用化妆品', 'ZJCPLX', 2, '质检产品分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (3, '03', '指（趾）甲用化妆品', 'ZJCPLX', 3, '质检产品分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (4, '04', '口唇用化妆品', 'ZJCPLX', 4, '质检产品分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (5, '1574147128833', '国际标准', 'BZYJFL', 1, '标准一级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (6, '1574147128834', '国家标准', 'BZYJFL', 2, '标准一级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (7, '1574147128835', '行业标准', 'BZYJFL', 3, '标准一级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (8, '1574147128836', '地方标准', 'BZYJFL', 4, '标准一级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (9, '1574147128837', '团体标准', 'BZYJFL', 5, '标准一级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (10, '1574147128838', '其他标准', 'BZYJFL', 6, '标准一级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (11, '1574147128839', '基础标准', 'BZEJFL', 1, '标准二级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (12, '1574147128840', '产品标准', 'BZEJFL', 2, '标准二级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (13, '1574147128841', '方法标准', 'BZEJFL', 3, '标准二级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (14, '1574147128842', '安全标准', 'BZEJFL', 4, '标准二级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (15, '1574147128843', '卫生标准', 'BZEJFL', 5, '标准二级分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (16, '1574147128844', '单位1', 'BZFBDW', 1, '标准发布单位', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (17, '1574147128845', '单位2', 'BZFBDW', 2, '标准发布单位', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (18, '1574147128846', '单位3', 'BZFBDW', 3, '标准发布单位', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (19, '1574147128847', '单位4', 'BZFBDW', 4, '标准发布单位', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (20, '1574147128848', '单位5', 'BZFBDW', 5, '标准发布单位', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (21, '1574147128849', '国际法规', 'FGFL', 1, '法规分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (22, '1574147128850', '国家法规', 'FGFL', 2, '法规分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (23, '1574147128851', '地方法规', 'FGFL', 3, '法规分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (24, '1574147128852', '其他法规', 'FGFL', 4, '法规分类', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (25, '1574147128853', '发布机构1', 'FGFBDW', 1, '法规发布机构', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (26, '1574147128854', '发布机构2', 'FGFBDW', 2, '法规发布机构', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (27, '1574147128855', '法规来源1', 'FGLY', 1, '法规来源', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (28, '1574147128856', '法规来源2', 'FGLY', 2, '法规来源', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (29, '1574147128857', '法规来源3', 'FGLY', 3, '法规来源', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (30, '1574147128858', '法规来源4', 'FGLY', 4, '法规来源', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (31, '1574147128859', '法规文章', 'WZLX', 1, '文章类型', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+INSERT INTO `tb_system_data` VALUES (32, '1574147128860', '质检文章', 'WZLX', 2, '文章类型', 1, '2019-11-19 15:05:52', 1, '2019-11-19 15:05:55', 1);
+
+-- ----------------------------
 -- Table structure for tb_system_data_type
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_system_data_type`;
@@ -255,7 +394,7 @@ CREATE TABLE `tb_system_data_type`  (
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_system_data_type
@@ -303,6 +442,37 @@ INSERT INTO `tb_system_data_type` VALUES (40, 3, 1, 'law', 'law_publish_unit', '
 INSERT INTO `tb_system_data_type` VALUES (41, 3, 2, 'law', 'law_publish_unit', '发布机构2', NULL, NULL, 1, '2019-10-29 10:29:33', 1, '2019-10-29 10:29:37', 1);
 INSERT INTO `tb_system_data_type` VALUES (42, 3, 1, 'law', 'law_source', '来源1', NULL, NULL, 1, '2019-10-29 10:30:08', 1, '2019-10-29 10:30:11', 1);
 INSERT INTO `tb_system_data_type` VALUES (43, 3, 2, 'law', 'law_source', '来源2', NULL, NULL, 1, '2019-10-29 10:30:32', 1, '2019-10-29 10:30:35', 1);
+INSERT INTO `tb_system_data_type` VALUES (44, 3, 3, 'law', 'law_source', '来源3', '来源3', NULL, 1, '2019-11-07 20:20:26', 1, '2019-11-07 20:20:26', 1);
+INSERT INTO `tb_system_data_type` VALUES (45, 3, 4, 'law', 'law_source', '来源4', '来源4', NULL, 1, '2019-11-07 20:23:11', 1, '2019-11-07 20:23:11', 1);
+
+-- ----------------------------
+-- Table structure for tb_system_type
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_system_type`;
+CREATE TABLE `tb_system_type`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编码',
+  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `remark` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典说明',
+  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_system_type
+-- ----------------------------
+INSERT INTO `tb_system_type` VALUES (1, 'WZLX', '文章类型', '文章类型', 1, '2019-11-19 14:54:46', 1, '2019-11-19 14:54:51', 1);
+INSERT INTO `tb_system_type` VALUES (2, 'ZJCPLX', '质检产品类型', '质检产品类型', 1, '2019-11-19 14:55:53', 1, '2019-11-19 14:55:56', 1);
+INSERT INTO `tb_system_type` VALUES (3, 'BZYJFL', '标准一级分类', '标准一级分类', 1, '2019-11-19 14:54:46', 1, '2019-11-19 14:54:51', 1);
+INSERT INTO `tb_system_type` VALUES (4, 'BZEJFL', '标准二级分类', '标准二级分类', 1, '2019-11-19 14:54:46', 1, '2019-11-19 14:54:51', 1);
+INSERT INTO `tb_system_type` VALUES (5, 'BZFBDW', '标准发布单位', '标准发布单位', 1, '2019-11-19 14:54:46', 1, '2019-11-19 14:54:51', 1);
+INSERT INTO `tb_system_type` VALUES (6, 'FGFL', '法规分类', '法规分类', 1, '2019-11-19 14:54:46', 1, '2019-11-19 14:54:51', 1);
+INSERT INTO `tb_system_type` VALUES (7, 'FGFBDW', '法规发布机构', '法规发布机构', 1, '2019-11-19 14:54:46', 1, '2019-11-19 14:54:51', 1);
+INSERT INTO `tb_system_type` VALUES (8, 'FGLY', '法规来源', '法规来源', 1, '2019-11-19 14:54:46', 1, '2019-11-19 14:54:51', 1);
 
 -- ----------------------------
 -- Table structure for tb_user
