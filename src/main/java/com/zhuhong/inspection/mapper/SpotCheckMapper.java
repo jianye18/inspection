@@ -2,6 +2,7 @@ package com.zhuhong.inspection.mapper;
 
 import com.zhuhong.inspection.condition.SpotCheckCondition;
 import com.zhuhong.inspection.model.SpotCheck;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SpotCheckVo;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
@@ -35,5 +36,12 @@ public interface SpotCheckMapper extends Mapper<SpotCheck> {
      * @Date: 2019/10/31 16:13
      */
     SpotCheckVo getSpotCheckById(SpotCheckCondition condition);
+
+    /**
+     * 获取发布机构集合
+     * @Author: jian.ye
+     * @Date: 2019/11/13 20:59
+     */
+    List<SelectionLabel> getInstitutionList();
 
 }

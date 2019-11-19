@@ -64,4 +64,13 @@ public interface SystemDataService {
      */
     List<SelectionLabel> getLawCategoryData(SystemDataType systemDataType);
 
+    /**
+     * 根据父级编码获取常量数据
+     * @param typeCodes
+     * @return Map<String, List>
+     * @Author: jian.ye
+     * @Date: 2019/11/19 15:27
+     */
+    Map<String, List> getSystemDataByTypeCode(String typeCodes);
+
 }

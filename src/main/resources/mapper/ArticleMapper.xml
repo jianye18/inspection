@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.ArticleMapper">
+
+    <sql id="baseResult">
+        a.id as id,
+        a.title as title,
+        a.author as author,
+        a.content as content,
+        a.type_code as typeCode,
+        a.subject as subject,
+        a.is_publish as isPublish,
+        a.publish_time as publishTime,
+        a.read_count as readCount,
+        a.links as links,
+        a.create_id as createId,
+        a.create_time as createTime,
+        a.update_id as updateId,
+        a.update_time as updateTime,
+        a.usable as usable
+    </sql>
+
+    <select id="getArticleListByCondition" resultType="com.zhuhong.inspection.vo.ArticleVo"
+            parameterType="com.zhuhong.inspection.condition.ArticleCondition">
+        select
+            <include refid="baseResult"/>
+            ,s.name as typeName
+        from
+            tb_article a
+        left join tb_system_data s on s.code = a.type_code
+        where
+            a.usable = 1
+            <if test="typeCode != null and typeCode != ''">
+                and a.type_code = #{typeCode}
+            </if>
+            <if test="isPublish != null and isPublish != 0">
+                and a.is_publish = #{isPublish}
+            </if>
+            <if test="searchPhrase != null and searchPhrase != '' ">
+                and a.title like concat('%', #{searchPhrase}, '%')
+            </if>
+        order by a.publish_time desc
+    </select>
+
+    <select id="getArticleById" resultType="com.zhuhong.inspection.vo.ArticleVo">
+        select
+            <include refid="baseResult"/>
+            ,s.name as typeName
+        from
+            tb_article a
+        left join tb_system_data s on s.code = a.type_code
+        where
+            a.usable = 1
+            and a.id = #{articleId}
+    </select>
+
+</mapper>

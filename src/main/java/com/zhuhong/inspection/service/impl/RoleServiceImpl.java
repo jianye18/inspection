@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,12 +60,13 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean saveRole(Role role, Integer currentUserId) {
         boolean flag = false;
+        Date currentDate = DateUtil.getCurrentDate();
         Integer roleId = role.getId();
         role.setUpdateId(currentUserId);
-        role.setUpdateTime(DateUtil.getCurrentDate());
+        role.setUpdateTime(currentDate);
         if (roleId == null) {
             role.setCreateId(currentUserId);
-            role.setCreateTime(DateUtil.getCurrentDate());
+            role.setCreateTime(currentDate);
             flag = roleMapper.insertSelective(role) > 0;
         } else {
             flag = roleMapper.updateByPrimaryKey(role) > 0;

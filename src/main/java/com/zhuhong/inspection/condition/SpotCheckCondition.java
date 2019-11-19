@@ -18,8 +18,8 @@ public class SpotCheckCondition extends BaseCondition {
     private Integer id;
     @ApiModelProperty(name = "currentId", value = "1",hidden = true)
     private Integer currentId;
-    @ApiModelProperty(name = "productType", value = "产品分类：1-皮肤用化妆品，2-毛发用化妆品，3-指（趾）甲用化妆品，4-口唇用化妆品", example = "1")
-    private Integer productType;
+    @ApiModelProperty(name = "productType", value = "产品分类,关联数据常量表", example = "01")
+    private String productType;
     @ApiModelProperty(name = "institution", value = "公布机构", example = "国家药品监督管理局")
     private String institution;
     @ApiModelProperty(name = "checkResult", value = "抽检结果：0-不合格，1-合格", example = "1")

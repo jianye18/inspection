@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.SystemDataMapper">
+
+    <select id="getSystemDataByTypeCode" resultType="com.zhuhong.inspection.vo.SelectionLabel"
+            parameterType="java.lang.String">
+        select
+            s.code as code,
+            s.code as value,
+            s.name as label
+        from
+            tb_system_data s
+        where
+            s.usable = 1
+            and s.type_code = #{typeCode}
+        order by s.sort
+    </select>
+
+</mapper>

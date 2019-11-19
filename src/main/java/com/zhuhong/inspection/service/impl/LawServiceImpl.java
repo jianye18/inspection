@@ -1,9 +1,11 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.LawCondition;
+import com.zhuhong.inspection.dto.LawDto;
 import com.zhuhong.inspection.mapper.LawMapper;
 import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.Law;
@@ -31,9 +33,11 @@ public class LawServiceImpl implements LawService {
     private AnnexService annexService;
 
     @Override
-    public boolean saveLaw(Law law, Integer currentUserId) {
+    public boolean saveLaw(LawDto lawDto, Integer currentUserId) {
         boolean flag = false;
         Date current = DateUtil.getCurrentDate();
+        String annexs = lawDto.getAnnexs();
+        Law law = JSONObject.parseObject(JSONObject.toJSONString(lawDto), Law.class);
         law.setUpdateId(currentUserId);
         law.setUpdateTime(current);
         if (law.getId() == null) {
@@ -42,13 +46,13 @@ public class LawServiceImpl implements LawService {
             int r = lawMapper.insertSelective(law);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(false, law.getAnnexs(), law.getId(), Constants.BASE_TYPE_3);
+                annexService.handleAnnex(false, annexs, law.getId(), Constants.BASE_TYPE_3);
             }
         } else {
             int r = lawMapper.updateByPrimaryKeySelective(law);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(true, law.getAnnexs(), law.getId(), Constants.BASE_TYPE_3);
+                annexService.handleAnnex(true, annexs, law.getId(), Constants.BASE_TYPE_3);
             }
         }
         return flag;

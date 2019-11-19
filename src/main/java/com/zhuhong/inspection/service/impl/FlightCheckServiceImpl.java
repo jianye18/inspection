@@ -11,6 +11,7 @@ import com.zhuhong.inspection.vo.FlightCheckVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,11 +28,12 @@ public class FlightCheckServiceImpl implements FlightCheckService {
 
     @Override
     public boolean saveFlightCheck(FlightCheck flightCheck, Integer currentUserId) {
+        Date currentDate = DateUtil.getCurrentDate();
         flightCheck.setUpdateId(currentUserId);
-        flightCheck.setUpdateTime(DateUtil.getCurrentDate());
+        flightCheck.setUpdateTime(currentDate);
         if (flightCheck.getId() == null) {
             flightCheck.setCreateId(currentUserId);
-            flightCheck.setCreateTime(DateUtil.getCurrentDate());
+            flightCheck.setCreateTime(currentDate);
             return flightCheckMapper.insertSelective(flightCheck) > 0;
         } else {
             return flightCheckMapper.updateByPrimaryKey(flightCheck) > 0;

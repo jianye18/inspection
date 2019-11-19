@@ -44,10 +44,10 @@ public class SpotCheck extends BaseModel {
     @Column(name = "expire_time")
     @ExcelProperty(index = 5 , value = "保质期")
     private String expireTime;
-    @ApiModelProperty(name = "productType", value = "产品分类：1-皮肤用化妆品，2-毛发用化妆品，3-指（趾）甲用化妆品，4-口唇用化妆品", example = "1")
+    @ApiModelProperty(name = "productType", value = "产品分类,关联数据常量表", example = "1")
     @Column(name = "product_type")
     @ExcelProperty(index = 6 , value = "产品分类")
-    private Integer productType;
+    private String productType;
     @ApiModelProperty(name = "location", value = "产地", example = "安徽")
     @Column(name = "location")
     @ExcelProperty(index = 7 , value = "产地")

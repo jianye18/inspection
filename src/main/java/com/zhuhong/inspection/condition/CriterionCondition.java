@@ -18,13 +18,13 @@ public class CriterionCondition extends BaseCondition {
     @ApiModelProperty(name = "currentId", value = "1",hidden = true)
     private Integer currentId;
     @ApiModelProperty(name = "category", value = "一级分类", example = "1")
-    private Integer category;
+    private String category;
     @ApiModelProperty(name = "type", value = "二级分类", example = "1")
-    private Integer type;
+    private String type;
     @ApiModelProperty(name = "status", value = "状态", example = "1")
     private Integer status;
     @ApiModelProperty(name = "publishUnit", value = "发布单位", example = "1")
-    private Integer publishUnit;
+    private String publishUnit;
     @ApiModelProperty(name = "startDate", value = "开始日期", example = "2019-01-01")
     private String startDate;
     @ApiModelProperty(name = "endDate", value = "结束日期", example = "2019-10-10")

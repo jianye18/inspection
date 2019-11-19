@@ -28,17 +28,17 @@
     <select id="getSpotCheckListByCondition" resultType="com.zhuhong.inspection.vo.SpotCheckVo"
             parameterType="com.zhuhong.inspection.condition.SpotCheckCondition">
         select
-            <include refid="baseSql"></include>,
-            t.name as productTypeName
+            <include refid="baseSql"/>,
+            d.name as productTypeName
         from
             tb_spot_check s
-        left join tb_system_data_type t on t.value = s.product_type and t.code = #{code} and t.param = #{param}
+        left join tb_system_data d on d.code = s.product_type
         where
             s.usable = 1
             <if test="currentId != null and currentId != 0">
                 and s.id != #{currentId}
             </if>
-            <if test="productType != null and productType != 0">
+            <if test="productType != null and productType != ''">
                 and s.product_type = #{productType}
             </if>
             <if test="institution != null and institution != '' ">
@@ -56,14 +56,25 @@
     <select id="getSpotCheckById" resultType="com.zhuhong.inspection.vo.SpotCheckVo"
             parameterType="com.zhuhong.inspection.condition.SpotCheckCondition">
         select
-            <include refid="baseSql"></include>,
-            t.name as productTypeName
+            <include refid="baseSql"/>,
+            d.name as productTypeName
         from
             tb_spot_check s
-        left join tb_system_data_type t on t.value = s.product_type and t.code = #{code} and t.param = #{param}
+        left join tb_system_data d on d.code = s.product_type
         where
             s.usable = 1
             and s.id = #{id}
+    </select>
+
+    <select id="getInstitutionList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            id as code,
+            institution as value,
+            institution as label
+        from
+            tb_spot_check
+        group by
+            institution
     </select>
 
 </mapper>

@@ -1,9 +1,12 @@
 package com.zhuhong.inspection.controller.system;
 
+import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
-import com.zhuhong.inspection.model.Law;
+import com.zhuhong.inspection.condition.LawCondition;
+import com.zhuhong.inspection.dto.LawDto;
 import com.zhuhong.inspection.service.LawService;
+import com.zhuhong.inspection.vo.LawVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -21,26 +24,40 @@ import javax.servlet.http.HttpServletRequest;
 @Api(value = "法规数据controller")
 @Slf4j
 @RestController
-@RequestMapping("/law/")
+@RequestMapping("/api/law/")
 public class LawController extends BaseController {
 
     @Autowired
     private LawService lawService;
 
-    /**
-     * 保存法规数据
-     * @Author: jian.ye
-     * @Date: 2019/10/19 15:23
-     */
-    @ApiOperation(value = "保存法规数据", notes = "保存法规数据")
-    @ApiImplicitParam(name = "law", value = "法规数据", dataType = "Law")
-    @PostMapping("/saveLaw")
-    public Result saveLaw(@RequestBody Law law, HttpServletRequest request) {
-        String LOG_MSG = "调用保存法规数据接口---saveLaw()---，";
-        log.debug(LOG_MSG + "上传参数：" + law.toString());
+    @ApiOperation(value = "分页获取法规数据", notes = "返回法规数据列表")
+    @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "LawCondition")
+    @PostMapping("/getLawPageList")
+    public Result<LawVo> getLawPageList(@RequestBody LawCondition condition) {
+        String LOG_MSG = "调用分页获取法规数据接口---getLawPageList()---，";
+        log.debug(LOG_MSG + "上传参数：" + condition.toString());
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
-            boolean flag = lawService.saveLaw(law, getCurrentUser(request).getId());
+            PageInfo<LawVo> list = lawService.getLawPageList(condition);
+            result = Result.genSuccessResult(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "保存法规数据", notes = "保存法规数据")
+    @ApiImplicitParam(name = "lawDto", value = "法规数据", dataType = "LawDto")
+    @PostMapping("/saveLaw")
+    public Result saveLaw(@RequestBody LawDto lawDto, HttpServletRequest request) {
+        String LOG_MSG = "调用保存法规数据接口---saveLaw()---，";
+        log.debug(LOG_MSG + "上传参数：" + lawDto.toString());
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            boolean flag = lawService.saveLaw(lawDto, getCurrentUser(request).getId());
             if (flag) {
                 result = Result.genSuccessResultMsg("保存法规数据成功");
             }
@@ -53,11 +70,24 @@ public class LawController extends BaseController {
         return result;
     }
 
-    /**
-     * 删除法规数据
-     * @Author: jian.ye
-     * @Date: 2019/10/19 16:46
-     */
+    @ApiOperation(value = "根据ID获取法规数据", notes = "根据ID获取法规数据")
+    @ApiImplicitParam(name = "id", value = "法规数据ID", example = "1")
+    @GetMapping("getLawById/{id}")
+    public Result<LawVo> getLawById(@PathVariable(value = "id") Integer id) {
+        String LOG_MSG = "调用根据ID获取法规数据接口---getLawById()---，";
+        log.debug(LOG_MSG + "上传参数：" + id);
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            result = Result.genSuccessResult(lawService.getLawById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
     @ApiOperation(value = "删除法规数据", notes = "删除法规数据")
     @ApiImplicitParam(name = "lawId", value = "法规数据ID", example = "1")
     @DeleteMapping("/deleteLaw/{lawId}")

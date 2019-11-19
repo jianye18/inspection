@@ -25,17 +25,17 @@
     <select id="getLawListByCondition" resultType="com.zhuhong.inspection.vo.LawVo"
             parameterType="com.zhuhong.inspection.condition.LawCondition">
         select
-            <include refid="baseResult"></include>,
+            <include refid="baseResult"/>,
             s.name as categoryName,
-            d.name as typeName,
+            b.name as typeName,
             t.name as publishUnitName,
-            b.name as sourceName
+            d.name as sourceName
         from
             tb_law l
-        left join tb_system_data_type s on s.type = 3 and s.value = l.category and s.code = #{code} and s.param = #{categoryCode}
-        left join tb_system_data_type d on d.type = 3 and d.value = l.type and d.code = #{code} and d.param = #{typeCode}
-        left join tb_system_data_type t on t.type = 3 and t.value = l.publish_unit and t.code = #{code} and t.param = #{publishUnitCode}
-        left join tb_system_data_type b on b.type = 3 and b.value = l.source and b.code = #{code} and b.param = #{sourceCode}
+        left join tb_system_data s on s.code = l.category
+        left join tb_law_type b on b.value = l.type
+        left join tb_system_data t on t.code = l.publish_unit
+        left join tb_system_data d on d.code = l.source
         where
             l.usable = 1
             <if test="currentId != null and currentId != 0">
@@ -68,17 +68,17 @@
     <select id="getLawById" resultType="com.zhuhong.inspection.vo.LawVo"
             parameterType="com.zhuhong.inspection.condition.LawCondition">
         select
-            <include refid="baseResult"></include>,
+            <include refid="baseResult"/>,
             s.name as categoryName,
-            d.name as typeName,
+            b.name as typeName,
             t.name as publishUnitName,
-            b.name as sourceName
+            d.name as sourceName
         from
             tb_law l
-        left join tb_system_data_type s on s.type = 3 and s.value = l.category and s.code = #{code} and s.param = #{categoryCode}
-        left join tb_system_data_type d on d.type = 3 and d.value = l.type and d.code = #{code} and d.param = #{categoryCode}
-        left join tb_system_data_type t on t.type = 3 and t.value = l.publish_unit and t.code = #{code} and t.param = #{publishUnitCode}
-        left join tb_system_data_type b on b.type = 3 and b.value = l.source and b.code = #{code} and b.param = #{sourceCode}
+        left join tb_system_data s on s.code = l.category
+        left join tb_law_type b on b.value = l.type
+        left join tb_system_data t on t.code = l.publish_unit
+        left join tb_system_data d on d.code = l.source
         where
             l.usable = 1
             and l.id = #{id}

@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Date;
@@ -22,6 +24,8 @@ public class BaseModel implements Serializable {
 
     /**主键ID*/
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY, generator = "SELECT LAST_INSERT_ID()")
+    @Column(name = "id")
     @ApiModelProperty(hidden = true)
     private Integer id;
     /**创建人ID*/

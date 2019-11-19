@@ -27,7 +27,7 @@ import java.util.Map;
 @Api(value = "系统数据信息controller")
 @Slf4j
 @RestController
-@RequestMapping("/system/")
+@RequestMapping("/api/system/")
 public class SystemDataController extends BaseController {
 
     @Autowired
@@ -141,6 +141,28 @@ public class SystemDataController extends BaseController {
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
             result = Result.genSuccessResult(systemDataService.getLawCategoryData(systemDataType));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
+     * 根据父级编码获取常量数据
+     * @Author: jian.ye
+     * @Date: 2019/10/30 14:12
+     */
+    @ApiOperation(value = "根据父级编码获取常量数据", notes = "根据父级编码获取常量数据")
+    @GetMapping("/getSystemDataByTypeCode/{typeCodes}")
+    public Result getSystemDataByTypeCode(@PathVariable(value = "typeCodes") String typeCodes) {
+        String LOG_MSG = "调用根据父级编码获取常量数据接口---getSystemDataByTypeCode()---，";
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        log.debug(LOG_MSG + "参数：" + typeCodes);
+        try {
+            result = Result.genSuccessResult(systemDataService.getSystemDataByTypeCode(typeCodes));
         } catch (Exception e) {
             e.printStackTrace();
             log.error(LOG_MSG + "返回错误信息：", e);

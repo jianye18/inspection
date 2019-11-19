@@ -1,8 +1,10 @@
 package com.zhuhong.inspection.controller.system;
 
 import com.alibaba.excel.EasyExcel;
+import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
+import com.zhuhong.inspection.condition.FlightCheckCondition;
 import com.zhuhong.inspection.listener.excel.FlightCheckExcelListener;
 import com.zhuhong.inspection.listener.excel.SpotCheckExcelListener;
 import com.zhuhong.inspection.model.FlightCheck;
@@ -11,6 +13,7 @@ import com.zhuhong.inspection.model.SpotCheck;
 import com.zhuhong.inspection.service.FlightCheckService;
 import com.zhuhong.inspection.utils.ImageUtil;
 import com.zhuhong.inspection.utils.VideoUtil;
+import com.zhuhong.inspection.vo.FlightCheckVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +36,7 @@ import java.util.Map;
 @Api(value = "飞检数据controller")
 @Slf4j
 @RestController
-@RequestMapping("/flightCheck/")
+@RequestMapping("/api/flightCheck/")
 public class FlightCheckController extends BaseController {
 
     @Autowired
@@ -42,12 +45,25 @@ public class FlightCheckController extends BaseController {
     @Value("${upload_path}")
     private String FILE_DIR;
 
-    /**
-     * 上传飞检结果数据
-     *
-     * @Author: jian.ye
-     * @Date: 2019/10/16 16:04
-     */
+    @ApiOperation(value = "分页获取飞检数据", notes = "返回分页获取飞检数据列表")
+    @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "FlightCheckCondition")
+    @PostMapping("getFlightCheckPageList")
+    public Result<FlightCheckVo> getFlightCheckPageList(@RequestBody FlightCheckCondition condition) {
+        String LOG_MSG = "调用分页获取飞检数据接口---getFlightCheckPageList()---，";
+        log.debug(LOG_MSG + "上传参数：" + condition.toString());
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            PageInfo<FlightCheckVo> list = flightCheckService.getFlightCheckPageList(condition);
+            result = Result.genSuccessResult(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
     @ApiOperation(value = "上传飞检信息excel", notes = "上传飞检信息")
     @PostMapping("/uploadFlightCheck")
     public Result uploadFlightCheck(MultipartFile file, HttpServletRequest request) {
@@ -67,11 +83,6 @@ public class FlightCheckController extends BaseController {
         return result;
     }
 
-    /**
-     * 上传缺陷问题图片
-     * @Author: jian.ye
-     * @Date: 2019/11/13 15:26
-     */
     @ApiOperation(value = "上传缺陷问题图片", notes = "返回上传结果")
     @PostMapping("uploadMediaFile")
     public Result uploadMediaFile(@RequestParam("file") MultipartFile file) {
@@ -94,11 +105,6 @@ public class FlightCheckController extends BaseController {
         return result;
     }
 
-    /**
-     * 保存飞检数据
-     * @Author: jian.ye
-     * @Date: 2019/11/09 15:23
-     */
     @ApiOperation(value = "保存飞检数据", notes = "保存飞检数据")
     @ApiImplicitParam(name = "flightCheck", value = "飞检数据", dataType = "FlightCheck")
     @PostMapping("saveFlightCheck")
@@ -120,11 +126,24 @@ public class FlightCheckController extends BaseController {
         return result;
     }
 
-    /**
-     * 删除飞检数据
-     * @Author: jian.ye
-     * @Date: 2019/11/09 16:46
-     */
+    @ApiOperation(value = "根据ID获取飞检数据", notes = "根据ID获取飞检数据")
+    @ApiImplicitParam(name = "id", value = "飞检数据ID", example = "1")
+    @GetMapping("getFlightCheckById/{id}")
+    public Result<FlightCheckVo> getFlightCheckById(@PathVariable(value = "id") Integer id) {
+        String LOG_MSG = "调用根据ID获取飞检数据接口---getFlightCheckById()---，";
+        log.debug(LOG_MSG + "上传参数：" + id);
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            result = Result.genSuccessResult(flightCheckService.getFlightCheckById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
     @ApiOperation(value = "删除飞检数据", notes = "删除飞检数据")
     @ApiImplicitParam(name = "flightCheckId", value = "飞检数据ID", example = "1")
     @DeleteMapping("/deleteFlightCheck/{flightCheckId}")

@@ -22,27 +22,27 @@
     <select id="getCriterionListByCondition" resultType="com.zhuhong.inspection.vo.CriterionVo"
             parameterType="com.zhuhong.inspection.condition.CriterionCondition">
         select
-            <include refid="baseResult"></include>,
+            <include refid="baseResult"/>,
             s.name as categoryName,
             d.name as typeName,
             t.name as publishUnitName
         from
             tb_criterion c
-        left join tb_system_data_type s on s.type = 2 and s.value = c.category and s.code = #{code} and s.param = #{categoryCode}
-        left join tb_system_data_type d on d.type = 2 and d.value = c.type and d.code = #{code} and d.param = #{typeCode}
-        left join tb_system_data_type t on t.type = 2 and t.value = c.publish_unit and t.code = #{code} and t.param = #{publishUnitCode}
+        left join tb_system_data s on s.code = c.category
+        left join tb_system_data d on d.code = c.type
+        left join tb_system_data t on t.code = c.publish_unit
         where
             c.usable = 1
             <if test="currentId != null and currentId != 0">
                 and c.id != #{currentId}
             </if>
-            <if test="category != null and category != 0">
+            <if test="category != null and category != ''">
                 and c.category = #{category}
             </if>
-            <if test="type != null and type != 0">
+            <if test="type != null and type != ''">
                 and c.type = #{type}
             </if>
-            <if test="publishUnit != null and publishUnit != 0">
+            <if test="publishUnit != null and publishUnit != ''">
                 and c.publish_unit = #{publishUnit}
             </if>
             <if test="status != null">
@@ -60,15 +60,15 @@
     <select id="getCriterionById" resultType="com.zhuhong.inspection.vo.CriterionVo"
             parameterType="com.zhuhong.inspection.condition.CriterionCondition">
         select
-            <include refid="baseResult"></include>,
+            <include refid="baseResult"/>,
             s.name as categoryName,
             d.name as typeName,
             t.name as publishUnitName
         from
             tb_criterion c
-        left join tb_system_data_type s on s.type = 2 and s.value = c.category and s.code = #{code} and s.param = #{categoryCode}
-        left join tb_system_data_type d on d.type = 2 and d.value = c.type and d.code = #{code} and d.param = #{typeCode}
-        left join tb_system_data_type t on t.type = 2 and t.value = c.publish_unit and t.code = #{code} and t.param = #{publishUnitCode}
+        left join tb_system_data s on s.code = c.category
+        left join tb_system_data d on d.code = c.type
+        left join tb_system_data t on t.code = c.publish_unit
         where
             c.usable = 1
             and c.id = #{id}

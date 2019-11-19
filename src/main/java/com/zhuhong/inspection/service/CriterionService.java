@@ -2,7 +2,7 @@ package com.zhuhong.inspection.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.CriterionCondition;
-import com.zhuhong.inspection.model.Criterion;
+import com.zhuhong.inspection.dto.CriterionDto;
 import com.zhuhong.inspection.vo.CriterionVo;
 
 /**
@@ -16,12 +16,12 @@ public interface CriterionService {
     /**
      * 保存标准数据
      *
-     * @param criterion
+     * @param criterionDto
      * @return boolean
      * @Author: jian.ye
      * @Date: 2019/10/19 10:25
      */
-    boolean saveCriterion(Criterion criterion, Integer currentUserId);
+    boolean saveCriterion(CriterionDto criterionDto, Integer currentUserId);
 
     /**
      * 根据条件获取标准数据信息

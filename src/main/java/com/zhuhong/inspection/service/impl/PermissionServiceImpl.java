@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,12 +51,13 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public boolean savePermission(Permission permission, Integer currentUserId) {
+        Date currentDate = DateUtil.getCurrentDate();
         Integer pId = permission.getId();
         permission.setUpdateId(currentUserId);
-        permission.setUpdateTime(DateUtil.getCurrentDate());
+        permission.setUpdateTime(currentDate);
         if (pId == null) {
             permission.setCreateId(currentUserId);
-            permission.setCreateTime(DateUtil.getCurrentDate());
+            permission.setCreateTime(currentDate);
             if (permission.getType() == 1) {
                 permission.setParentId(0);
             }

@@ -1,9 +1,11 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.CriterionCondition;
+import com.zhuhong.inspection.dto.CriterionDto;
 import com.zhuhong.inspection.mapper.CriterionMapper;
 import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.Criterion;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,23 +35,26 @@ public class CriterionServiceImpl implements CriterionService {
     private AnnexService annexService;
 
     @Override
-    public boolean saveCriterion(Criterion criterion, Integer currentUserId) {
+    public boolean saveCriterion(CriterionDto criterionDto, Integer currentUserId) {
         boolean flag = false;
+        String annexs = criterionDto.getAnnexs();
+        Criterion criterion = JSONObject.parseObject(JSONObject.toJSONString(criterionDto), Criterion.class);
+        Date currentDate = DateUtil.getCurrentDate();
         criterion.setUpdateId(currentUserId);
-        criterion.setUpdateTime(DateUtil.getCurrentDate());
+        criterion.setUpdateTime(currentDate);
         if (criterion.getId() == null) {
             criterion.setCreateId(currentUserId);
-            criterion.setCreateTime(DateUtil.getCurrentDate());
+            criterion.setCreateTime(currentDate);
             int r = criterionMapper.insertSelective(criterion);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(false, criterion.getAnnexs(), criterion.getId(), Constants.BASE_TYPE_2);
+                annexService.handleAnnex(false, annexs, criterion.getId(), Constants.BASE_TYPE_2);
             }
         } else {
             int r = criterionMapper.updateByPrimaryKey(criterion);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(true, criterion.getAnnexs(), criterion.getId(), Constants.BASE_TYPE_2);
+                annexService.handleAnnex(true, annexs, criterion.getId(), Constants.BASE_TYPE_2);
             }
         }
         return flag;

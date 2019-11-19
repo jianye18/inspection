@@ -2,6 +2,7 @@ package com.zhuhong.inspection.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.LawCondition;
+import com.zhuhong.inspection.dto.LawDto;
 import com.zhuhong.inspection.model.Law;
 import com.zhuhong.inspection.vo.LawVo;
 
@@ -14,12 +15,12 @@ public interface LawService {
 
     /**
      * 保存法规信息
-     * @param law
+     * @param lawDto
      * @return boolean
      * @Author: jian.ye
      * @Date: 2019/10/23 8:38
      */
-    boolean saveLaw(Law law, Integer currentUserId);
+    boolean saveLaw(LawDto lawDto, Integer currentUserId);
 
     /**
      * 根据条件分页查询法规信息

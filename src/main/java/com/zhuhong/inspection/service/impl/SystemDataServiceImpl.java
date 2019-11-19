@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.SystemDataTypeCondition;
+import com.zhuhong.inspection.mapper.SystemDataMapper;
 import com.zhuhong.inspection.mapper.SystemDataTypeMapper;
 import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
@@ -16,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 系统数据业务实现类
@@ -32,6 +30,8 @@ public class SystemDataServiceImpl implements SystemDataService {
 
     @Autowired
     private SystemDataTypeMapper systemDataTypeMapper;
+    @Autowired
+    private SystemDataMapper systemDataMapper;
 
     @Override
     public Map<String, List> getAllSystemDataTypeList(Integer type, String code, String param) {
@@ -60,13 +60,14 @@ public class SystemDataServiceImpl implements SystemDataService {
 
     @Override
     public boolean saveSystemDataType(SystemDataType systemDataType, Integer currentUserId) {
+        Date currentDate = DateUtil.getCurrentDate();
         systemDataType.setUpdateId(currentUserId);
-        systemDataType.setUpdateTime(DateUtil.getCurrentDate());
+        systemDataType.setUpdateTime(currentDate);
         if (systemDataType.getId() != null) {
             return systemDataTypeMapper.updateByPrimaryKeySelective(systemDataType) > 0;
         } else {
             systemDataType.setCreateId(currentUserId);
-            systemDataType.setCreateTime(DateUtil.getCurrentDate());
+            systemDataType.setCreateTime(currentDate);
             systemDataType.setValue(systemDataTypeMapper.getMaxValueByParam(systemDataType.getCode(), systemDataType.getParam()) + 1);
             return systemDataTypeMapper.insertSelective(systemDataType) > 0;
         }
@@ -136,6 +137,17 @@ public class SystemDataServiceImpl implements SystemDataService {
             }
         }
         return labelList;
+    }
+
+    @Override
+    public Map<String, List> getSystemDataByTypeCode(String typeCodes) {
+        Map<String, List> map = new HashMap<>();
+        String[] arr = typeCodes.split(",");
+        for (String typeCode : arr) {
+            List<SelectionLabel> list = systemDataMapper.getSystemDataByTypeCode(typeCode);
+            map.put(typeCode, list);
+        }
+        return map;
     }
 
     /**

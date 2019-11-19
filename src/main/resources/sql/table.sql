@@ -121,7 +121,7 @@ CREATE TABLE `tb_spot_check`  (
  `sample` varchar(255) NULL DEFAULT NULL COMMENT '样品名称',
  `specification` varchar(128) NULL DEFAULT NULL COMMENT '包装规格',
  `expire_time` varchar(64) NULL DEFAULT NULL COMMENT '保质期',
- `product_type` tinyint(2) NULL DEFAULT NULL COMMENT '产品分类：1-皮肤用化妆品，2-毛发用化妆品，3-指（趾）甲用化妆品，4-口唇用化妆品',
+ `product_type` varchar(32) NULL DEFAULT NULL COMMENT '产品分类,关联数据常量表',
  `location` varchar(16) NULL DEFAULT NULL COMMENT '产地',
  `check_result` tinyint(2) NULL DEFAULT NULL COMMENT '抽检结果：0-不合格，1-合格',
  `subject` varchar(255) NULL DEFAULT NULL COMMENT '不合格项目',
@@ -159,16 +159,53 @@ CREATE TABLE `tb_system_data_type`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for tb_system_type
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_system_type`;
+CREATE TABLE `tb_system_type`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `code` varchar(32) NULL DEFAULT NULL COMMENT '编码',
+ `name` varchar(64) NULL DEFAULT NULL COMMENT '名称', 
+ `remark` varchar(32) DEFAULT NULL COMMENT '字典说明',
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_system_data
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_system_data`;
+CREATE TABLE `tb_system_data`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `code` varchar(32) NULL DEFAULT NULL COMMENT '编码',
+ `name` varchar(64) NULL DEFAULT NULL COMMENT '名称', 
+ `type_code` varchar(32) NULL DEFAULT NULL COMMENT '父级编码',
+ `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
+ `remark` varchar(32) DEFAULT NULL COMMENT '字典说明', 
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE,
+ UNIQUE KEY `idx_code` (`code`) USING BTREE COMMENT '编码唯一索引'
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统分类数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for tb_criterion
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_criterion`;
 CREATE TABLE `tb_criterion`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
  `name` varchar(32) NULL DEFAULT NULL COMMENT '名称', 
- `category` tinyint(2) NULL DEFAULT NULL COMMENT '一级分类', 
- `type` tinyint(2) NULL DEFAULT NULL COMMENT '二级分类', 
+ `category` varchar(32) NULL DEFAULT NULL COMMENT '一级分类,关联数据常量表', 
+ `type` varchar(32) NULL DEFAULT NULL COMMENT '二级分类,关联数据常量表', 
  `status` tinyint(2) NULL DEFAULT NULL COMMENT '状态',
- `publish_unit` tinyint(2) NULL DEFAULT NULL COMMENT '发布单位',
+ `publish_unit` varchar(32) NULL DEFAULT NULL COMMENT '发布单位,关联数据常量表',
  `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
  `implement_date` date NULL DEFAULT NULL COMMENT '实施日期',
  `summary` varchar(255) NULL DEFAULT NULL COMMENT '摘要',
@@ -219,6 +256,25 @@ CREATE TABLE `tb_law`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法律法规数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for tb_law_type
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_law_type`;
+CREATE TABLE `tb_law_type`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `code` varchar(32) NULL DEFAULT NULL COMMENT '编码,关联数据常量表"',
+ `name` varchar(64) NULL DEFAULT NULL COMMENT '名称', 
+ `value` int(11) NULL DEFAULT NULL COMMENT '值',
+ `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
+ `remark` varchar(32) DEFAULT NULL COMMENT '字典说明', 
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '法规二级分类表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for tb_flight_check
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_flight_check`;
@@ -255,6 +311,29 @@ CREATE TABLE `tb_multi_media`  (
  `size` double DEFAULT NULL COMMENT '大小(KB)',
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '多媒体数据表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for tb_article
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_article`;
+CREATE TABLE `tb_article`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `title` varchar(128) NULL DEFAULT NULL COMMENT '文章标题',
+ `author` varchar(16)  NULL DEFAULT NULL COMMENT '作者',
+ `content` MEDIUMTEXT NULL DEFAULT NULL COMMENT '文章内容', 
+ `type_code` varchar(32) NULL DEFAULT NULL COMMENT '文章类型',
+ `subject` varchar(225) NULL DEFAULT NULL COMMENT '文章关键词',
+ `is_publish` tinyint(2) DEFAULT 0 COMMENT '是否发布：0-否，1-是',
+ `publish_time` datetime NULL DEFAULT NULL COMMENT '发布时间',
+ `read_count` int(11) DEFAULT 0 COMMENT '阅读量',
+ `links` text NULL DEFAULT NULL COMMENT '相关链接', 
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文章表' ROW_FORMAT = Dynamic; 
 
 SET FOREIGN_KEY_CHECKS = 1;
 

@@ -25,16 +25,16 @@ public class Criterion extends BaseModel {
     private String name;
     @ApiModelProperty(name = "category", value = "一级分类", example = "1")
     @Column(name = "category")
-    private Integer category;
+    private String category;
     @ApiModelProperty(name = "type", value = "二级分类", example = "1")
     @Column(name = "type")
-    private Integer type;
+    private String type;
     @ApiModelProperty(name = "status", value = "状态", example = "1")
     @Column(name = "status")
     private Integer status;
     @ApiModelProperty(name = "publishUnit", value = "发布单位", example = "1")
     @Column(name = "publish_unit")
-    private Integer publishUnit;
+    private String publishUnit;
     @ApiModelProperty(name = "publishDate", value = "发布日期", example = "2019-10-15")
     @Column(name = "publish_date")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
@@ -47,7 +47,4 @@ public class Criterion extends BaseModel {
     @Column(name = "summary")
     private String summary;
 
-    @ApiModelProperty(name = "annexs", value = "附件集合", example = "[{\"111_20191023.txt\", \"112_20191023.txt\"}]")
-    @Transient
-    private String annexs;
 }

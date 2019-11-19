@@ -1,5 +1,6 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.List;
 
 
@@ -48,12 +50,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVo getUserWithRolePermissionByNickName(String nickName) throws InvocationTargetException, IllegalAccessException {
+    public UserVo getUserWithRolePermissionByNickName(String nickName) {
         User user = new User();
         user.setNickName(nickName);
         user = userMapper.selectOne(user);
-        UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(userVo, user);
+        UserVo userVo = JSONObject.parseObject(JSONObject.toJSONString(user), UserVo.class);
         Integer userId = user.getId();
         List<UserRole>  userRoles = roleMapper.getUserRoleByUserId(userId);
         if (userRoles != null && userRoles.size() > 0) {
@@ -67,19 +68,20 @@ public class UserServiceImpl implements UserService {
     public PageInfo<UserVo> getUserPageListByCondition(UserCondition userCondition) {
         PageHelper.startPage(userCondition.getPageNum(), userCondition.getPageSize());
         List<UserVo> list = userMapper.getUserListByCondition(userCondition);
-        return new PageInfo<UserVo>(list);
+        return new PageInfo<>(list);
     }
 
     @Override
     public boolean saveUser(User user, Integer currentUserId) {
         boolean flag = false;
+        Date currentDate = DateUtil.getCurrentDate();
         Integer userId = user.getId();
         user.setUpdateId(currentUserId);
-        user.setUpdateTime(DateUtil.getCurrentDate());
+        user.setUpdateTime(currentDate);
         if (userId == null) {
             user.setPassword(MD5.getMD5(Constants.DEFAULT_PASSWORD));
             user.setCreateId(currentUserId);
-            user.setCreateTime(DateUtil.getCurrentDate());
+            user.setCreateTime(currentDate);
             user.setUserStatus(Constants.SYS_USER_STATUS_1);
             if (userMapper.insertSelective(user) > 0) {
                 flag = true;
