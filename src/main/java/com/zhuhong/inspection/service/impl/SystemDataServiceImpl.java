@@ -3,15 +3,19 @@ package com.zhuhong.inspection.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
+import com.zhuhong.inspection.condition.SystemDataCondition;
 import com.zhuhong.inspection.condition.SystemDataTypeCondition;
 import com.zhuhong.inspection.mapper.SystemDataMapper;
 import com.zhuhong.inspection.mapper.SystemDataTypeMapper;
+import com.zhuhong.inspection.model.SystemData;
 import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
 import com.zhuhong.inspection.utils.DateUtil;
+import com.zhuhong.inspection.utils.MD5;
 import com.zhuhong.inspection.vo.CascaderData;
 import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SystemDataTypeVo;
+import com.zhuhong.inspection.vo.SystemDataVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -148,6 +152,32 @@ public class SystemDataServiceImpl implements SystemDataService {
             map.put(typeCode, list);
         }
         return map;
+    }
+
+    @Override
+    public List<SelectionLabel> getAllSystemType() {
+        return systemDataMapper.getAllSystemType();
+    }
+
+    @Override
+    public PageInfo<SystemDataVo> getSystemDataPageList(SystemDataCondition condition) {
+        PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
+        List<SystemDataVo> list = systemDataMapper.getSystemDataPageList(condition);
+        return new PageInfo<>(list);
+    }
+
+    @Override
+    public boolean saveSystemData(SystemData systemData, Integer currentUserId) {
+        Date current = DateUtil.getCurrentDate();
+        systemData.setUpdateId(currentUserId);
+        systemData.setUpdateTime(current);
+        if (systemData.getId() == null) {
+            systemData.setCreateId(currentUserId);
+            systemData.setCreateTime(current);
+            systemData.setTypeCode(MD5.getMD5(String.valueOf(System.currentTimeMillis())));
+
+        }
+        return false;
     }
 
     /**

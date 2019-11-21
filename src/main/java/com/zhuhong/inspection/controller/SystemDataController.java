@@ -3,9 +3,12 @@ package com.zhuhong.inspection.controller;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
+import com.zhuhong.inspection.condition.SystemDataCondition;
 import com.zhuhong.inspection.condition.SystemDataTypeCondition;
+import com.zhuhong.inspection.model.SystemData;
 import com.zhuhong.inspection.model.SystemDataType;
 import com.zhuhong.inspection.service.SystemDataService;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SystemDataTypeVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -141,6 +144,49 @@ public class SystemDataController extends BaseController {
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
             result = Result.genSuccessResult(systemDataService.getLawCategoryData(systemDataType));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
+     * 分页获取系统分类常量数据
+     * @Author: jian.ye
+     * @Date: 2019/10/30 14:12
+     */
+    @ApiOperation(value = "分页获取系统分类常量数据", notes = "分页获取系统分类常量数据")
+    @ApiImplicitParam(name = "condition", value = "查询条件", dataType = "SystemDataCondition")
+    @PostMapping("/getSystemDataPageList")
+    public Result<List<SystemData>> getSystemDataPageList(@RequestBody SystemDataCondition condition) {
+        String LOG_MSG = "调用分页获取系统分类常量数据接口---getSystemDataPageList()---，";
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            result = Result.genSuccessResult(systemDataService.getSystemDataPageList(condition));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(LOG_MSG + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(LOG_MSG + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    /**
+     * 获取所有系统分类
+     * @Author: jian.ye
+     * @Date: 2019/10/30 14:12
+     */
+    @ApiOperation(value = "获取所有系统分类", notes = "获取所有系统分类")
+    @GetMapping("/getAllSystemType")
+    public Result<List<SelectionLabel>> getAllSystemType() {
+        String LOG_MSG = "调用获取所有系统分类接口---getAllSystemType()---，";
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            result = Result.genSuccessResult(systemDataService.getAllSystemType());
         } catch (Exception e) {
             e.printStackTrace();
             log.error(LOG_MSG + "返回错误信息：", e);

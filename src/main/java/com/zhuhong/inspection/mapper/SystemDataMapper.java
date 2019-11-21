@@ -1,7 +1,9 @@
 package com.zhuhong.inspection.mapper;
 
+import com.zhuhong.inspection.condition.SystemDataCondition;
 import com.zhuhong.inspection.model.SystemData;
 import com.zhuhong.inspection.vo.SelectionLabel;
+import com.zhuhong.inspection.vo.SystemDataVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
@@ -22,5 +24,22 @@ public interface SystemDataMapper extends Mapper<SystemData> {
      * @Date: 2019/11/19 15:29
      */
     List<SelectionLabel> getSystemDataByTypeCode(@Param(value = "typeCode") String typeCode);
+
+    /**
+     * 获取所有系统分类
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2019/11/21 9:29
+     */
+    List<SelectionLabel> getAllSystemType();
+
+    /**
+     * 根据条件获取系统分类常量数据
+     * @param condition
+     * @return List<SystemDataVo>
+     * @Author: jian.ye
+     * @Date: 2019/11/21 11:17
+     */
+    List<SystemDataVo> getSystemDataPageList(SystemDataCondition condition);
 
 }
