@@ -21,15 +21,12 @@ public class FlightCheckCondition extends BaseCondition {
     @ApiModelProperty(name = "currentId", value = "1",hidden = true)
     private Integer currentId;
     @ApiModelProperty(name = "precautions", value = "处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改", example = "3")
-    private Integer precautions;
-    @ApiModelProperty(name = "type", value = "处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改", example = "3")
-    private Integer type;
+    private String precautions;
+    @ApiModelProperty(name = "type", value = "飞检类型", example = "3")
+    private String type;
     @ApiModelProperty(name = "isDefect", value = "是否有缺陷：0-否，1-是", example = "3")
     private Integer isDefect;
-    @ApiModelProperty(name = "publishUnit", value = "处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改", example = "3")
+    @ApiModelProperty(name = "publishUnit", value = "发布单位", example = "3")
     private String publishUnit;
-
-    private String code = Constants.FLIGHT_CHECK;
-    private String param = Constants.PRECAUTIONS;
 
 }

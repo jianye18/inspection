@@ -15,5 +15,7 @@ public class FlightCheckVo extends FlightCheck {
 
     @ApiModelProperty(name = "precautionsName", value = "处理措施", example = "处理措施")
     private String precautionsName;
+    @ApiModelProperty(name = "typeName", value = "飞检类型")
+    private String typeName;
 
 }

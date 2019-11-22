@@ -4,6 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.FlightCheckCondition;
 import com.zhuhong.inspection.model.FlightCheck;
 import com.zhuhong.inspection.vo.FlightCheckVo;
+import com.zhuhong.inspection.vo.SelectionLabel;
+
+import java.util.List;
 
 /**
  * 飞检数据业务逻辑接口层
@@ -65,5 +68,13 @@ public interface FlightCheckService {
      * @Date: 2019/11/9 19:47
      */
     boolean deleteFlightCheck(Integer id, Integer currentUserId);
+
+    /**
+     * 获取飞检数据的发布单位
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2019/11/22 20:33
+     */
+    List<SelectionLabel> getAllPublishUnit();
 
 }

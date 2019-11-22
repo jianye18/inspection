@@ -8,6 +8,7 @@ import com.zhuhong.inspection.model.FlightCheck;
 import com.zhuhong.inspection.service.FlightCheckService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.FlightCheckVo;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,5 +72,10 @@ public class FlightCheckServiceImpl implements FlightCheckService {
         flightCheck.setUpdateTime(DateUtil.getCurrentDate());
         flightCheck.setUsable(FlightCheck.ENABLE_0);
         return flightCheckMapper.updateByPrimaryKeySelective(flightCheck) > 0;
+    }
+
+    @Override
+    public List<SelectionLabel> getAllPublishUnit() {
+        return flightCheckMapper.getPublishUnitList();
     }
 }
