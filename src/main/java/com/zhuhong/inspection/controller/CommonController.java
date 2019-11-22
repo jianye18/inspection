@@ -26,7 +26,7 @@ import java.time.LocalDate;
 @Api(value = "公共controller")
 @Slf4j
 @RestController
-@RequestMapping("/common/")
+@RequestMapping("/api/common/")
 public class CommonController extends BaseController {
 
     @Value("${upload_path}")

@@ -25,12 +25,14 @@
             <include refid="baseResult"/>,
             s.name as categoryName,
             d.name as typeName,
-            t.name as publishUnitName
+            t.name as publishUnitName,
+            a.name as statusName
         from
             tb_criterion c
         left join tb_system_data s on s.code = c.category
         left join tb_system_data d on d.code = c.type
         left join tb_system_data t on t.code = c.publish_unit
+        left join tb_system_data a on a.code = c.status
         where
             c.usable = 1
             <if test="currentId != null and currentId != 0">
@@ -63,12 +65,14 @@
             <include refid="baseResult"/>,
             s.name as categoryName,
             d.name as typeName,
-            t.name as publishUnitName
+            t.name as publishUnitName,
+            a.name as statusName
         from
             tb_criterion c
         left join tb_system_data s on s.code = c.category
         left join tb_system_data d on d.code = c.type
         left join tb_system_data t on t.code = c.publish_unit
+        left join tb_system_data a on a.code = c.status
         where
             c.usable = 1
             and c.id = #{id}

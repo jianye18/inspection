@@ -7,6 +7,7 @@ import com.zhuhong.inspection.mapper.SpotCheckMapper;
 import com.zhuhong.inspection.model.SpotCheck;
 import com.zhuhong.inspection.service.SpotCheckService;
 import com.zhuhong.inspection.utils.DateUtil;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SpotCheckVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,11 @@ public class SpotCheckServiceImpl implements SpotCheckService {
         SpotCheckCondition condition = new SpotCheckCondition();
         condition.setId(id);
         return spotCheckMapper.getSpotCheckById(condition);
+    }
+
+    @Override
+    public List<SelectionLabel> getAllInstitution() {
+        return spotCheckMapper.getInstitutionList();
     }
 
 }

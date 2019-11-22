@@ -21,53 +21,6 @@ import java.util.Map;
 public interface SystemDataService {
 
     /**
-     * 根据类型获取系统分类数据
-     * @param type
-     * @param code
-     * @param param
-     * @return List<SystemDataType>
-     * @Author: jian.ye
-     * @Date: 2019/10/16 16:42
-     */
-    Map<String, List> getAllSystemDataTypeList(Integer type, String code, String param);
-
-    /**
-     * 保存系统相关分类数据
-     * @param systemDataType
-     * @param currentUserId
-     * @return boolean
-     * @Author: jian.ye
-     * @Date: 2019/10/21 15:28
-     */
-    boolean saveSystemDataType(SystemDataType systemDataType, Integer currentUserId);
-
-    /**
-     * 根据条件分页查询分类数据
-     * @param condition
-     * @return PageInfo<SystemDataType>
-     * @Author: jian.ye
-     * @Date: 2019/10/21 15:36
-     */
-    PageInfo<SystemDataTypeVo> getSystemDataTypePageList(SystemDataTypeCondition condition);
-
-    /**
-     * 获取首页筛选项
-     * @return List<Map<String, Object>>
-     * @Author: jian.ye
-     * @Date: 2019/10/30 14:00
-     */
-    List<Map<String, Object>> getHomePageFilterItem();
-
-    /**
-     * 根据条件查询分类数据
-     * @param systemDataType
-     * @return List<SelectionLabel>
-     * @Author: jian.ye
-     * @Date: 2019/11/7 20:37
-     */
-    List<SelectionLabel> getLawCategoryData(SystemDataType systemDataType);
-
-    /**
      * 根据父级编码获取常量数据
      * @param typeCodes
      * @return Map<String, List>

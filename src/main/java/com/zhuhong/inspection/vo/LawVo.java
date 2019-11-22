@@ -25,5 +25,7 @@ public class LawVo extends Law {
     private String publishUnitName;
     @ApiModelProperty(name = "sourceName", value = "来源名称")
     private String sourceName;
+    @ApiModelProperty(name = "statusName", value = "状态名称")
+    private String statusName;
 
 }

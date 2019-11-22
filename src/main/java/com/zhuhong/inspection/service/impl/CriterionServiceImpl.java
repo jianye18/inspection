@@ -37,7 +37,7 @@ public class CriterionServiceImpl implements CriterionService {
     @Override
     public boolean saveCriterion(CriterionDto criterionDto, Integer currentUserId) {
         boolean flag = false;
-        String annexs = criterionDto.getAnnexs();
+        List<Annex> annexList = criterionDto.getAnnexList();
         Criterion criterion = JSONObject.parseObject(JSONObject.toJSONString(criterionDto), Criterion.class);
         Date currentDate = DateUtil.getCurrentDate();
         criterion.setUpdateId(currentUserId);
@@ -48,13 +48,13 @@ public class CriterionServiceImpl implements CriterionService {
             int r = criterionMapper.insertSelective(criterion);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(false, annexs, criterion.getId(), Constants.BASE_TYPE_2);
+                annexService.saveAnnex(false, annexList, criterion.getId(), Constants.BASE_TYPE_2);
             }
         } else {
             int r = criterionMapper.updateByPrimaryKey(criterion);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(true, annexs, criterion.getId(), Constants.BASE_TYPE_2);
+                annexService.saveAnnex(true, annexList, criterion.getId(), Constants.BASE_TYPE_2);
             }
         }
         return flag;

@@ -30,9 +30,4 @@ public class CriterionCondition extends BaseCondition {
     @ApiModelProperty(name = "endDate", value = "结束日期", example = "2019-10-10")
     private String endDate;
 
-    private String code = Constants.CRITERION;
-    private String categoryCode = Constants.CRITERION_CATEGORY;
-    private String typeCode = Constants.CRITERION_TYPE;
-    private String publishUnitCode = Constants.CRITERION_PUBLISH_UNIT;
-
 }

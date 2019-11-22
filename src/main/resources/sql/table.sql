@@ -204,7 +204,7 @@ CREATE TABLE `tb_criterion`  (
  `name` varchar(32) NULL DEFAULT NULL COMMENT '名称', 
  `category` varchar(32) NULL DEFAULT NULL COMMENT '一级分类,关联数据常量表', 
  `type` varchar(32) NULL DEFAULT NULL COMMENT '二级分类,关联数据常量表', 
- `status` tinyint(2) NULL DEFAULT NULL COMMENT '状态',
+ `status` varchar(32) NULL DEFAULT NULL COMMENT '状态',
  `publish_unit` varchar(32) NULL DEFAULT NULL COMMENT '发布单位,关联数据常量表',
  `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
  `implement_date` date NULL DEFAULT NULL COMMENT '实施日期',
@@ -240,7 +240,7 @@ CREATE TABLE `tb_law`  (
  `code_number` varchar(255) NULL DEFAULT NULL COMMENT '法规文号',
  `category` varchar(32) NULL DEFAULT NULL COMMENT '一级分类', 
  `type` tinyint(2) NULL DEFAULT NULL COMMENT '二级分类', 
- `status` tinyint(2) NULL DEFAULT NULL COMMENT '状态',
+ `status` varchar(32) NULL DEFAULT NULL COMMENT '状态',
  `publish_unit` varchar(32) NULL DEFAULT NULL COMMENT '发布单位',
  `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
  `implement_date` date NULL DEFAULT NULL COMMENT '实施日期',
@@ -333,6 +333,26 @@ CREATE TABLE `tb_article`  (
  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
  `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文章表' ROW_FORMAT = Dynamic; 
+
+-- ----------------------------
+-- Table structure for tb_user_log
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_user_log`;
+CREATE TABLE `tb_user_log`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `user_id` int(11) DEFAULT NULL COMMENT '用户ID',
+ `user_name` varchar(32) NULL DEFAULT NULL COMMENT '用户名',
+ `ip` varchar(16)  NULL DEFAULT NULL COMMENT '访问地址', 
+ `type` varchar(16) NULL DEFAULT NULL COMMENT '日志操作类型',
+ `description` varchar(225) NULL DEFAULT NULL COMMENT '操作描述',
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE,
+ KEY `idx_type` (`type`) USING BTREE COMMENT '日志操作类型索引'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文章表' ROW_FORMAT = Dynamic; 
 
 SET FOREIGN_KEY_CHECKS = 1;

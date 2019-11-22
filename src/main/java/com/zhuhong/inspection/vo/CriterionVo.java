@@ -21,6 +21,8 @@ public class CriterionVo extends Criterion {
     private String typeName;
     @ApiModelProperty(name = "publishUnitName", value = "发布单位名称", example = "单位1")
     private String publishUnitName;
+    @ApiModelProperty(name = "statusName", value = "状态名称", example = "现行有效")
+    private String statusName;
     @ApiModelProperty(name = "annexList", value = "附件集合")
     private List<Annex> annexList;
 }

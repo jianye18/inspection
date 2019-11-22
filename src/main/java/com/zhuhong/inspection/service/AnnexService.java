@@ -12,15 +12,14 @@ import java.util.List;
 public interface AnnexService {
 
     /**
-     * 处理标准和法规的附件数据
+     * 保存附件信息
      * @param isUpdate
-     * @param annexs
+     * @param annexList
      * @param businessId
-     * @param type
      * @Author: jian.ye
-     * @Date: 2019/10/23 20:01
+     * @Date: 2019/11/22 16:37
      */
-    void handleAnnex(boolean isUpdate, String annexs, Integer businessId, Integer type);
+    void saveAnnex(boolean isUpdate, List<Annex> annexList, Integer businessId, Integer type);
 
     /**
      * 根据业务ID和类型删除附件数据

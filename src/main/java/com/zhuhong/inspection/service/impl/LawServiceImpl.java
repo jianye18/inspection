@@ -13,6 +13,7 @@ import com.zhuhong.inspection.service.AnnexService;
 import com.zhuhong.inspection.service.LawService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.LawVo;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,7 @@ public class LawServiceImpl implements LawService {
     public boolean saveLaw(LawDto lawDto, Integer currentUserId) {
         boolean flag = false;
         Date current = DateUtil.getCurrentDate();
-        String annexs = lawDto.getAnnexs();
+        List<Annex> annexList = lawDto.getAnnexList();
         Law law = JSONObject.parseObject(JSONObject.toJSONString(lawDto), Law.class);
         law.setUpdateId(currentUserId);
         law.setUpdateTime(current);
@@ -46,13 +47,13 @@ public class LawServiceImpl implements LawService {
             int r = lawMapper.insertSelective(law);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(false, annexs, law.getId(), Constants.BASE_TYPE_3);
+                annexService.saveAnnex(false, annexList, law.getId(), Constants.BASE_TYPE_3);
             }
         } else {
             int r = lawMapper.updateByPrimaryKeySelective(law);
             if (r > 0) {
                 flag = true;
-                annexService.handleAnnex(true, annexs, law.getId(), Constants.BASE_TYPE_3);
+                annexService.saveAnnex(true, annexList, law.getId(), Constants.BASE_TYPE_3);
             }
         }
         return flag;

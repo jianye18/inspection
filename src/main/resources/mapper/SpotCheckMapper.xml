@@ -68,7 +68,7 @@
 
     <select id="getInstitutionList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
         select
-            id as code,
+            institution as code,
             institution as value,
             institution as label
         from

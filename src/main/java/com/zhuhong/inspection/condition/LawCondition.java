@@ -22,7 +22,7 @@ public class LawCondition extends BaseCondition {
     @ApiModelProperty(name = "type", value = "二级分类", example = "1")
     private Integer type;
     @ApiModelProperty(name = "status", value = "状态", example = "1")
-    private Integer status;
+    private String status;
     @ApiModelProperty(name = "process", value = "环节", example = "1")
     private Integer process;
     @ApiModelProperty(name = "source", value = "来源", example = "1")
@@ -33,11 +33,5 @@ public class LawCondition extends BaseCondition {
     private String startDate;
     @ApiModelProperty(name = "endDate", value = "结束日期", example = "2019-10-10")
     private String endDate;
-
-    private String categoryCode = Constants.LAW_CATEGORY;
-    private String typeCode = Constants.LAW_TYPE;
-    private String code = Constants.LAW;
-    private String publishUnitCode = Constants.LAW_PUBLISH_UNIT;
-    private String sourceCode = Constants.LAW_SOURCE;
 
 }

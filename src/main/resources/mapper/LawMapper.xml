@@ -29,14 +29,16 @@
             s.name as categoryName,
             b.name as typeName,
             t.name as publishUnitName,
-            d.name as sourceName
+            d.name as sourceName,
+            a.name as statusName
         from
             tb_law l
         left join tb_system_data s on s.code = l.category
-        left join tb_law_type b on b.value = l.type
+        left join tb_law_type b on b.value = l.type and b.code = l.category
         left join tb_system_data t on t.code = l.publish_unit
         left join tb_system_data d on d.code = l.source
-        where
+        left join tb_system_data a on a.code = l.status
+        WHERE
             l.usable = 1
             <if test="currentId != null and currentId != 0">
                 and l.id != #{currentId}
@@ -72,13 +74,15 @@
             s.name as categoryName,
             b.name as typeName,
             t.name as publishUnitName,
-            d.name as sourceName
+            d.name as sourceName,
+            a.name as statusName
         from
             tb_law l
         left join tb_system_data s on s.code = l.category
-        left join tb_law_type b on b.value = l.type
+        left join tb_law_type b on b.value = l.type and b.code = l.category
         left join tb_system_data t on t.code = l.publish_unit
         left join tb_system_data d on d.code = l.source
+        left join tb_system_data a on a.code = l.status
         where
             l.usable = 1
             and l.id = #{id}

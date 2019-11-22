@@ -33,7 +33,7 @@ public class Law extends BaseModel {
     private Integer type;
     @ApiModelProperty(name = "status", value = "状态", example = "1")
     @Column(name = "status")
-    private Integer status;
+    private String status;
     @ApiModelProperty(name = "publishUnit", value = "发布单位", example = "1")
     @Column(name = "publish_unit")
     private String publishUnit;

@@ -4,7 +4,11 @@ import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.LawCondition;
 import com.zhuhong.inspection.dto.LawDto;
 import com.zhuhong.inspection.model.Law;
+import com.zhuhong.inspection.model.LawType;
 import com.zhuhong.inspection.vo.LawVo;
+import com.zhuhong.inspection.vo.SelectionLabel;
+
+import java.util.List;
 
 /**
  * 法规业务接口层

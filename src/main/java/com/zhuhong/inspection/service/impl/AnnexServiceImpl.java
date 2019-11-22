@@ -1,17 +1,17 @@
 package com.zhuhong.inspection.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
 import com.zhuhong.inspection.mapper.AnnexMapper;
 import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.service.AnnexService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 叶剑
+ */
 @Service
 public class AnnexServiceImpl implements AnnexService {
 
@@ -21,27 +21,19 @@ public class AnnexServiceImpl implements AnnexService {
     private String FILE_DIR;
 
     @Override
-    public void handleAnnex(boolean isUpdate, String annexs, Integer businessId, Integer type) {
+    public void saveAnnex(boolean isUpdate, List<Annex> annexList, Integer businessId, Integer type) {
         if (isUpdate) {
             Annex annex = new Annex();
             annex.setBusinessId(businessId);
             annex.setType(type);
             annexMapper.delete(annex);
         }
-        List<Annex> list = new ArrayList<>();
-        if (StringUtils.isNotEmpty(annexs)) {
-            JSONArray jsonArray = JSONArray.parseArray(annexs);
-            for (Object o : jsonArray) {
-                Annex annex = new Annex();
-                String name = (String) o;
-                annex.setName(name);
-                annex.setPath(FILE_DIR + name);
-                annex.setType(type);
-                annex.setBusinessId(businessId);
-                list.add(annex);
-            }
-            annexMapper.insertList(list);
+        for (Annex annex : annexList) {
+            annex.setPath(FILE_DIR + annex.getName());
+            annex.setBusinessId(businessId);
+            annex.setType(type);
         }
+        annexMapper.insertList(annexList);
     }
 
     @Override

@@ -3,7 +3,10 @@ package com.zhuhong.inspection.service;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.SpotCheckCondition;
 import com.zhuhong.inspection.model.SpotCheck;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SpotCheckVo;
+
+import java.util.List;
 
 /**
  * 抽检数据业务接口层
@@ -41,5 +44,13 @@ public interface SpotCheckService {
      * @Date: 2019/10/31 16:12
      */
     SpotCheckVo getSpotCheckById(Integer id);
+
+    /**
+     * 获取抽检数据的公布机构
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2019/11/22 11:34
+     */
+    List<SelectionLabel> getAllInstitution();
 
 }

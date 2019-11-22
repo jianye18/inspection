@@ -33,115 +33,7 @@ import java.util.*;
 public class SystemDataServiceImpl implements SystemDataService {
 
     @Autowired
-    private SystemDataTypeMapper systemDataTypeMapper;
-    @Autowired
     private SystemDataMapper systemDataMapper;
-
-    @Override
-    public Map<String, List> getAllSystemDataTypeList(Integer type, String code, String param) {
-        Map<String, List> map = new HashMap<>();
-        SystemDataType systemDataType = new SystemDataType();
-        systemDataType.setUsable(SystemDataType.ENABLE_1);
-        systemDataType.setType(type);
-        if (StringUtils.isNotEmpty(code)) {
-            systemDataType.setCode(code);
-        }
-        if (StringUtils.isNotEmpty(param)) {
-            systemDataType.setParam(param);
-        }
-        List<SystemDataType> list = systemDataTypeMapper.select(systemDataType);
-        if (Constants.BASE_TYPE_1.equals(type)) {
-            map = getSpotCheckType(map, list);
-        }
-        if (Constants.BASE_TYPE_2.equals(type)) {
-            map = getCriterionType(map, list);
-        }
-        if (Constants.BASE_TYPE_3.equals(type)) {
-            map = getLawType(map, list);
-        }
-        return map;
-    }
-
-    @Override
-    public boolean saveSystemDataType(SystemDataType systemDataType, Integer currentUserId) {
-        Date currentDate = DateUtil.getCurrentDate();
-        systemDataType.setUpdateId(currentUserId);
-        systemDataType.setUpdateTime(currentDate);
-        if (systemDataType.getId() != null) {
-            return systemDataTypeMapper.updateByPrimaryKeySelective(systemDataType) > 0;
-        } else {
-            systemDataType.setCreateId(currentUserId);
-            systemDataType.setCreateTime(currentDate);
-            systemDataType.setValue(systemDataTypeMapper.getMaxValueByParam(systemDataType.getCode(), systemDataType.getParam()) + 1);
-            return systemDataTypeMapper.insertSelective(systemDataType) > 0;
-        }
-    }
-
-    @Override
-    public PageInfo<SystemDataTypeVo> getSystemDataTypePageList(SystemDataTypeCondition condition) {
-        PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
-        List<SystemDataTypeVo> list = systemDataTypeMapper.getSystemDataTypeList(condition);
-        return new PageInfo<>(list);
-    }
-
-    @Override
-    public List<Map<String, Object>> getHomePageFilterItem() {
-        List<Map<String, Object>> mapList = new ArrayList<>();
-        SystemDataType systemDataType = new SystemDataType();
-        systemDataType.setUsable(SystemDataType.ENABLE_1);
-        List<SystemDataType> list = systemDataTypeMapper.select(systemDataType);
-        if (list.size() > 0) {
-            List<SystemDataType> spotCheckTypeList = new ArrayList<>();
-            List<SystemDataType> criterionTypeList = new ArrayList<>();
-            List<SystemDataType> lawTypeList = new ArrayList<>();
-            for (SystemDataType dataType : list) {
-                if (Constants.BASE_TYPE_1.equals(dataType.getType())) {
-                    if (Constants.PRODUCT_TYPE.equals(dataType.getParam())) {
-                        spotCheckTypeList.add(dataType);
-                    }
-                }
-                if (Constants.BASE_TYPE_2.equals(dataType.getType())) {
-                    if (Constants.CRITERION_CATEGORY.equals(dataType.getParam()) || Constants.CRITERION_TYPE.equals(dataType.getParam())) {
-                        criterionTypeList.add(dataType);
-                    }
-                }
-                if (Constants.BASE_TYPE_3.equals(dataType.getType())) {
-                    if (Constants.LAW_CATEGORY.equals(dataType.getParam()) || Constants.LAW_SOURCE.equals(dataType.getParam()) || Constants.LAW_TYPE.equals(dataType.getParam())) {
-                        lawTypeList.add(dataType);
-                    }
-                }
-            }
-            Map<String, Object> spotCheckMap = new HashMap<>();
-            spotCheckMap.put("type", Constants.BASE_TYPE_1);
-            spotCheckMap.put("list", spotCheckTypeList);
-            mapList.add(spotCheckMap);
-            Map<String, Object> criterionMap = new HashMap<>();
-            criterionMap.put("type", Constants.BASE_TYPE_2);
-            criterionMap.put("list", criterionTypeList);
-            mapList.add(criterionMap);
-            Map<String, Object> lawMap = new HashMap<>();
-            lawMap.put("type", Constants.BASE_TYPE_3);
-            lawMap.put("list", lawTypeList);
-            mapList.add(lawMap);
-        }
-        return mapList;
-    }
-
-    @Override
-    public List<SelectionLabel> getLawCategoryData(SystemDataType systemDataType) {
-        List<SelectionLabel> labelList = new ArrayList<>();
-        systemDataType.setUsable(SystemDataType.ENABLE_1);
-        List<SystemDataType> list = systemDataTypeMapper.select(systemDataType);
-        if (list.size() > 0) {
-            for (SystemDataType dataType : list) {
-                SelectionLabel label = new SelectionLabel();
-                label.setValue(String.valueOf(dataType.getValue()));
-                label.setLabel(dataType.getName());
-                labelList.add(label);
-            }
-        }
-        return labelList;
-    }
 
     @Override
     public Map<String, List> getSystemDataByTypeCode(String typeCodes) {
@@ -174,10 +66,11 @@ public class SystemDataServiceImpl implements SystemDataService {
         if (systemData.getId() == null) {
             systemData.setCreateId(currentUserId);
             systemData.setCreateTime(current);
-            systemData.setTypeCode(MD5.getMD5(String.valueOf(System.currentTimeMillis())));
-
+            systemData.setCode(MD5.getMD5(String.valueOf(System.currentTimeMillis())));
+            return systemDataMapper.insertSelective(systemData) > 0;
+        } else {
+            return systemDataMapper.updateByPrimaryKeySelective(systemData) > 0;
         }
-        return false;
     }
 
     /**
