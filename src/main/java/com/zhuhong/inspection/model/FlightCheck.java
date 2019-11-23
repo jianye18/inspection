@@ -31,11 +31,11 @@ public class FlightCheck extends BaseModel {
     @ApiModelProperty(name = "precautions", value = "处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改", example = "3")
     @Column(name = "precautions")
     @ExcelProperty(index = 2 , value = "处理措施")
-    private Integer precautions;
+    private String precautions;
     @ApiModelProperty(name = "type", value = "飞检类型：1-国家飞检，2-地方飞检", example = "1")
     @Column(name = "type")
     @ExcelProperty(index = 3 , value = "飞检类型")
-    private Integer type;
+    private String type;
     @ApiModelProperty(name = "publishUnit", value = "发布单位", example = "发布单位")
     @Column(name = "publish_unit")
     @ExcelProperty(index = 4 , value = "发布单位")

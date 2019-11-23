@@ -1,9 +1,10 @@
 package com.zhuhong.inspection.controller;
 
+import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
+import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.utils.DateUtil;
-import com.zhuhong.inspection.utils.ImageUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -32,15 +33,10 @@ public class CommonController extends BaseController {
     @Value("${upload_path}")
     private String FILE_DIR;
 
-    /**
-     * 上传文件
-     * @Author: jian.ye
-     * @Date: 2019/10/23 14:16
-     */
     @ApiOperation(value = "上传文件", notes = "返回上传结果")
     @PostMapping("uploadSingleFile")
     public Result uploadSingleFile(@RequestParam("file") MultipartFile file) {
-        Result result = Result.genFailResult(FAIL_MESSAGE);
+        Result result;
         log.debug("上传文件名：" + file.getOriginalFilename());
         try{
             //判断文件是否为空
@@ -67,17 +63,12 @@ public class CommonController extends BaseController {
         return result;
     }
 
-    /**
-     * 根据文件名删除文件
-     *
-     * @Author: jian.ye
-     * @Date: 2019/10/27 17:38
-     */
     @ApiOperation(value = "删除文件", notes = "返回删除结果")
     @ApiImplicitParam(name = "fileName", value = "文件名")
     @DeleteMapping("deleteFile/{fileName}")
-    public Result deleteFile(@PathVariable(value = "fileName", required = true) String fileName) {
-        Result result = Result.genFailResult(FAIL_MESSAGE);
+    @SystemLog(description = "删除文件", type = UserLog.USER_LOG_DELETE)
+    public Result deleteFile(@PathVariable(value = "fileName") String fileName) {
+        Result result;
         log.debug("删除文件的文件名：" + fileName);
         try{
             //判断文件是否为空

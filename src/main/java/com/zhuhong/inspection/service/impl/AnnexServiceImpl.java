@@ -28,12 +28,14 @@ public class AnnexServiceImpl implements AnnexService {
             annex.setType(type);
             annexMapper.delete(annex);
         }
-        for (Annex annex : annexList) {
-            annex.setPath(FILE_DIR + annex.getName());
-            annex.setBusinessId(businessId);
-            annex.setType(type);
+        if (annexList.size() > 0) {
+            for (Annex annex : annexList) {
+                annex.setPath(FILE_DIR + annex.getName());
+                annex.setBusinessId(businessId);
+                annex.setType(type);
+            }
+            annexMapper.insertList(annexList);
         }
-        annexMapper.insertList(annexList);
     }
 
     @Override

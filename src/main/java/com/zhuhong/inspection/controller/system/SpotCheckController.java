@@ -1,6 +1,7 @@
 package com.zhuhong.inspection.controller.system;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.BaseController;
@@ -61,7 +62,7 @@ public class SpotCheckController extends BaseController {
     @PostMapping("getSpotCheckPageList")
     public Result<SpotCheckVo> getSpotCheckPageList(@RequestBody SpotCheckCondition condition) {
         String logMsg = "调用分页获取抽检结果数据接口---getSpotCheckPageList()---，";
-        log.debug(logMsg + "上传参数：" + condition.toString());
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(condition));
         Result result;
         try {
             PageInfo<SpotCheckVo> list = spotCheckService.getSpotCheckPageList(condition);

@@ -1,16 +1,16 @@
 package com.zhuhong.inspection.controller.system;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.condition.FlightCheckCondition;
+import com.zhuhong.inspection.dto.FlightCheckDto;
 import com.zhuhong.inspection.listener.excel.FlightCheckExcelListener;
-import com.zhuhong.inspection.listener.excel.SpotCheckExcelListener;
 import com.zhuhong.inspection.model.FlightCheck;
 import com.zhuhong.inspection.model.MultiMedia;
-import com.zhuhong.inspection.model.SpotCheck;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.service.FlightCheckService;
 import com.zhuhong.inspection.utils.ImageUtil;
@@ -52,7 +52,7 @@ public class FlightCheckController extends BaseController {
     @PostMapping("getFlightCheckPageList")
     public Result<FlightCheckVo> getFlightCheckPageList(@RequestBody FlightCheckCondition condition) {
         String logMsg = "调用分页获取飞检数据接口---getFlightCheckPageList()---，";
-        log.debug(logMsg + "上传参数：" + condition.toString());
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(condition));
         Result result;
         try {
             PageInfo<FlightCheckVo> list = flightCheckService.getFlightCheckPageList(condition);
@@ -92,8 +92,8 @@ public class FlightCheckController extends BaseController {
     public Result uploadMediaFile(@RequestParam("file") MultipartFile file) {
         Result result;
         try{
-            //Map<String, String> map = ImageUtil.saveImage(file, FILE_DIR, String.valueOf(System.currentTimeMillis()), true);
-            Map<String, String> map = VideoUtil.uploadVideo(file, FILE_DIR, String.valueOf(System.currentTimeMillis()));
+            Map<String, String> map = ImageUtil.saveImage(file, FILE_DIR, String.valueOf(System.currentTimeMillis()), true);
+            //Map<String, String> map = VideoUtil.uploadVideo(file, FILE_DIR, String.valueOf(System.currentTimeMillis()));
             log.debug("上传图片返回结果：" + map.toString());
             MultiMedia multiMedia = new MultiMedia();
             multiMedia.setMediaName(map.get("mediaName"));
@@ -113,12 +113,12 @@ public class FlightCheckController extends BaseController {
     @ApiImplicitParam(name = "flightCheck", value = "飞检数据", dataType = "FlightCheck")
     @PostMapping("saveFlightCheck")
     @SystemLog(description = "保存飞检数据", type = UserLog.USER_LOG_SAVE)
-    public Result saveFlightCheck(@RequestBody FlightCheck flightCheck, HttpServletRequest request) {
+    public Result saveFlightCheck(@RequestBody FlightCheckDto flightCheckDto, HttpServletRequest request) {
         String logMsg = "调用保存飞检数据接口---saveFlightCheck()---，";
-        log.debug(logMsg + "上传参数：" + flightCheck.toString());
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(flightCheckDto));
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
-            boolean flag = flightCheckService.saveFlightCheck(flightCheck, getCurrentUser(request).getId());
+            boolean flag = flightCheckService.saveFlightCheck(flightCheckDto, getCurrentUser(request).getId());
             if (flag) {
                 result = Result.genSuccessResultMsg("保存飞检数据成功");
             }
@@ -153,7 +153,7 @@ public class FlightCheckController extends BaseController {
     @ApiImplicitParam(name = "flightCheckId", value = "飞检数据ID", example = "1")
     @DeleteMapping("/deleteFlightCheck/{flightCheckId}")
     @SystemLog(description = "删除飞检数据", type = UserLog.USER_LOG_DELETE)
-    public Result deleteFlightCheck(@PathVariable(value = "flightCheckId", required = true) Integer flightCheckId, HttpServletRequest request) {
+    public Result deleteFlightCheck(@PathVariable(value = "flightCheckId") Integer flightCheckId, HttpServletRequest request) {
         String logMsg = "调用删除法规数据接口---deleteFlightCheck()---，";
         log.debug(logMsg + "上传参数：flightCheckId=" + flightCheckId);
         Result result = Result.genFailResult(FAIL_MESSAGE);

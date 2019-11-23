@@ -2,6 +2,7 @@ package com.zhuhong.inspection.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.FlightCheckCondition;
+import com.zhuhong.inspection.dto.FlightCheckDto;
 import com.zhuhong.inspection.model.FlightCheck;
 import com.zhuhong.inspection.vo.FlightCheckVo;
 import com.zhuhong.inspection.vo.SelectionLabel;
@@ -19,13 +20,13 @@ public interface FlightCheckService {
     /**
      * 保存飞检数据
      *
-     * @param flightCheck
+     * @param flightCheckDto
      * @param currentUserId
      * @return boolean
      * @Author: jian.ye
      * @Date: 2019/11/9 19:47
      */
-    boolean saveFlightCheck(FlightCheck flightCheck, Integer currentUserId);
+    boolean saveFlightCheck(FlightCheckDto flightCheckDto, Integer currentUserId);
 
     /**
      * 插入飞检数据

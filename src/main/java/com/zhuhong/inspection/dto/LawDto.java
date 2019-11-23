@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class LawDto extends Law {
 
-    @ApiModelProperty(name = "annexList", value = "附件集合", example = "[{\"111_20191023.txt\", \"112_20191023.txt\"}]")
+    @ApiModelProperty(name = "annexList", value = "附件集合", example = "[{\"name\":\"111_20191023.txt\", \"name\":\"112_20191023.txt\"}]")
     @JSONField(serialize = false)
     private List<Annex> annexList;
 

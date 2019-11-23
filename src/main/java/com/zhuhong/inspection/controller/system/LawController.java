@@ -1,5 +1,6 @@
 package com.zhuhong.inspection.controller.system;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.BaseController;
@@ -40,7 +41,7 @@ public class LawController extends BaseController {
     @PostMapping("/getLawPageList")
     public Result<LawVo> getLawPageList(@RequestBody LawCondition condition) {
         String logMsg = "调用分页获取法规数据接口---getLawPageList()---，";
-        log.debug(logMsg + "上传参数：" + condition.toString());
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(condition));
         Result result;
         try {
             PageInfo<LawVo> list = lawService.getLawPageList(condition);
@@ -60,7 +61,7 @@ public class LawController extends BaseController {
     @SystemLog(description = "保存法规数据", type = UserLog.USER_LOG_SAVE)
     public Result saveLaw(@RequestBody LawDto lawDto, HttpServletRequest request) {
         String logMsg = "调用保存法规数据接口---saveLaw()---，";
-        log.debug(logMsg + "上传参数：" + lawDto.toString());
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(lawDto));
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
             boolean flag = lawService.saveLaw(lawDto, getCurrentUser(request).getId());

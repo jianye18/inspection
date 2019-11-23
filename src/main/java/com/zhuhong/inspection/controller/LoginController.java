@@ -1,7 +1,9 @@
 package com.zhuhong.inspection.controller;
 
+import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.base.Result;
+import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.utils.CookieUtil;
 import com.zhuhong.inspection.utils.MD5;
 import io.swagger.annotations.Api;
@@ -12,12 +14,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 /**
  * 用户登录交互层
@@ -29,25 +32,17 @@ import java.util.Map;
 @RequestMapping("/login/")
 @Slf4j
 public class LoginController {
-
-    /**
-     * 功能描述：系统用户登录接口
-     *
-     * @return com.shop.common.config.Result
-     * @author jianye2
-     * @date 2018/8/10 15:45
-     * @version 1.0.0
-     */
-    @ApiOperation(value = "用户登录", notes = "使用账号和密码登录系统")
+    
+    @ApiOperation(value = "用户登录")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "loginName", value = "用户登录账号", required = true, dataType = "String"),
             @ApiImplicitParam(name = "password", value = "用户登录密码", required = true, dataType = "String")
     })
     @RequestMapping(value = "loginIn", method = RequestMethod.POST)
     public Result loginIn(String loginName, String password) {
-        String LOG_MSG = "调用系统用户登录接口---loginIn()---，";
+        String logMsg = "调用系统用户登录接口---loginIn()---，";
         Result result = Result.genSuccessResult();
-        log.info(LOG_MSG + "上传参数{loginName=" + loginName + ",password=" + password + "}");
+        log.info(logMsg + "上传参数{loginName=" + loginName + ",password=" + password + "}");
         UsernamePasswordToken token = new UsernamePasswordToken(loginName, MD5.getMD5(password));
         token.setRememberMe(true);
         //获取当前的Subject
@@ -63,23 +58,15 @@ public class LoginController {
         if (!currentUser.isAuthenticated()) {
             result = Result.genFailResult("用户无权限");
         }
-        log.info(LOG_MSG + "返回结果信息：" + result.toString());
+        log.info(logMsg + "返回结果信息：" + result.toString());
         return result;
     }
 
-    /**
-     * 功能描述：退出登录
-     *
-     * @return java.lang.String
-     * @author jianye2
-     * @date 2019/2/19 10:47
-     * @version 1.0.0
-     */
-    @ApiOperation(value = "用户退出登录", notes = "用户退出登录")
+    @ApiOperation(value = "用户退出登录")
     @PostMapping("/loginOut")
     public Result loginOut(HttpServletRequest request, HttpServletResponse response) {
-        String LOG_MSG = "调用系统用户退出登录接口---loginOut()---，";
-        log.info(LOG_MSG);
+        String logMsg = "调用系统用户退出登录接口---loginOut()---，";
+        log.info(logMsg);
         Result result = Result.genSuccessResult();
         try {
             CookieUtil.removeCookie(Constants.TOKEN, request, response);
@@ -87,11 +74,18 @@ public class LoginController {
             subject.logout();
         } catch (Exception e) {
             e.printStackTrace();
-            log.error(LOG_MSG + "返回错误信息：", e);
+            log.error(logMsg + "返回错误信息：", e);
             result = Result.genFailResult("用户退出失败");
         }
-        log.info(LOG_MSG + "返回结果信息：" + result.toString());
+        log.info(logMsg + "返回结果信息：" + result.toString());
         return result;
+    }
+
+    @ApiOperation(value = "保存用户登录信息")
+    @PostMapping("/saveUserLoginLog")
+    @SystemLog(description = "用户登录", type = UserLog.USER_LOG_LOGIN)
+    public void saveUserLoginLog(){
+
     }
 
 }

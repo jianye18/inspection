@@ -1,10 +1,15 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.FlightCheckCondition;
+import com.zhuhong.inspection.dto.FlightCheckDto;
 import com.zhuhong.inspection.mapper.FlightCheckMapper;
+import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.FlightCheck;
+import com.zhuhong.inspection.service.AnnexService;
 import com.zhuhong.inspection.service.FlightCheckService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.FlightCheckVo;
@@ -26,19 +31,33 @@ public class FlightCheckServiceImpl implements FlightCheckService {
 
     @Autowired
     private FlightCheckMapper flightCheckMapper;
+    @Autowired
+    private AnnexService annexService;
 
     @Override
-    public boolean saveFlightCheck(FlightCheck flightCheck, Integer currentUserId) {
+    public boolean saveFlightCheck(FlightCheckDto flightCheckDto, Integer currentUserId) {
+        boolean flag = false;
         Date currentDate = DateUtil.getCurrentDate();
+        List<Annex> annexList = flightCheckDto.getAnnexList();
+        FlightCheck flightCheck = JSONObject.parseObject(JSONObject.toJSONString(flightCheckDto), FlightCheck.class);
         flightCheck.setUpdateId(currentUserId);
         flightCheck.setUpdateTime(currentDate);
         if (flightCheck.getId() == null) {
             flightCheck.setCreateId(currentUserId);
             flightCheck.setCreateTime(currentDate);
-            return flightCheckMapper.insertSelective(flightCheck) > 0;
+            int r = flightCheckMapper.insertSelective(flightCheck);
+            if (r > 0) {
+                flag = true;
+                annexService.saveAnnex(false, annexList, flightCheck.getId(), Constants.BASE_TYPE_4);
+            }
         } else {
-            return flightCheckMapper.updateByPrimaryKey(flightCheck) > 0;
+            int r = flightCheckMapper.updateByPrimaryKey(flightCheck);
+            if (r > 0) {
+                flag = true;
+                annexService.saveAnnex(true, annexList, flightCheck.getId(), Constants.BASE_TYPE_4);
+            }
         }
+        return flag;
     }
 
     @Override

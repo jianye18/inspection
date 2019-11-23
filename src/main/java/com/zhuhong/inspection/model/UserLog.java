@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @Table(name = "tb_user_log")
 public class UserLog extends BaseModel {
 
+    public static final String USER_LOG_LOGIN = "登录";
     public static final String USER_LOG_SAVE = "保存";
     public static final String USER_LOG_UPDATE = "修改";
     public static final String USER_LOG_VIEW = "查询";

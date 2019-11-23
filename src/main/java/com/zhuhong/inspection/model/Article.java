@@ -35,7 +35,7 @@ public class Article extends BaseModel {
     @Column(name = "is_publish")
     private Integer isPublish;
     @ApiModelProperty(name = "publishTime", value = "发布时间", example = "2019-11-19 12:12:12")
-    @Column(name = "publishTime")
+    @Column(name = "publish_time")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
     @ApiModelProperty(name = "readCount", value = "阅读数量", hidden = true)

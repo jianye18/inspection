@@ -72,7 +72,7 @@
 
     <select id="getPublishUnitList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
         select
-            id as code,
+            publish_unit as code,
             publish_unit as value,
             publish_unit as label
         from

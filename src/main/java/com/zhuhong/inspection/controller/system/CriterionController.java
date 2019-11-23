@@ -1,5 +1,6 @@
 package com.zhuhong.inspection.controller.system;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.BaseController;
@@ -40,7 +41,7 @@ public class CriterionController extends BaseController {
     @PostMapping("getCriterionPageList")
     public Result<CriterionVo> getCriterionPageList(@RequestBody CriterionCondition condition) {
         String logMsg = "调用分页获取标准数据接口---getSpotCheckPageList()---，";
-        log.debug(logMsg + "上传参数：" + condition.toString());
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(condition));
         Result result;
         try {
             PageInfo<CriterionVo> list = criterionService.getCriterionPageList(condition);
@@ -84,7 +85,7 @@ public class CriterionController extends BaseController {
     @SystemLog(description = "保存标准数据", type = UserLog.USER_LOG_SAVE)
     public Result saveCriterion(@RequestBody CriterionDto criterionDto, HttpServletRequest request) {
         String logMsg = "调用保存标准数据接口---saveCriterion()---，";
-        log.debug(logMsg + "上传参数：" + criterionDto.toString());
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(criterionDto));
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
             boolean flag = criterionService.saveCriterion(criterionDto, getCurrentUser(request).getId());
