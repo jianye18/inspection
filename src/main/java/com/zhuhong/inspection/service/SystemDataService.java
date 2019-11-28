@@ -56,4 +56,13 @@ public interface SystemDataService {
      */
     boolean saveSystemData(SystemData systemData, Integer currentUserId);
 
+    /**
+     * 获取首页展示分类常量数据
+     * @param types
+     * @return Map<String, List>
+     * @Author: jian.ye
+     * @Date: 2019/11/27 19:30
+     */
+    Map<String, List> getHomeShowSystemData(String types);
+
 }

@@ -34,16 +34,16 @@
             <if test="currentId != null and currentId != 0">
                 and f.id != #{currentId}
             </if>
-            <if test="precautions != null and precautions != 0">
+            <if test="precautions != null and precautions != '' ">
                 and f.precautions = #{precautions}
             </if>
-            <if test="type != null and type != 0">
+            <if test="type != null and type != '' ">
                 and f.type = #{type}
             </if>
             <if test="isDefect != null">
                 and f.is_defect = #{isDefect}
             </if>
-            <if test="publishUnit != null and publishUnit != 0">
+            <if test="publishUnit != null and publishUnit != '' ">
                 and f.publish_unit = #{publishUnit}
             </if>
             <!--<if test="startDate != null">

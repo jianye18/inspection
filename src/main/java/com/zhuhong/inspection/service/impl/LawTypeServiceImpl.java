@@ -21,4 +21,9 @@ public class LawTypeServiceImpl implements LawTypeService {
     public List<SelectionLabel> getLawTypeListByCode(String code) {
         return lawTypeMapper.getLawTypeListByCode(code);
     }
+
+    @Override
+    public List<SelectionLabel> getAllLawType() {
+        return lawTypeMapper.getAllLawType();
+    }
 }

@@ -28,7 +28,7 @@ import java.util.List;
 @Api(value = "系统数据信息controller")
 @Slf4j
 @RestController
-@RequestMapping("/api/system/")
+@RequestMapping("/api/system")
 public class SystemDataController extends BaseController {
 
     @Autowired
@@ -97,6 +97,23 @@ public class SystemDataController extends BaseController {
         log.debug(logMsg + "参数：" + typeCodes);
         try {
             result = Result.genSuccessResult(systemDataService.getSystemDataByTypeCode(typeCodes));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "获取首页展示分类常量数据")
+    @GetMapping("/getHomeShowSystemData/{types}")
+    public Result getHomeShowSystemData(@PathVariable(value = "types") String types){
+        String logMsg = "调用获取首页展示分类常量数据接口---getHomeShowSystemData()---，";
+        Result result;
+        log.debug(logMsg + "参数：" + types);
+        try {
+            result = Result.genSuccessResult(systemDataService.getHomeShowSystemData(types));
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);

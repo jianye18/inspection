@@ -53,6 +53,17 @@ public class Constants {
     public static final Integer BASE_TYPE_2 = 2;
     public static final Integer BASE_TYPE_3 = 3;
     public static final Integer BASE_TYPE_4 = 4;
+    public static final String BASE_TYPE_SC = "SC";
+    public static final String BASE_TYPE_CC = "CC";
+    public static final String BASE_TYPE_LW = "LW";
+    public static final String BASE_TYPE_FC = "FC";
+    public static final String BASE_TYPE_AC = "AC";
+
+    /**
+     * 产品分类是否展示
+     */
+    public static final Integer IS_VIEW_TRUE = 1;
+    public static final Integer IS_VIEW_FALSE = 0;
 
     /**
      * 数据分类编码

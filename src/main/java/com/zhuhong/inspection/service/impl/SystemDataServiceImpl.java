@@ -1,5 +1,6 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.Constants;
@@ -17,6 +18,7 @@ import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SystemDataTypeVo;
 import com.zhuhong.inspection.vo.SystemDataVo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -71,6 +73,19 @@ public class SystemDataServiceImpl implements SystemDataService {
         } else {
             return systemDataMapper.updateByPrimaryKeySelective(systemData) > 0;
         }
+    }
+
+    @Override
+    public Map<String, List> getHomeShowSystemData(String types) {
+        String[] typeList = types.split(",");
+        Map<String, List> map = new HashMap<>(typeList.length);
+        if (typeList.length > 0) {
+            for (String type : typeList) {
+                List<SelectionLabel> list = systemDataMapper.getHomeShowSystemData(type, Constants.IS_VIEW_TRUE);
+                map.put(type, list);
+            }
+        }
+        return map;
     }
 
     /**

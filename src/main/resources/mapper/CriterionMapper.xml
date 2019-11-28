@@ -47,7 +47,7 @@
             <if test="publishUnit != null and publishUnit != ''">
                 and c.publish_unit = #{publishUnit}
             </if>
-            <if test="status != null">
+            <if test="status != null and status != '' ">
                 and c.status = #{status}
             </if>
             <if test="startDate != null">

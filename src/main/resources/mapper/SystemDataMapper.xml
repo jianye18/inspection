@@ -19,7 +19,7 @@
     <select id="getSystemDataByTypeCode" resultType="com.zhuhong.inspection.vo.SelectionLabel"
             parameterType="java.lang.String">
         select
-            s.code as code,
+            s.type_code as code,
             s.code as value,
             s.name as label
         from
@@ -56,6 +56,21 @@
                 and d.type_code = #{typeCode}
             </if>
         order by d.update_time desc
+    </select>
+
+    <select id="getHomeShowSystemData" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            s.type_code as code,
+            s.code as value,
+            s.name as label
+        from
+            tb_system_data s
+        where
+            s.usable = 1
+            and s.is_view = #{isView}
+            and s.type_code in (
+                select code from tb_system_type where type = #{type}
+            )
     </select>
 
 </mapper>

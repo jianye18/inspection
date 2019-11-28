@@ -26,6 +26,9 @@ public class SystemData extends BaseModel {
     @ApiModelProperty(name = "sort", value = "排序", example = "1")
     @Column(name = "sort")
     private Integer sort;
+    @ApiModelProperty(name = "isView", value = "是否首页展示：0-否、1-是", example = "1")
+    @Column(name = "is_view")
+    private Integer isView;
     @ApiModelProperty(name = "remark", value = "字典说明", example = "字典说明")
     @Column(name = "remark")
     private String remark;

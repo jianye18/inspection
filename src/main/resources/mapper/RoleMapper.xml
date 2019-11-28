@@ -17,7 +17,7 @@
 
     <select id="getRoleListByUserId" resultType="com.zhuhong.inspection.model.Role">
         select
-            <include refid="baseResult"></include>
+            <include refid="baseResult"/>
         from
             tb_role r
         where

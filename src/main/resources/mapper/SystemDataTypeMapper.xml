@@ -21,7 +21,7 @@
     <select id="getSystemDataTypeList" resultType="com.zhuhong.inspection.vo.SystemDataTypeVo"
             parameterType="com.zhuhong.inspection.condition.SystemDataTypeCondition">
         select
-            <include refid="baseResult"></include>,
+            <include refid="baseResult"/>,
             d.name as parentName
         from
             tb_system_data_type s

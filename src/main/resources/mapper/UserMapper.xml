@@ -24,7 +24,7 @@
 
     <select id="getUserListByCondition" resultType="com.zhuhong.inspection.vo.UserVo" parameterType="com.zhuhong.inspection.condition.UserCondition">
         select
-            <include refid="baseSql"></include>,
+            <include refid="baseSql"/>,
             GROUP_CONCAT(r.role_name) as roleNames
         from
             tb_user u

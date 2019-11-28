@@ -18,4 +18,12 @@ public interface LawTypeService {
      */
     List<SelectionLabel> getLawTypeListByCode(String code);
 
+    /**
+     * 获取所有法规子分类
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2019/11/22 16:08
+     */
+    List<SelectionLabel> getAllLawType();
+
 }

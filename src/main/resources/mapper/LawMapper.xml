@@ -43,19 +43,19 @@
             <if test="currentId != null and currentId != 0">
                 and l.id != #{currentId}
             </if>
-            <if test="category != null and category != 0">
+            <if test="category != null and category != '' ">
                 and l.category = #{category}
             </if>
             <if test="type != null and type != 0">
                 and l.type = #{type}
             </if>
-            <if test="publishUnit != null and publishUnit != 0">
+            <if test="publishUnit != null and publishUnit != '' ">
                 and l.publish_unit = #{publishUnit}
             </if>
-            <if test="status != null">
+            <if test="status != null and status != '' ">
                 and l.status = #{status}
             </if>
-            <if test="source != null">
+            <if test="source != null and source != '' ">
                 and l.source = #{source}
             </if>
             <if test="startDate != null">

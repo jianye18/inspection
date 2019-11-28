@@ -42,4 +42,14 @@ public interface SystemDataMapper extends Mapper<SystemData> {
      */
     List<SystemDataVo> getSystemDataPageList(SystemDataCondition condition);
 
+    /**
+     * 根据传入的type获取所有分类常量数据
+     * @param type
+     * @param isView
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2019/11/27 19:34
+     */
+    List<SelectionLabel> getHomeShowSystemData(@Param(value = "type") String type, @Param(value = "isView") Integer isView);
+
 }

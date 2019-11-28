@@ -135,4 +135,20 @@ public class LawController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "获取所有法规子分类")
+    @GetMapping("/getAllLawType")
+    public Result getAllLawType() {
+        String logMsg = "调用获取所有法规子分类接口---getAllLawType()---，";
+        Result result;
+        try {
+            result = Result.genSuccessResult(lawTypeService.getAllLawType());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
 }

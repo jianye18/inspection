@@ -28,4 +28,15 @@
             and t.code = #{code}
     </select>
 
+    <select id="getAllLawType" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            t.code as code,
+            t.value as value,
+            t.name as label
+        from
+            tb_law_type t
+        where
+            t.usable = 1
+    </select>
+
 </mapper>
