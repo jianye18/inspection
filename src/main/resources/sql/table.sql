@@ -357,5 +357,25 @@ CREATE TABLE `tb_user_log`  (
  KEY `idx_type` (`type`) USING BTREE COMMENT '日志操作类型索引'
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文章表' ROW_FORMAT = Dynamic; 
 
+-- ----------------------------
+-- Table structure for tb_banner
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_banner`;
+CREATE TABLE `tb_banner`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `name` varchar(225) NULL DEFAULT NULL COMMENT '轮播图名称',
+ `path` varchar(225) NULL DEFAULT NULL COMMENT '轮播图地址',
+ `size` double  NULL DEFAULT NULL COMMENT '大小', 
+ `type` varchar(16) NULL DEFAULT NULL COMMENT '图片类型',
+ `is_view` tinyint(2) DEFAULT 1 COMMENT '是否展示：0-否，1-是',
+ `remark` varchar(225) NULL DEFAULT NULL COMMENT '备注',
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '轮播图表' ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;
 

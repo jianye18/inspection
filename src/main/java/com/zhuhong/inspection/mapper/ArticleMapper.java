@@ -33,4 +33,14 @@ public interface ArticleMapper extends Mapper<Article> {
      */
     ArticleVo getArticleById(@Param(value = "articleId") Integer articleId);
 
+    /**
+     * 根据不同排序规则获取指定数量的文章数据
+     * @param orderName
+     * @param limit
+     * @return List<Article>
+     * @Author: jian.ye
+     * @Date: 2019/11/29 14:37
+     */
+    List<Article> getArticleListWithOrder(@Param(value = "orderName") String orderName, @Param(value = "limit") Integer limit);
+
 }

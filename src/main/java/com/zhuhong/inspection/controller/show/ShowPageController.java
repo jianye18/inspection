@@ -1,14 +1,10 @@
 package com.zhuhong.inspection.controller.show;
 
 import com.alibaba.excel.util.FileUtils;
-import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.base.BaseController;
-import com.zhuhong.inspection.base.Result;
-import com.zhuhong.inspection.condition.*;
 import com.zhuhong.inspection.model.Annex;
-import com.zhuhong.inspection.service.*;
+import com.zhuhong.inspection.service.AnnexService;
 import com.zhuhong.inspection.utils.FileUtil;
-import com.zhuhong.inspection.vo.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,7 +16,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,20 +38,10 @@ import java.util.zip.ZipOutputStream;
 public class ShowPageController extends BaseController {
 
     @Autowired
-    private SpotCheckService spotCheckService;
-    @Autowired
-    private CriterionService criterionService;
-    @Autowired
-    private LawService lawService;
-    @Autowired
     private AnnexService annexService;
-    @Autowired
-    private FlightCheckService flightCheckService;
-    @Autowired
-    private ArticleService articleService;
 
     @Value("${upload_path}")
-    private String FILE_DIR;
+    private String fileDir;
 
     /**
      * 下载附件文件
@@ -79,7 +67,7 @@ public class ShowPageController extends BaseController {
                 headers.add("Pragma", "no-cache");
                 headers.add("Expires", "0");
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-                String path = FILE_DIR + "docs\\";
+                String path = fileDir + "docs\\";
                 if (l == 1) {
                     fileName = list.get(0).getName();
                 } else {

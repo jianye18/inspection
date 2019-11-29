@@ -5,6 +5,7 @@ import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.utils.DateUtil;
+import com.zhuhong.inspection.utils.FileUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +32,7 @@ import java.time.LocalDate;
 public class CommonController extends BaseController {
 
     @Value("${upload_path}")
-    private String FILE_DIR;
+    private String fileDir;
 
     @ApiOperation(value = "上传文件", notes = "返回上传结果")
     @PostMapping("uploadSingleFile")
@@ -43,17 +44,16 @@ public class CommonController extends BaseController {
             if(file.isEmpty()){
                 result = Result.genFailResult("文件为空，上传失败!");
             } else {
-                //获得文件的字节流
-                byte[] bytes=file.getBytes();
                 //获得path对象，也即是文件保存的路径对象
                 String[] arr = file.getOriginalFilename().split("\\.");
                 String fileName = arr[0];
                 String suffix = arr[1];
                 String name = fileName + "_" + DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER_1) + "." + suffix;
-                Path path= Paths.get(FILE_DIR + "docs\\" + name);
-                //调用静态方法完成将文件写入到目标路径
-                Files.write(path,bytes);
-                result = Result.genSuccessResult(name);
+                if (FileUtil.uploadFile(file, fileDir + "docs\\", name)) {
+                    result = Result.genSuccessResult(name);
+                } else {
+                    result = Result.genFailResult("上传失败!");
+                }
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -72,7 +72,7 @@ public class CommonController extends BaseController {
         log.debug("删除文件的文件名：" + fileName);
         try{
             //判断文件是否为空
-            File file = new File(FILE_DIR + "docs\\" + fileName);
+            File file = new File(fileDir + "docs\\" + fileName);
             file.delete();
             result = Result.genSuccessResultMsg("删除文件成功！");
         }catch (Exception e){

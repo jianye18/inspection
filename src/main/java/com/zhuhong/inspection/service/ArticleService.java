@@ -5,6 +5,9 @@ import com.zhuhong.inspection.condition.ArticleCondition;
 import com.zhuhong.inspection.model.Article;
 import com.zhuhong.inspection.vo.ArticleVo;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author 叶剑
  */
@@ -57,5 +60,15 @@ public interface ArticleService {
      * @Date: 2019/11/19 14:19
      */
     boolean deleteArticle(Integer articleId, Integer currentUserId);
+
+    /**
+     * 获取首页最新和最热文章信息
+     * @param orderName
+     * @param limit
+     * @return List<Article>
+     * @Author: jian.ye
+     * @Date: 2019/11/29 14:35
+     */
+    List<Article> getHomeArticleList(String orderName, Integer limit);
 
 }

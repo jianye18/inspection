@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.BannerMapper">
+
+    <sql id="baseResult">
+        b.id as id,
+        b.name as name,
+        b.path as path,
+        b.type as type,
+        b.size as size,
+        b.remark as remark,
+        b.is_view as isView,
+        b.create_id as createId,
+        b.create_time as createTime,
+        b.update_id as updateId,
+        b.update_time as updateTime,
+        b.usable as usable
+    </sql>
+
+    <select id="getViewBannerList" resultType="com.zhuhong.inspection.model.Banner"
+            parameterType="com.zhuhong.inspection.condition.BannerCondition">
+        select
+            name,
+            concat(#{baseUrl}, path) as path
+        from
+            tb_banner
+        where
+            usable = 1
+        limit $(limit)
+    </select>
+
+</mapper>

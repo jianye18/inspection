@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author 叶剑
@@ -67,5 +68,10 @@ public class ArticleServiceImpl implements ArticleService {
         article.setUpdateTime(DateUtil.getCurrentDate());
         article.setUsable(Article.ENABLE_0);
         return articleMapper.updateByPrimaryKeySelective(article) > 0;
+    }
+
+    @Override
+    public List<Article> getHomeArticleList(String orderName, Integer limit) {
+        return articleMapper.getArticleListWithOrder(orderName, limit);
     }
 }

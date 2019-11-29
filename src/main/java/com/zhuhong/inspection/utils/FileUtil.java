@@ -1,6 +1,12 @@
 package com.zhuhong.inspection.utils;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -120,6 +126,26 @@ public class FileUtil {
             file.delete();
         }
         return true;
+    }
+
+    public static boolean uploadFile(MultipartFile file, String savePath, String name) {
+        try {
+            File f = new File(savePath);
+            if (!f.exists()) {
+                f.mkdirs();
+            }
+            File dest = new File(savePath + name);
+            file.transferTo(dest);
+            /*//获得文件的字节流
+            byte[] bytes=file.getBytes();
+            Path path= Paths.get(savePath + name);
+            //调用静态方法完成将文件写入到目标路径
+            Files.write(path,bytes);*/
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

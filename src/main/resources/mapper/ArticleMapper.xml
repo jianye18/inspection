@@ -54,4 +54,16 @@
             and a.id = #{articleId}
     </select>
 
+    <select id="getArticleListWithOrder" resultType="com.zhuhong.inspection.model.Article">
+        select
+            <include refid="baseResult"/>
+        from
+            tb_article a
+        where
+            a.usable = 1
+            and a.is_publish = 1
+        order by ${orderName} desc
+        limit ${limit}
+    </select>
+
 </mapper>

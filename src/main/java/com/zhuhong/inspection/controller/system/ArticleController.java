@@ -12,6 +12,7 @@ import com.zhuhong.inspection.service.ArticleService;
 import com.zhuhong.inspection.vo.ArticleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +115,7 @@ public class ArticleController extends BaseController {
 
     @ApiOperation(value = "删除文章信息")
     @ApiImplicitParam(name = "articleId", value = "文章ID")
-    @PostMapping("deleteArticle/{articleId}")
+    @DeleteMapping("deleteArticle/{articleId}")
     @SystemLog(description = "删除文章信息", type = UserLog.USER_LOG_DELETE)
     public Result deleteArticle(@PathVariable(value = "articleId") Integer articleId, HttpServletRequest request) {
         String logMsg = "调用删除文章接口---deleteArticle()---，";
@@ -125,6 +126,27 @@ public class ArticleController extends BaseController {
             if (flag) {
                 result = Result.genSuccessResultMsg("删除文章成功");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "获取首页最新和最热文章信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderName", value = "排序字段"),
+            @ApiImplicitParam(name = "limit", value = "查询数量")
+    })
+    @GetMapping("getHomeArticleList")
+    public Result getHomeArticleList(String orderName, Integer limit) {
+        String logMsg = "调用获取首页最新和最热文章信息接口---getHomeArticleList()---，";
+        log.debug(logMsg + "上传参数：{orderName=" + orderName + ",limit=" + limit + "}");
+        Result result;
+        try {
+            result = Result.genSuccessResult(articleService.getHomeArticleList(orderName, limit));
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);
