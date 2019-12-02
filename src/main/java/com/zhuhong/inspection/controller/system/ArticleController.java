@@ -135,25 +135,4 @@ public class ArticleController extends BaseController {
         return result;
     }
 
-    @ApiOperation(value = "获取首页最新和最热文章信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "orderName", value = "排序字段"),
-            @ApiImplicitParam(name = "limit", value = "查询数量")
-    })
-    @GetMapping("getHomeArticleList")
-    public Result getHomeArticleList(String orderName, Integer limit) {
-        String logMsg = "调用获取首页最新和最热文章信息接口---getHomeArticleList()---，";
-        log.debug(logMsg + "上传参数：{orderName=" + orderName + ",limit=" + limit + "}");
-        Result result;
-        try {
-            result = Result.genSuccessResult(articleService.getHomeArticleList(orderName, limit));
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error(logMsg + "返回错误信息：", e);
-            result = Result.genFailResult(e.getMessage());
-        }
-        log.debug(logMsg + "返回结果信息：" + result.toString());
-        return result;
-    }
-
 }

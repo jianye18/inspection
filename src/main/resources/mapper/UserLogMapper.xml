@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhuhong.inspection.mapper.UserLogMapper">
+
+    <sql id="baseResult">
+        l.id as id,
+        l.user_id as userId,
+        l.user_name as userName,
+        l.ip as ip,
+        l.type as type,
+        l.description as description,
+        l.create_id as createId,
+        l.create_time as createTime,
+        l.update_id as updateId,
+        l.update_time as updateTime,
+        l.usable as usable
+    </sql>
+
+    <select id="getUserLogList" resultType="com.zhuhong.inspection.model.UserLog"
+            parameterType="com.zhuhong.inspection.condition.UserLogCondition">
+        select
+            <include refid="baseResult"/>
+        from
+            tb_user_log l
+        where
+            l.usable = 1
+            <if test="type != null and type != ''">
+                and l.type = #{type}
+            </if>
+            <if test="searchPhrase != null and searchPhrase != ''">
+                and (l.user_name like concat('%', #{searchPhrase}, '%') or l.description like concat('%', #{searchPhrase}, '%'))
+            </if>
+        order by l.create_time desc
+    </select>
+
+</mapper>

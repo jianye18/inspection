@@ -8,6 +8,7 @@ import com.zhuhong.inspection.condition.BannerCondition;
 import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.Banner;
 import com.zhuhong.inspection.service.AnnexService;
+import com.zhuhong.inspection.service.ArticleService;
 import com.zhuhong.inspection.service.BannerService;
 import com.zhuhong.inspection.utils.FileUtil;
 import io.swagger.annotations.Api;
@@ -44,6 +45,8 @@ public class ShowPageController extends BaseController {
     private AnnexService annexService;
     @Autowired
     private BannerService bannerService;
+    @Autowired
+    private ArticleService articleService;
 
     @Value("${upload_path}")
     private String fileDir;
@@ -108,6 +111,27 @@ public class ShowPageController extends BaseController {
         Result result;
         try {
             result = Result.genSuccessResult(bannerService.getViewBannerList(condition));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "获取首页最新和最热文章信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "orderName", value = "排序字段"),
+            @ApiImplicitParam(name = "limit", value = "查询数量")
+    })
+    @GetMapping("getHomeArticleList")
+    public Result getHomeArticleList(String orderName, Integer limit) {
+        String logMsg = "调用获取首页最新和最热文章信息接口---getHomeArticleList()---，";
+        log.debug(logMsg + "上传参数：{orderName=" + orderName + ",limit=" + limit + "}");
+        Result result;
+        try {
+            result = Result.genSuccessResult(articleService.getHomeArticleList(orderName, limit));
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);
