@@ -17,16 +17,25 @@
         b.usable as usable
     </sql>
 
-    <select id="getViewBannerList" resultType="com.zhuhong.inspection.model.Banner"
+    <select id="getViewBannerList" resultType="com.zhuhong.inspection.vo.BannerVo"
             parameterType="com.zhuhong.inspection.condition.BannerCondition">
         select
-            name,
-            concat(#{baseUrl}, path) as path
+            <include refid="baseResult"/>
+            ,concat(#{baseUrl}, b.path, b.name) as viewUrl
         from
-            tb_banner
+            tb_banner b
         where
-            usable = 1
-        limit $(limit)
+            b.usable = 1
+            <if test="isView != null">
+                and b.is_view = #{isView}
+            </if>
+            <if test="searchPhrase != null and searchPhrase != ''">
+                and b.name like concat('%', #{searchPhrase}, '%')
+            </if>
+        order by b.update_time desc
+        <if test="limit != null">
+            limit ${limit}
+        </if>
     </select>
 
 </mapper>

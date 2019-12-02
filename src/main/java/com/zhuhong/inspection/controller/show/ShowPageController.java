@@ -1,9 +1,14 @@
 package com.zhuhong.inspection.controller.show;
 
 import com.alibaba.excel.util.FileUtils;
+import com.alibaba.fastjson.JSON;
 import com.zhuhong.inspection.base.BaseController;
+import com.zhuhong.inspection.base.Result;
+import com.zhuhong.inspection.condition.BannerCondition;
 import com.zhuhong.inspection.model.Annex;
+import com.zhuhong.inspection.model.Banner;
 import com.zhuhong.inspection.service.AnnexService;
+import com.zhuhong.inspection.service.BannerService;
 import com.zhuhong.inspection.utils.FileUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,9 +21,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,6 +42,8 @@ public class ShowPageController extends BaseController {
 
     @Autowired
     private AnnexService annexService;
+    @Autowired
+    private BannerService bannerService;
 
     @Value("${upload_path}")
     private String fileDir;
@@ -92,6 +97,24 @@ public class ShowPageController extends BaseController {
         } else {
             return null;
         }
+    }
+
+    @ApiOperation(value = "获取首页轮播图数据")
+    @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "BannerCondition")
+    @PostMapping("getViewBannerList")
+    public Result<Banner> getViewBannerList(@RequestBody BannerCondition condition) {
+        String logMsg = "调用获取首页轮播图数据接口---getViewBannerList()---，";
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(condition));
+        Result result;
+        try {
+            result = Result.genSuccessResult(bannerService.getViewBannerList(condition));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
     }
 
 }

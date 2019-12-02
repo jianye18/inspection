@@ -2,6 +2,7 @@ package com.zhuhong.inspection.mapper;
 
 import com.zhuhong.inspection.condition.BannerCondition;
 import com.zhuhong.inspection.model.Banner;
+import com.zhuhong.inspection.vo.BannerVo;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -20,6 +21,6 @@ public interface BannerMapper extends Mapper<Banner> {
      * @Author: jian.ye
      * @Date: 2019/11/29 15:16
      */
-    List<Banner> getViewBannerList(BannerCondition condition);
+    List<BannerVo> getViewBannerList(BannerCondition condition);
 
 }

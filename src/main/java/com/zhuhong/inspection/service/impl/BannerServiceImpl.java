@@ -8,11 +8,10 @@ import com.zhuhong.inspection.model.Banner;
 import com.zhuhong.inspection.service.BannerService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.utils.FileUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.zhuhong.inspection.vo.BannerVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -44,18 +43,10 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public PageInfo<Banner> getBannerPageList(BannerCondition condition) {
+    public PageInfo<BannerVo> getBannerPageList(BannerCondition condition) {
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
-        Example example = new Example(Banner.class);
-        Example.Criteria criteria = example.createCriteria();
-        if (condition.getIsView() != null) {
-            criteria.andEqualTo("isView", condition.getIsView());
-        }
-        if (StringUtils.isNotEmpty(condition.getSearchPhrase())) {
-            criteria.andLike("name", condition.getSearchPhrase());
-        }
-        example.setOrderByClause("update_time desc");
-        List<Banner> list = bannerMapper.selectByExample(example);
+        condition.setBaseUrl(fileDir);
+        List<BannerVo> list = bannerMapper.getViewBannerList(condition);
         return new PageInfo<>(list);
     }
 
@@ -69,18 +60,29 @@ public class BannerServiceImpl implements BannerService {
         boolean flag = false;
         Banner banner = getBannerById(bannerId);
         Date current = DateUtil.getCurrentDate();
+        banner.setUsable(Banner.ENABLE_0);
         banner.setUpdateId(currentUserId);
         banner.setUpdateTime(current);
         if (bannerMapper.updateByPrimaryKeySelective(banner) > 0) {
             flag = true;
-            FileUtil.delAllFile(banner.getPath() + banner.getName());
+            FileUtil.delAllFile(fileDir + banner.getPath() + banner.getName());
         }
         return flag;
     }
 
     @Override
-    public List<Banner> getViewBannerList(BannerCondition condition) {
+    public List<BannerVo> getViewBannerList(BannerCondition condition) {
         condition.setBaseUrl(fileDir);
         return bannerMapper.getViewBannerList(condition);
+    }
+
+    @Override
+    public boolean viewBanner(Integer bannerId, Integer isView, Integer currentUserId) {
+        Banner banner = new Banner();
+        banner.setId(bannerId);
+        banner.setIsView(isView);
+        banner.setUpdateId(currentUserId);
+        banner.setUpdateTime(DateUtil.getCurrentDate());
+        return bannerMapper.updateByPrimaryKeySelective(banner) > 0;
     }
 }

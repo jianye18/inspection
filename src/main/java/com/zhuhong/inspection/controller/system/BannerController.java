@@ -13,6 +13,7 @@ import com.zhuhong.inspection.utils.FileUtil;
 import com.zhuhong.inspection.vo.ArticleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import java.time.LocalDate;
 @Api(value = "轮播图数据controller")
 @Slf4j
 @RestController
-@RequestMapping("/api/banner/")
+@RequestMapping("/banner/")
 public class BannerController extends BaseController {
 
     @Autowired
@@ -53,12 +54,12 @@ public class BannerController extends BaseController {
                 String fileName = arr[0];
                 String suffix = arr[1];
                 String name = fileName + "_" + DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER_1) + "." + suffix;
-                String path = fileDir + "banner\\";
+                String path = fileDir + "banner/";
                 if (FileUtil.uploadFile(file, path, name)) {
                     Banner banner = new Banner();
                     banner.setName(name);
-                    banner.setPath(path);
-                    banner.setSize(file.getSize());
+                    banner.setPath("banner/");
+                    banner.setSize(file.getSize() / 1000);
                     banner.setType(file.getContentType());
                     if (bannerService.saveBanner(banner, getCurrentUser(request).getId())) {
                         result = Result.genSuccessResult();
@@ -113,6 +114,28 @@ public class BannerController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "设置轮播图是否可见")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "bannerId", value = "轮播图数据ID", example = "1"),
+            @ApiImplicitParam(name = "isView", value = "是否可见", example = "1")
+    })
+    @GetMapping("viewBanner")
+    @SystemLog(description = "设置轮播图是否可见", type = UserLog.USER_LOG_UPDATE)
+    public Result viewBanner(Integer bannerId, Integer isView, HttpServletRequest request) {
+        String logMsg = "调用设置轮播图是否可见接口---viewBanner()---，";
+        log.debug(logMsg + "上传参数：{bannerId=" + bannerId + ",isView=" + isView + "}");
+        Result result;
+        try {
+            result = Result.genSuccessResult(bannerService.viewBanner(bannerId, isView, getCurrentUser(request).getId()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
     @ApiOperation(value = "删除轮播图信息")
     @ApiImplicitParam(name = "bannerId", value = "轮播图ID")
     @DeleteMapping("deleteBanner/{bannerId}")
@@ -126,24 +149,6 @@ public class BannerController extends BaseController {
             if (flag) {
                 result = Result.genSuccessResultMsg("删除轮播图成功");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.error(logMsg + "返回错误信息：", e);
-            result = Result.genFailResult(e.getMessage());
-        }
-        log.debug(logMsg + "返回结果信息：" + result.toString());
-        return result;
-    }
-
-    @ApiOperation(value = "获取首页轮播图数据")
-    @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "BannerCondition")
-    @PostMapping("getViewBannerList")
-    public Result<Banner> getViewBannerList(@RequestBody BannerCondition condition) {
-        String logMsg = "调用获取首页轮播图数据接口---getViewBannerList()---，";
-        log.debug(logMsg + "上传参数：" + JSON.toJSONString(condition));
-        Result result;
-        try {
-            result = Result.genSuccessResult(bannerService.getViewBannerList(condition));
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);

@@ -49,7 +49,7 @@ public class CommonController extends BaseController {
                 String fileName = arr[0];
                 String suffix = arr[1];
                 String name = fileName + "_" + DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER_1) + "." + suffix;
-                if (FileUtil.uploadFile(file, fileDir + "docs\\", name)) {
+                if (FileUtil.uploadFile(file, fileDir + "docs/", name)) {
                     result = Result.genSuccessResult(name);
                 } else {
                     result = Result.genFailResult("上传失败!");
@@ -72,7 +72,7 @@ public class CommonController extends BaseController {
         log.debug("删除文件的文件名：" + fileName);
         try{
             //判断文件是否为空
-            File file = new File(fileDir + "docs\\" + fileName);
+            File file = new File(fileDir + "docs/" + fileName);
             file.delete();
             result = Result.genSuccessResultMsg("删除文件成功！");
         }catch (Exception e){

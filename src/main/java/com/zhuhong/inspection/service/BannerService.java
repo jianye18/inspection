@@ -3,6 +3,7 @@ package com.zhuhong.inspection.service;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.BannerCondition;
 import com.zhuhong.inspection.model.Banner;
+import com.zhuhong.inspection.vo.BannerVo;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public interface BannerService {
      * @Author: jian.ye
      * @Date: 2019/11/29 15:23
      */
-    PageInfo<Banner> getBannerPageList(BannerCondition condition);
+    PageInfo<BannerVo> getBannerPageList(BannerCondition condition);
 
     /**
      * 根据ID获取轮播图信息
@@ -56,6 +57,17 @@ public interface BannerService {
      * @Author: jian.ye
      * @Date: 2019/11/29 16:13
      */
-    List<Banner> getViewBannerList(BannerCondition condition);
+    List<BannerVo> getViewBannerList(BannerCondition condition);
+
+    /**
+     * 设置轮播图是否可见
+     * @param bannerId
+     * @param isView
+     * @param currentUserId
+     * @return boolean
+     * @Author: jian.ye
+     * @Date: 2019/12/2 17:01
+     */
+    boolean viewBanner(Integer bannerId, Integer isView, Integer currentUserId);
 
 }
