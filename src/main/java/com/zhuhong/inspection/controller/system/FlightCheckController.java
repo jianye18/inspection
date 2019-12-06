@@ -14,7 +14,6 @@ import com.zhuhong.inspection.model.MultiMedia;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.service.FlightCheckService;
 import com.zhuhong.inspection.utils.ImageUtil;
-import com.zhuhong.inspection.utils.VideoUtil;
 import com.zhuhong.inspection.vo.FlightCheckVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -45,7 +44,7 @@ public class FlightCheckController extends BaseController {
     private FlightCheckService flightCheckService;
 
     @Value("${upload_path}")
-    private String FILE_DIR;
+    private String fileDir;
 
     @ApiOperation(value = "分页获取飞检数据")
     @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "FlightCheckCondition")
@@ -92,8 +91,7 @@ public class FlightCheckController extends BaseController {
     public Result uploadMediaFile(@RequestParam("file") MultipartFile file) {
         Result result;
         try{
-            Map<String, String> map = ImageUtil.saveImage(file, FILE_DIR, String.valueOf(System.currentTimeMillis()), true);
-            //Map<String, String> map = VideoUtil.uploadVideo(file, FILE_DIR, String.valueOf(System.currentTimeMillis()));
+            Map<String, String> map = ImageUtil.saveImage(file, fileDir, String.valueOf(System.currentTimeMillis()), true);
             log.debug("上传图片返回结果：" + map.toString());
             MultiMedia multiMedia = new MultiMedia();
             multiMedia.setMediaName(map.get("mediaName"));

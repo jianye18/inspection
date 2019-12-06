@@ -1,11 +1,11 @@
 package com.zhuhong.inspection.aop;
 
 import com.zhuhong.inspection.base.Constants;
+import com.zhuhong.inspection.model.User;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.service.UserLogService;
 import com.zhuhong.inspection.utils.CookieUtil;
 import com.zhuhong.inspection.utils.DateUtil;
-import com.zhuhong.inspection.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -15,7 +15,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.bytedeco.javacpp.presets.opencv_core;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -23,7 +22,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
-import java.util.Date;
 
 @Aspect
 @Component
@@ -48,11 +46,11 @@ public class LogAspect {
         HttpServletRequest request = attributes.getRequest();
         String accessToken = CookieUtil.getCookieValue(Constants.TOKEN, request);
         Session session = SecurityUtils.getSubject().getSession();
-        UserVo userVo = (UserVo) session.getAttribute(accessToken);
+        User user = (User) session.getAttribute(accessToken);
         UserLog userLog = new UserLog();
-        Integer userId = userVo.getId();
+        Integer userId = user.getId();
         userLog.setUserId(userId);
-        userLog.setUserName(userVo.getUserName());
+        userLog.setUserName(user.getUserName());
         String ip = request.getHeader("X-Real-IP");
         if (StringUtils.isEmpty(ip)) {
             ip = request.getRemoteAddr();

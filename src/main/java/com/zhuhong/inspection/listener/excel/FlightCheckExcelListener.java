@@ -5,6 +5,7 @@ import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.fastjson.JSON;
 import com.zhuhong.inspection.model.FlightCheck;
 import com.zhuhong.inspection.model.SpotCheck;
+import com.zhuhong.inspection.model.User;
 import com.zhuhong.inspection.service.FlightCheckService;
 import com.zhuhong.inspection.service.SpotCheckService;
 import com.zhuhong.inspection.vo.UserVo;
@@ -24,12 +25,12 @@ public class FlightCheckExcelListener extends AnalysisEventListener<FlightCheck>
 
     private FlightCheckService flightCheckService;
 
-    private UserVo userVo;
+    private User user;
 
-    public FlightCheckExcelListener(FlightCheckService flightCheckService, UserVo userVo) {
+    public FlightCheckExcelListener(FlightCheckService flightCheckService, User user) {
         super();
         this.flightCheckService = flightCheckService;
-        this.userVo = userVo;
+        this.user = user;
     }
 
     /**
@@ -63,7 +64,7 @@ public class FlightCheckExcelListener extends AnalysisEventListener<FlightCheck>
         log.info("存储数据库成功！");
         if (list.size() > 0) {
             for (FlightCheck flightCheck : list) {
-                boolean flag = flightCheckService.insertFlightCheck(flightCheck, userVo.getId());
+                boolean flag = flightCheckService.insertFlightCheck(flightCheck, user.getId());
                 if (flag) {
                     SUCCESS_COUNT++;
                 }

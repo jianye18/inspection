@@ -1,18 +1,5 @@
 package com.zhuhong.inspection.utils;
 
-import com.zhuhong.inspection.base.Constants;
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.Java2DFrameConverter;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 视频处理工具类
  * @Author: jian.ye
@@ -29,7 +16,7 @@ public class VideoUtil {
      * @Author: jian.ye
      * @Date: 2019/11/13 16:52
      */
-    public static Map<String, String> uploadVideo(MultipartFile file, String fileDir, String realName) {
+    /*public static Map<String, String> uploadVideo(MultipartFile file, String fileDir, String realName) {
         Map<String, String> map = new HashMap<>();
         try {
             String fileType = file.getOriginalFilename().split("\\.")[1];
@@ -61,7 +48,7 @@ public class VideoUtil {
             e.printStackTrace();
         }
         return map;
-    }
+    }*/
 
     /**
      *  抽取视频第5帧图片
@@ -70,7 +57,7 @@ public class VideoUtil {
      * @Author: jian.ye
      * @Date: 2019/11/13 16:52
      */
-    private static void grabberVideoFramer(String rootPath, String picPath) {
+    /*private static void grabberVideoFramer(String rootPath, String picPath) {
         //Frame对象
         Frame frame = null;
         //标识
@@ -101,9 +88,9 @@ public class VideoUtil {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    private static BufferedImage frameToBufferedImage(Frame frame) {
+    /*private static BufferedImage frameToBufferedImage(Frame frame) {
         //创建BufferedImage对象
         Java2DFrameConverter converter = new Java2DFrameConverter();
         BufferedImage bufferedImage = converter.getBufferedImage(frame);
@@ -138,6 +125,6 @@ public class VideoUtil {
             }
         }
         return buffer;
-    }
+    }*/
 
 }

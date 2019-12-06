@@ -52,17 +52,17 @@ public class MyShiroRealm extends AuthorizingRealm {
         List<String> roleList = new ArrayList<String>();
         List<String> permissionList = new ArrayList<String>();
         //从数据库中获取当前登录用户的详细信息
-        UserVo userVo = null;
-        try {
+        User user = userService.getUserByNickName(loginName);
+        /*try {
             userVo = userService.getUserWithRolePermissionByNickName(loginName);
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }
-        if (null != userVo) {
+        }*/
+        if (null != user) {
             //实体类User中包含有用户角色的实体类信息
-            if(null != userVo.getRoleList() && userVo.getRoleList().size() > 0){
+            /*if(null != userVo.getRoleList() && userVo.getRoleList().size() > 0){
                 //获取当前登录用户的角色
                 for(Role role : userVo.getRoleList()){
                     roleList.add(role.getRoleName());
@@ -77,7 +77,7 @@ public class MyShiroRealm extends AuthorizingRealm {
                         }
                     }
                 }
-            }
+            }*/
             //为当前用户设置角色和权限
             authorizationInfo.addRoles(roleList);
             authorizationInfo.addStringPermissions(permissionList);
@@ -95,27 +95,20 @@ public class MyShiroRealm extends AuthorizingRealm {
         //两个token的引用都是一样的,本例中是org.apache.shiro.authc.UsernamePasswordToken@33799a1e
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         logger.info("验证当前Subject时获取到token为" + ReflectionToStringBuilder.toString(token, ToStringStyle.MULTI_LINE_STYLE));
-        UserVo userVo = null;
-        try {
-            userVo = userService.getUserWithRolePermissionByNickName(token.getUsername());
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        if (null == userVo) {
+        User user = userService.getUserByNickName(token.getUsername());
+        if (null == user) {
             throw new UnknownAccountException("账号不存在");
-        } else if (Constants.SYS_USER_STATUS_2.equals(userVo.getUserStatus())) {
+        } else if (Constants.SYS_USER_STATUS_2.equals(user.getUserStatus())) {
             throw new LockedAccountException("账号禁用中，请联系管理员！");
-        } else if (!userVo.getPassword().equals(String.valueOf(token.getPassword()))) {
+        } else if (!user.getPassword().equals(String.valueOf(token.getPassword()))) {
             throw new AccountException("密码不正确！");
         }
         //用户信息缓存到session里面
         Session session = SecurityUtils.getSubject().getSession();
-        session.setAttribute(session.getId(), userVo);
+        session.setAttribute(session.getId(), user);
         session.setTimeout(24 * 60 * 60 * 1000);
         System.out.println("测试：" + SecurityUtils.getSubject().getSession().getId());
-        return new SimpleAuthenticationInfo(userVo.getNickName(), userVo.getPassword(), userVo.getNickName());
+        return new SimpleAuthenticationInfo(user.getNickName(), user.getPassword(), user.getNickName());
     }
 
 }

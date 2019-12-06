@@ -29,11 +29,11 @@ public class ImageUtil {
         try {
             Map<String, String> map = new HashMap<>();
             String fileType = file.getOriginalFilename().split("\\.")[1];
-            String rootPath = fileDir + "images\\" + realName + "." + fileType;
+            String rootPath = fileDir + "images/" + realName + "." + fileType;
             map.put("mediaName", realName + "." + fileType);
             file.transferTo(new File(rootPath));
             if (isCondense) {
-                String thumbnailPath = fileDir + "images\\" + realName + "_thumbnail." + fileType;
+                String thumbnailPath = fileDir + "images/" + realName + "_thumbnail." + fileType;
                 condenseImageFile(rootPath, thumbnailPath);
                 map.put("thumbnail", realName + "_thumbnail" + "." + fileType);
             }

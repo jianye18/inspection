@@ -9,7 +9,7 @@
     </parent>
     <groupId>com.zhuhong</groupId>
     <artifactId>inspection</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>inspection</name>
     <description>inspection</description>
 
@@ -149,7 +149,7 @@
         </dependency>
 
         <!-- 视频处理jar包 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv</artifactId>
             <version>1.4.4</version>
@@ -159,7 +159,7 @@
             <groupId>org.bytedeco.javacpp-presets</groupId>
             <artifactId>ffmpeg-platform</artifactId>
             <version>4.1-1.4.4</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 

@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.zhuhong.inspection.base.BussinessException;
 import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.model.SpotCheck;
+import com.zhuhong.inspection.model.User;
 import com.zhuhong.inspection.service.SpotCheckService;
 import com.zhuhong.inspection.utils.CookieUtil;
 import com.zhuhong.inspection.vo.UserVo;
@@ -33,12 +34,12 @@ public class SpotCheckExcelListener extends AnalysisEventListener<SpotCheck> {
 
     private SpotCheckService spotCheckService;
 
-    private UserVo userVo;
+    private User user;
 
-    public SpotCheckExcelListener (SpotCheckService spotCheckService, UserVo userVo) {
+    public SpotCheckExcelListener (SpotCheckService spotCheckService, User user) {
         super();
         this.spotCheckService = spotCheckService;
-        this.userVo = userVo;
+        this.user = user;
     }
 
     /**
@@ -72,7 +73,7 @@ public class SpotCheckExcelListener extends AnalysisEventListener<SpotCheck> {
         log.info("存储数据库成功！");
         if (list.size() > 0) {
             for (SpotCheck spotCheck : list) {
-                boolean flag = spotCheckService.insertSpotCheck(spotCheck, userVo.getId());
+                boolean flag = spotCheckService.insertSpotCheck(spotCheck, user.getId());
                 if (flag) {
                     SUCCESS_COUNT++;
                 }

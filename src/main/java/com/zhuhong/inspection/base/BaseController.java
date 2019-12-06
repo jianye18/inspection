@@ -1,6 +1,8 @@
 package com.zhuhong.inspection.base;
 
+import com.alibaba.fastjson.JSON;
 import com.zhuhong.inspection.base.Constants;
+import com.zhuhong.inspection.model.User;
 import com.zhuhong.inspection.utils.CookieUtil;
 import com.zhuhong.inspection.vo.UserVo;
 import io.swagger.annotations.Api;
@@ -30,13 +32,13 @@ public class BaseController {
      * @Author: jian.ye
      * @Date: 2019/10/10 12:00
      */
-    protected UserVo getCurrentUser(HttpServletRequest request) {
+    protected User getCurrentUser(HttpServletRequest request) {
         String accessToken = CookieUtil.getCookieValue(Constants.TOKEN, request);
         log.debug("获取当前用户信息的cookie保存内容：" + accessToken);
         Session session = SecurityUtils.getSubject().getSession();
-        UserVo userVo = (UserVo) session.getAttribute(accessToken);
-        log.debug("获取当前用户信息：" + userVo.toString());
-        return userVo;
+        User user = (User) session.getAttribute(accessToken);
+        log.debug("获取当前用户信息：" + JSON.toJSONString(user));
+        return user;
     }
 
     /**
