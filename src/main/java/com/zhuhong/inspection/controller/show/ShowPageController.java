@@ -75,13 +75,13 @@ public class ShowPageController extends BaseController {
                 headers.add("Pragma", "no-cache");
                 headers.add("Expires", "0");
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-                String path = fileDir + "docs\\";
+                String path = fileDir + "docs/";
                 if (l == 1) {
                     fileName = list.get(0).getName();
                 } else {
                     fileName = System.currentTimeMillis() + ".zip";
                     List<String> filePaths = new ArrayList<>();
-                    list.forEach(annex -> filePaths.add(annex.getPath()));
+                    list.forEach(annex -> filePaths.add(path + annex.getName()));
                     ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(path + fileName));
                     FileUtil.zipFile(filePaths, zos);
                 }

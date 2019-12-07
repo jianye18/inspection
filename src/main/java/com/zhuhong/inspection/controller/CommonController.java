@@ -45,10 +45,11 @@ public class CommonController extends BaseController {
                 result = Result.genFailResult("文件为空，上传失败!");
             } else {
                 //获得path对象，也即是文件保存的路径对象
-                String[] arr = file.getOriginalFilename().split("\\.");
+                /*String[] arr = file.getOriginalFilename().split("\\.");
                 String fileName = arr[0];
                 String suffix = arr[1];
-                String name = fileName + "_" + DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER_1) + "." + suffix;
+                String name = fileName + "_" + DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER_1) + "." + suffix;*/
+                String name = file.getOriginalFilename();
                 if (FileUtil.uploadFile(file, fileDir + "docs/", name)) {
                     result = Result.genSuccessResult(name);
                 } else {

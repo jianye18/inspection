@@ -34,7 +34,7 @@ public class ArticleServiceImpl implements ArticleService {
             article.setCreateTime(currentDate);
             return articleMapper.insertSelective(article) > 0;
         } else {
-            return articleMapper.updateByPrimaryKey(article) > 0;
+            return articleMapper.updateByPrimaryKeySelective(article) > 0;
         }
     }
 

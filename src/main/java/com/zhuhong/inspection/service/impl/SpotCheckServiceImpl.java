@@ -43,6 +43,13 @@ public class SpotCheckServiceImpl implements SpotCheckService {
     }
 
     @Override
+    public boolean saveSpotCheck(SpotCheck spotCheck, Integer currentUserId) {
+        spotCheck.setUpdateId(currentUserId);
+        spotCheck.setUpdateTime(DateUtil.getCurrentDate());
+        return spotCheckMapper.updateByPrimaryKeySelective(spotCheck) > 0;
+    }
+
+    @Override
     public SpotCheckVo getSpotCheckById(Integer id) {
         SpotCheckCondition condition = new SpotCheckCondition();
         condition.setId(id);
@@ -52,6 +59,16 @@ public class SpotCheckServiceImpl implements SpotCheckService {
     @Override
     public List<SelectionLabel> getAllInstitution() {
         return spotCheckMapper.getInstitutionList();
+    }
+
+    @Override
+    public boolean deleteSpotCheck(Integer id, Integer currentUserId) {
+        SpotCheck spotCheck = new SpotCheck();
+        spotCheck.setId(id);
+        spotCheck.setUpdateId(currentUserId);
+        spotCheck.setUpdateTime(DateUtil.getCurrentDate());
+        spotCheck.setUsable(SpotCheck.ENABLE_0);
+        return spotCheckMapper.updateByPrimaryKeySelective(spotCheck) > 0;
     }
 
 }

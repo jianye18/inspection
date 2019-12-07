@@ -57,6 +57,26 @@ public class SpotCheckController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "保存抽检数据")
+    @PostMapping("/saveSpotCheck")
+    @SystemLog(description = "保存抽检数据", type = UserLog.USER_LOG_UPDATE)
+    public Result saveSpotCheck(@RequestBody SpotCheck spotCheck, HttpServletRequest request) {
+        String logMsg = "调用保存抽检数据接口---saveSpotCheck()---，";
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(spotCheck));
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+           if (spotCheckService.saveSpotCheck(spotCheck, getCurrentUser(request).getId())) {
+               result = Result.genSuccessResultMsg("保存抽检数据成功");
+           }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
     @ApiOperation(value = "分页获取抽检结果数据")
     @ApiImplicitParam(name = "condition", value = "查询参数", dataType = "SpotCheckCondition")
     @PostMapping("getSpotCheckPageList")
@@ -101,6 +121,27 @@ public class SpotCheckController extends BaseController {
         Result result;
         try {
             result = Result.genSuccessResult(spotCheckService.getAllInstitution());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "删除抽检数据")
+    @ApiImplicitParam(name = "id", value = "抽检数据ID", example = "1")
+    @DeleteMapping("deleteSpotCheck/{id}")
+    @SystemLog(description = "删除抽检数据", type = UserLog.USER_LOG_DELETE)
+    public Result deleteSpotCheck(@PathVariable(value = "id") Integer id, HttpServletRequest request) {
+        String logMsg = "调用删除抽检数据接口---deleteSpotCheck()---，";
+        log.debug(logMsg + "上传参数：id=" + id);
+        Result result = Result.genFailResult(FAIL_MESSAGE);
+        try {
+            if (spotCheckService.deleteSpotCheck(id, getCurrentUser(request).getId())) {
+                result = Result.genSuccessResultMsg("删除抽检数据成功");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);

@@ -8,8 +8,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/inspection?useSSL=false&serverTimezone=GMT%2B8
     username: root
-    # password: root
-    password: Yezhuhong1307404!
+    password: root
+    # password: Yezhuhong1307404!
     maxActive: 20
     initialSize: 1
     maxWait: 60000
@@ -33,8 +33,8 @@ spring:
   mvc:
     static-path-pattern: /images/**
   resources:
-    static-locations: file:/home/resources/
-    # static-locations: file:/E:/inspection/
+    # static-locations: file:/home/resources/
+    static-locations: file:/E:/inspection/
 #  mvc:
 #    view:
 #      prefix: /
@@ -58,5 +58,5 @@ logging:
     root: info
     com.zhuhong.inspection: debug
 
-# upload_path: E:/inspection/
-upload_path: /home/resources/
+upload_path: E:/inspection/
+# upload_path: /home/resources/

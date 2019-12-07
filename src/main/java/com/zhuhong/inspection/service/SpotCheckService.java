@@ -37,6 +37,16 @@ public interface SpotCheckService {
     PageInfo<SpotCheckVo> getSpotCheckPageList(SpotCheckCondition spotCheckCondition);
 
     /**
+     * 保存抽检数据
+     * @param spotCheck
+     * @param currentUserId
+     * @return boolean
+     * @Author: jian.ye
+     * @Date: 2019/12/7 13:54
+     */
+    boolean saveSpotCheck(SpotCheck spotCheck, Integer currentUserId);
+
+    /**
      * 根据ID获取抽检数据
      * @param id
      * @return SpotCheckVo
@@ -52,5 +62,15 @@ public interface SpotCheckService {
      * @Date: 2019/11/22 11:34
      */
     List<SelectionLabel> getAllInstitution();
+
+    /**
+     * 删除抽检数据
+     * @param id
+     * @param currentUserId
+     * @return boolean
+     * @Author: jian.ye
+     * @Date: 2019/12/7 11:51
+     */
+    boolean deleteSpotCheck(Integer id, Integer currentUserId);
 
 }
