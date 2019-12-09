@@ -55,7 +55,7 @@ public class SpotCheck extends BaseModel {
     @ApiModelProperty(name = "checkResult", value = "抽检结果：0-不合格，1-合格", example = "1")
     @Column(name = "check_result")
     @ExcelProperty(index = 8 , value = "抽检结果")
-    private Integer checkResult;
+    private String checkResult;
     @ApiModelProperty(name = "subject", value = "不合格项目", example = "检出成分与批件成分不符")
     @Column(name = "subject")
     @ExcelProperty(index = 9 , value = "不合格项目")
@@ -72,7 +72,7 @@ public class SpotCheck extends BaseModel {
     @ApiModelProperty(name = "isFake", value = "是否涉嫌假冒：0-否，1-是", example = "0")
     @Column(name = "is_fake")
     @ExcelProperty(index = 12 , value = "涉嫌假冒")
-    private Integer isFake;
+    private String isFake;
     @ApiModelProperty(name = "sourceLink", value = "来源链接", example = "https://sbt.21food.cn/spbz/search.shtml")
     @Column(name = "source_link")
     @ExcelProperty(index = 13 , value = "来源链接")

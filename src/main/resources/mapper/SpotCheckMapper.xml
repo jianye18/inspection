@@ -77,4 +77,15 @@
             institution
     </select>
 
+    <select id="getProductTypeList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            product_type as code,
+            product_type as value,
+            product_type as label
+        from
+            tb_spot_check
+        group by
+            product_type
+    </select>
+
 </mapper>

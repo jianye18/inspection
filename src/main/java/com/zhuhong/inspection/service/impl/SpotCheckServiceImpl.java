@@ -62,6 +62,11 @@ public class SpotCheckServiceImpl implements SpotCheckService {
     }
 
     @Override
+    public List<SelectionLabel> getProductTypeList() {
+        return spotCheckMapper.getProductTypeList();
+    }
+
+    @Override
     public boolean deleteSpotCheck(Integer id, Integer currentUserId) {
         SpotCheck spotCheck = new SpotCheck();
         spotCheck.setId(id);

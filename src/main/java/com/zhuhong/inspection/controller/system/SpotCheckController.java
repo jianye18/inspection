@@ -11,6 +11,7 @@ import com.zhuhong.inspection.listener.excel.SpotCheckExcelListener;
 import com.zhuhong.inspection.model.SpotCheck;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.service.SpotCheckService;
+import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SpotCheckVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -116,11 +117,27 @@ public class SpotCheckController extends BaseController {
 
     @ApiOperation(value = "获取抽检数据的公布机构")
     @GetMapping("getAllInstitution")
-    public Result<SpotCheckVo> getAllInstitution() {
+    public Result<SelectionLabel> getAllInstitution() {
         String logMsg = "调用获取抽检数据的公布机构接口---getAllInstitution()---，";
         Result result;
         try {
             result = Result.genSuccessResult(spotCheckService.getAllInstitution());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "获取抽检数据的产品类型集合")
+    @GetMapping("getAllProductType")
+    public Result<SelectionLabel> getAllProductType() {
+        String logMsg = "调用获取抽检数据的产品类型集合接口---getAllProductType()---，";
+        Result result;
+        try {
+            result = Result.genSuccessResult(spotCheckService.getProductTypeList());
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);
