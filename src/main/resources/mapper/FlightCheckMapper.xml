@@ -23,12 +23,8 @@
             parameterType="com.zhuhong.inspection.condition.FlightCheckCondition">
         select
             <include refid="baseResult"/>
-            ,s.name as precautionsName
-            ,d.name as typeName
         from
             tb_flight_check f
-        left join tb_system_data s on s.code = f.precautions
-        left join tb_system_data d on d.code = f.type
         where
             f.usable = 1
             <if test="currentId != null and currentId != 0">
@@ -59,12 +55,8 @@
             parameterType="com.zhuhong.inspection.condition.FlightCheckCondition">
         select
             <include refid="baseResult"/>
-            ,s.name as precautionsName
-            ,d.name as typeName
         from
             tb_flight_check f
-        left join tb_system_data s on s.code = f.precautions
-        left join tb_system_data d on d.code = f.type
         where
             f.usable = 1
             and f.id = #{id}
@@ -79,6 +71,28 @@
             tb_flight_check
         group by
             publish_unit
+    </select>
+
+    <select id="getPrecautionsList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            precautions as code,
+            precautions as value,
+            precautions as label
+        from
+            tb_flight_check
+        group by
+            precautions
+    </select>
+
+    <select id="getTypeList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            type as code,
+            type as value,
+            type as label
+        from
+            tb_flight_check
+        group by
+            type
     </select>
 
 </mapper>

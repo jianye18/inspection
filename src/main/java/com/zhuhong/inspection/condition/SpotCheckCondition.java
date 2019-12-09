@@ -23,8 +23,8 @@ public class SpotCheckCondition extends BaseCondition {
     @ApiModelProperty(name = "institution", value = "公布机构", example = "国家药品监督管理局")
     private String institution;
     @ApiModelProperty(name = "checkResult", value = "抽检结果：0-不合格，1-合格", example = "1")
-    private Integer checkResult;
+    private String checkResult;
     @ApiModelProperty(name = "isFake", value = "是否涉嫌假冒：0-否，1-是", example = "0")
-    private Integer isFake;
+    private String isFake;
 
 }

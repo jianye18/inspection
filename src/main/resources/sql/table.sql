@@ -203,14 +203,14 @@ CREATE TABLE `tb_system_data`  (
 DROP TABLE IF EXISTS `tb_criterion`;
 CREATE TABLE `tb_criterion`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
- `name` varchar(32) NULL DEFAULT NULL COMMENT '名称', 
+ `name` varchar(225) NULL DEFAULT NULL COMMENT '名称', 
  `category` varchar(32) NULL DEFAULT NULL COMMENT '一级分类,关联数据常量表', 
  `type` varchar(32) NULL DEFAULT NULL COMMENT '二级分类,关联数据常量表', 
  `status` varchar(32) NULL DEFAULT NULL COMMENT '状态',
  `publish_unit` varchar(32) NULL DEFAULT NULL COMMENT '发布单位,关联数据常量表',
  `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
  `implement_date` date NULL DEFAULT NULL COMMENT '实施日期',
- `summary` varchar(255) NULL DEFAULT NULL COMMENT '摘要',
+ `summary` text COMMENT '摘要',
  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
  `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
@@ -226,8 +226,8 @@ DROP TABLE IF EXISTS `tb_annex`;
 CREATE TABLE `tb_annex`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id', 
  `business_id` int(11) NULL DEFAULT NULL COMMENT '业务ID',
- `name` varchar(32) NULL DEFAULT NULL COMMENT '附件名称', 
- `path` varchar(128) NULL DEFAULT NULL COMMENT '附件路径',
+ `name` varchar(225) NULL DEFAULT NULL COMMENT '附件名称', 
+ `path` varchar(225) NULL DEFAULT NULL COMMENT '附件路径',
  `type` tinyint(2) NULL DEFAULT NULL COMMENT '分类：1-抽检，2-标准，3-法规', 
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '附件数据表' ROW_FORMAT = Dynamic;
@@ -238,7 +238,7 @@ CREATE TABLE `tb_annex`  (
 DROP TABLE IF EXISTS `tb_law`;
 CREATE TABLE `tb_law`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
- `name` varchar(32) NULL DEFAULT NULL COMMENT '名称', 
+ `name` varchar(225) NULL DEFAULT NULL COMMENT '名称', 
  `code_number` varchar(255) NULL DEFAULT NULL COMMENT '法规文号',
  `category` varchar(32) NULL DEFAULT NULL COMMENT '一级分类', 
  `type` tinyint(2) NULL DEFAULT NULL COMMENT '二级分类', 
@@ -284,11 +284,11 @@ CREATE TABLE `tb_flight_check`  (
  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
  `business_name` varchar(128) NULL DEFAULT NULL COMMENT '企业名称',
  `problem` MEDIUMTEXT NULL DEFAULT NULL COMMENT '缺陷问题',
- `precautions` tinyint(2) NULL DEFAULT NULL COMMENT '处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改',
- `type` tinyint(2) NULL DEFAULT NULL COMMENT '飞检类型：1-国家飞检，2-地方飞检',
+ `precautions` varchar(32) NULL DEFAULT NULL COMMENT '处理措施：1-无，2-未明示，3-责令整改，4-限期整改，5-停产整改',
+ `type` varchar(32) NULL DEFAULT NULL COMMENT '飞检类型：1-国家飞检，2-地方飞检',
  `publish_unit` varchar(128) NULL DEFAULT NULL COMMENT '发布单位',
  `publish_date` date NULL DEFAULT NULL COMMENT '发布日期',
- `is_defect` tinyint(2) NULL DEFAULT NULL COMMENT '是否有缺陷：0-否，1-是',
+ `is_defect` varchar(8) NULL DEFAULT NULL COMMENT '是否有缺陷：0-否，1-是',
  `source_link` varchar(128) NULL DEFAULT NULL COMMENT '来源链接', 
  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',

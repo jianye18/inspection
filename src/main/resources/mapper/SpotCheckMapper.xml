@@ -28,11 +28,9 @@
     <select id="getSpotCheckListByCondition" resultType="com.zhuhong.inspection.vo.SpotCheckVo"
             parameterType="com.zhuhong.inspection.condition.SpotCheckCondition">
         select
-            <include refid="baseSql"/>,
-            d.name as productTypeName
+            <include refid="baseSql"/>
         from
             tb_spot_check s
-        left join tb_system_data d on d.code = s.product_type
         where
             s.usable = 1
             <if test="currentId != null and currentId != 0">
@@ -44,7 +42,7 @@
             <if test="institution != null and institution != '' ">
                 and s.institution = #{institution}
             </if>
-            <if test="checkResult != null">
+            <if test="checkResult != null and checkResult != '' ">
                 and s.check_result = #{checkResult}
             </if>
             <if test="searchPhrase != null and searchPhrase != '' ">
@@ -56,11 +54,9 @@
     <select id="getSpotCheckById" resultType="com.zhuhong.inspection.vo.SpotCheckVo"
             parameterType="com.zhuhong.inspection.condition.SpotCheckCondition">
         select
-            <include refid="baseSql"/>,
-            d.name as productTypeName
+            <include refid="baseSql"/>
         from
             tb_spot_check s
-        left join tb_system_data d on d.code = s.product_type
         where
             s.usable = 1
             and s.id = #{id}

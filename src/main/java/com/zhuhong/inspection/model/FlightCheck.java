@@ -27,7 +27,7 @@ public class FlightCheck extends BaseModel {
     @ApiModelProperty(name = "isDefect", value = "是否有缺陷：0-否，1-是", example = "0")
     @Column(name = "is_defect")
     @ExcelProperty(index = 1 , value = "是否有缺陷")
-    private Integer isDefect;
+    private String isDefect;
     @ApiModelProperty(name = "problem", value = "缺陷问题", example = "缺陷问题")
     @Column(name = "problem")
     @ExcelProperty(index = 2 , value = "缺陷问题")

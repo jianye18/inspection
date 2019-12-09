@@ -185,4 +185,36 @@ public class FlightCheckController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "获取飞检数据的处理措施")
+    @GetMapping("/getPrecautionsList")
+    public Result getPrecautionsList() {
+        String logMsg = "调用获取飞检数据的处理措施接口---getPrecautionsList()---，";
+        Result result;
+        try {
+            result = Result.genSuccessResult(flightCheckService.getPrecautionsList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "获取飞检类型集合")
+    @GetMapping("/getTypeList")
+    public Result getTypeList() {
+        String logMsg = "调用获取飞检类型集合接口---getTypeList()---，";
+        Result result;
+        try {
+            result = Result.genSuccessResult(flightCheckService.getTypeList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
 }

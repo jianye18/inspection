@@ -45,4 +45,22 @@ public interface FlightCheckMapper extends Mapper<FlightCheck> {
      */
     List<SelectionLabel> getPublishUnitList();
 
+    /**
+     * 获取处理措施集合
+     *
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2019/12/9 20:01
+     */
+    List<SelectionLabel> getPrecautionsList();
+
+    /**
+     * 获取飞检类型集合
+     *
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2019/12/9 20:01
+     */
+    List<SelectionLabel> getTypeList();
+
 }

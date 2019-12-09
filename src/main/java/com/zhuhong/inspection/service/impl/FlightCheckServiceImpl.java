@@ -97,4 +97,14 @@ public class FlightCheckServiceImpl implements FlightCheckService {
     public List<SelectionLabel> getAllPublishUnit() {
         return flightCheckMapper.getPublishUnitList();
     }
+
+    @Override
+    public List<SelectionLabel> getPrecautionsList() {
+        return flightCheckMapper.getPrecautionsList();
+    }
+
+    @Override
+    public List<SelectionLabel> getTypeList() {
+        return flightCheckMapper.getTypeList();
+    }
 }
