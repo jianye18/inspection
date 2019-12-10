@@ -7,9 +7,9 @@ import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.condition.BannerCondition;
 import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.Banner;
-import com.zhuhong.inspection.service.AnnexService;
-import com.zhuhong.inspection.service.ArticleService;
-import com.zhuhong.inspection.service.BannerService;
+import com.zhuhong.inspection.model.Link;
+import com.zhuhong.inspection.model.Statement;
+import com.zhuhong.inspection.service.*;
 import com.zhuhong.inspection.utils.FileUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -47,6 +47,10 @@ public class ShowPageController extends BaseController {
     private BannerService bannerService;
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private LinkService linkService;
+    @Autowired
+    private StatementService statementService;
 
     @Value("${upload_path}")
     private String fileDir;
@@ -132,6 +136,38 @@ public class ShowPageController extends BaseController {
         Result result;
         try {
             result = Result.genSuccessResult(articleService.getHomeArticleList(orderName, limit));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "获取所有展示的友情链接")
+    @GetMapping("getLinkViewList")
+    public Result<List<Link>> getLinkViewList() {
+        String logMsg = "调用获取所有展示的友情链接接口---getLinkViewList()---，";
+        Result result;
+        try {
+            result = Result.genSuccessResult(linkService.getLinkViewList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "获取负责声明信息")
+    @GetMapping("getOneViewStatement")
+    public Result<Statement> getOneViewStatement() {
+        String logMsg = "调用获取负责声明信息接口---getOneViewStatement()---，";
+        Result result;
+        try {
+            result = Result.genSuccessResult(statementService.getOneViewStatement());
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);

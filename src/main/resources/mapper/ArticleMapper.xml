@@ -33,7 +33,7 @@
             <if test="typeCode != null and typeCode != ''">
                 and a.type_code = #{typeCode}
             </if>
-            <if test="isPublish != null and isPublish != 0">
+            <if test="isPublish != null">
                 and a.is_publish = #{isPublish}
             </if>
             <if test="searchPhrase != null and searchPhrase != '' ">
