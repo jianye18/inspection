@@ -396,5 +396,20 @@ CREATE TABLE `tb_links`  (
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '友情链接数据表' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for tb_statement
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_statement`;
+CREATE TABLE `tb_statement`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `content` text COMMENT '声明内容',
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '负责声明表' ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
