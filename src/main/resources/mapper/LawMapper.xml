@@ -64,7 +64,12 @@
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and l.name like concat('%', #{searchPhrase}, '%')
             </if>
-        order by l.update_time desc
+        <if test="orderName != null and orderName != '' ">
+            order by l.${orderName} ${orderType}
+        </if>
+        <if test="orderName == null or orderName == '' ">
+            order by l.update_time desc
+        </if>
     </select>
 
     <select id="getLawById" resultType="com.zhuhong.inspection.vo.LawVo"

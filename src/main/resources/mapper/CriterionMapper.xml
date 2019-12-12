@@ -56,7 +56,12 @@
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and c.name like concat('%', #{searchPhrase}, '%')
             </if>
-        order by c.update_time desc
+        <if test="orderName != null and orderName != '' ">
+            order by c.${orderName} ${orderType}
+        </if>
+        <if test="orderName == null or orderName == '' ">
+            order by c.update_time desc
+        </if>
     </select>
 
     <select id="getCriterionById" resultType="com.zhuhong.inspection.vo.CriterionVo"

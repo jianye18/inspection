@@ -17,5 +17,9 @@ public class BaseCondition {
     private Integer pageSize;
     @ApiModelProperty(name = "searchPhrase", value = "搜索条件", example = "admin")
     private String searchPhrase;
+    @ApiModelProperty(name = "orderName", value = "排序字段", example = "updateTime")
+    private String orderName;
+    @ApiModelProperty(name = "orderType", value = "排序类型", example = "desc")
+    private String orderType;
 
 }
