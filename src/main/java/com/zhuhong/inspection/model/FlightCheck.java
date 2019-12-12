@@ -44,9 +44,9 @@ public class FlightCheck extends BaseModel {
     @Column(name = "publish_unit")
     @ExcelProperty(index = 5 , value = "发布单位")
     private String publishUnit;
-    @ApiModelProperty(name = "publishDate", value = "发布日期", example = "2019/10/15")
+    @ApiModelProperty(name = "publishDate", value = "发布日期", example = "2019-10-15")
     @Column(name = "publish_date")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy/MM/dd")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     @ExcelProperty(index = 6 , value = "发布日期")
     private Date publishDate;
     @ApiModelProperty(name = "sourceLink", value = "来源链接", example = "https://sbt.21food.cn/spbz/search.shtml")

@@ -36,7 +36,7 @@
             <if test="type != null and type != '' ">
                 and f.type = #{type}
             </if>
-            <if test="isDefect != null">
+            <if test="isDefect != null and isDefect != ''">
                 and f.is_defect = #{isDefect}
             </if>
             <if test="publishUnit != null and publishUnit != '' ">

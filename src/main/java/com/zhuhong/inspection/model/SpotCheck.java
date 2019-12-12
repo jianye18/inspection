@@ -64,9 +64,9 @@ public class SpotCheck extends BaseModel {
     @Column(name = "institution")
     @ExcelProperty(index = 10 , value = "公布机构")
     private String institution;
-    @ApiModelProperty(name = "publishDate", value = "公布日期", example = "2019/10/15")
+    @ApiModelProperty(name = "publishDate", value = "公布日期", example = "2019-10-15")
     @Column(name = "publish_date")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy/MM/dd")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     @ExcelProperty(index = 11 , value = "公布日期")
     private Date publishDate;
     @ApiModelProperty(name = "isFake", value = "是否涉嫌假冒：0-否，1-是", example = "0")
