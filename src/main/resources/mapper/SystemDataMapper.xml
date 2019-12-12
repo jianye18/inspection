@@ -8,6 +8,7 @@
         d.name,
         d.type_code as typeCode,
         d.sort,
+        d.is_view as isView,
         d.remark,
         d.create_id as createId,
         d.create_time as createTime,

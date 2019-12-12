@@ -68,7 +68,10 @@ public class SystemDataServiceImpl implements SystemDataService {
         if (systemData.getId() == null) {
             systemData.setCreateId(currentUserId);
             systemData.setCreateTime(current);
-            systemData.setCode(MD5.getMD5(String.valueOf(System.currentTimeMillis())));
+            if (StringUtils.isEmpty(systemData.getCode())) {
+                systemData.setCode(MD5.getMD5(String.valueOf(System.currentTimeMillis())));
+            }
+            systemData.setIsView(1);
             return systemDataMapper.insertSelective(systemData) > 0;
         } else {
             return systemDataMapper.updateByPrimaryKeySelective(systemData) > 0;
