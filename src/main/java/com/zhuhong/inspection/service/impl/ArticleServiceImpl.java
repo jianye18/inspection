@@ -52,11 +52,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean publishArticle(ArticleCondition condition, Integer currentUserId) {
+        Date current = DateUtil.getCurrentDate();
         Article article = new Article();
         article.setId(condition.getArticleId());
         article.setIsPublish(condition.getIsPublish());
+        if (condition.getIsPublish() == 1) {
+            article.setPublishTime(current);
+        }
         article.setUpdateId(currentUserId);
-        article.setUpdateTime(DateUtil.getCurrentDate());
+        article.setUpdateTime(current);
         return articleMapper.updateByPrimaryKeySelective(article) > 0;
     }
 

@@ -48,13 +48,13 @@ public class FlightCheckServiceImpl implements FlightCheckService {
             int r = flightCheckMapper.insertSelective(flightCheck);
             if (r > 0) {
                 flag = true;
-                annexService.saveAnnex(false, annexList, flightCheck.getId(), Constants.BASE_TYPE_4);
+                // annexService.saveAnnex(false, annexList, flightCheck.getId(), Constants.BASE_TYPE_4);
             }
         } else {
             int r = flightCheckMapper.updateByPrimaryKey(flightCheck);
             if (r > 0) {
                 flag = true;
-                annexService.saveAnnex(true, annexList, flightCheck.getId(), Constants.BASE_TYPE_4);
+                // annexService.saveAnnex(true, annexList, flightCheck.getId(), Constants.BASE_TYPE_4);
             }
         }
         return flag;
