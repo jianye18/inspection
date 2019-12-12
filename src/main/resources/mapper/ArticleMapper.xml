@@ -44,7 +44,7 @@
     <select id="getArticleById" resultType="com.zhuhong.inspection.vo.ArticleVo">
         select
             <include refid="baseResult"/>
-            ,a.content as content,
+            ,a.content as content
             ,s.name as typeName
         from
             tb_article a
