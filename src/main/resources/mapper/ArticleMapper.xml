@@ -6,7 +6,6 @@
         a.id as id,
         a.title as title,
         a.author as author,
-        a.content as content,
         a.type_code as typeCode,
         a.subject as subject,
         a.is_publish as isPublish,
@@ -45,6 +44,7 @@
     <select id="getArticleById" resultType="com.zhuhong.inspection.vo.ArticleVo">
         select
             <include refid="baseResult"/>
+            ,a.content as content,
             ,s.name as typeName
         from
             tb_article a
