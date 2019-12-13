@@ -56,9 +56,6 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = new Article();
         article.setId(condition.getArticleId());
         article.setIsPublish(condition.getIsPublish());
-        if (condition.getIsPublish() == 1) {
-            article.setPublishTime(current);
-        }
         article.setUpdateId(currentUserId);
         article.setUpdateTime(current);
         return articleMapper.updateByPrimaryKeySelective(article) > 0;
