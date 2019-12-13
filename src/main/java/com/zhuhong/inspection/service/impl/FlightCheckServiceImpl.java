@@ -75,7 +75,7 @@ public class FlightCheckServiceImpl implements FlightCheckService {
         FlightCheckCondition condition = new FlightCheckCondition();
         condition.setId(id);
         FlightCheckVo flightCheckVo = flightCheckMapper.getFlightCheckById(condition);
-        flightCheckVo.setProblem(flightCheckVo.getProblem().replaceAll("\\r\\n", "<br/>"));
+        flightCheckVo.setProblem(flightCheckVo.getProblem().replaceAll("\\r\\n", "<br/>").replaceAll("\\n", "<br/>"));
         return flightCheckVo;
     }
 

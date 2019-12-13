@@ -115,7 +115,7 @@ public class CriterionServiceImpl implements CriterionService {
         if (annexList.size() > 0) {
             criterionVo.setAnnexList(annexList);
         }
-        criterionVo.setSummary(criterionVo.getSummary().replaceAll("\\r\\n", "<br/>"));
+        criterionVo.setSummary(criterionVo.getSummary().replaceAll("\\r\\n", "<br/>").replaceAll("\\n", "<br/>"));
         return criterionVo;
     }
 
