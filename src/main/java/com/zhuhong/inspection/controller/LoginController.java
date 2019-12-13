@@ -14,13 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * 用户登录交互层
@@ -39,9 +37,11 @@ public class LoginController {
             @ApiImplicitParam(name = "password", value = "用户登录密码", required = true, dataType = "String")
     })
     @RequestMapping(value = "loginIn", method = RequestMethod.POST)
-    public Result loginIn(String loginName, String password) {
+    public Result loginIn(@RequestBody Map<String, String> map) {
         String logMsg = "调用系统用户登录接口---loginIn()---，";
         Result result = Result.genSuccessResult();
+        String loginName = map.get("loginName");
+        String password = map.get("password");
         log.info(logMsg + "上传参数{loginName=" + loginName + ",password=" + password + "}");
         UsernamePasswordToken token = new UsernamePasswordToken(loginName, MD5.getMD5(password));
         token.setRememberMe(true);
