@@ -66,4 +66,8 @@
         limit ${limit}
     </select>
 
+    <update id="addArticleReadCount" parameterType="java.lang.Integer">
+        update tb_article set read_count = read_count + 1 where id = #{articleId}
+    </update>
+
 </mapper>

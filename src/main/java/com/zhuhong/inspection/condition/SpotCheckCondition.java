@@ -26,5 +26,9 @@ public class SpotCheckCondition extends BaseCondition {
     private String checkResult;
     @ApiModelProperty(name = "isFake", value = "是否涉嫌假冒：0-否，1-是", example = "0")
     private String isFake;
+    @ApiModelProperty(name = "startDate", value = "开始日期", example = "2019-01-01")
+    private String startDate;
+    @ApiModelProperty(name = "endDate", value = "结束日期", example = "2019-10-10")
+    private String endDate;
 
 }

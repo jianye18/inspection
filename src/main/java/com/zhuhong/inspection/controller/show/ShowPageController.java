@@ -198,7 +198,6 @@ public class ShowPageController extends BaseController {
             map.put("criterionCount", criterionService.getCriterionTotalCount());
             map.put("spotCheckCount", spotCheckService.getSpotCheckTotalCount());
             map.put("flightCheckCount", flightCheckService.getFlightCheckTotalCount());
-            map.put("articleCount", articleService.getArticleTotalCount());
             result = Result.genSuccessResult(map);
         } catch (Exception e) {
             e.printStackTrace();

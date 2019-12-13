@@ -14,6 +14,7 @@ import com.zhuhong.inspection.service.LawService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.LawVo;
 import com.zhuhong.inspection.vo.SelectionLabel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,9 +61,13 @@ public class LawServiceImpl implements LawService {
     }
 
     @Override
-    public PageInfo<LawVo> getLawPageList(LawCondition lawCondition) {
-        PageHelper.startPage(lawCondition.getPageNum(), lawCondition.getPageSize());
-        List<LawVo> list = lawMapper.getLawListByCondition(lawCondition);
+    public PageInfo<LawVo> getLawPageList(LawCondition condition) {
+        if (StringUtils.isNotEmpty(condition.getStartDate())) {
+            condition.setStartDate(DateUtil.getDayStartTime(condition.getStartDate()));
+            condition.setEndDate(DateUtil.getDayEndTime(condition.getEndDate()));
+        }
+        PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
+        List<LawVo> list = lawMapper.getLawListByCondition(condition);
         if (list.size() > 0) {
             for (LawVo lawVo : list) {
                 initAnnex(lawVo);

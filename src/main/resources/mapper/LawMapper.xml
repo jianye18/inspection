@@ -58,8 +58,8 @@
             <if test="source != null and source != '' ">
                 and l.source = #{source}
             </if>
-            <if test="startDate != null">
-                and l.implement_date between #{startDate} and #{endDate}
+            <if test="startDate != null and startDate != '' ">
+                and l.publish_date &gt;= #{startDate} and l.publish_date &lt;= #{endDate}
             </if>
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and l.name like concat('%', #{searchPhrase}, '%')

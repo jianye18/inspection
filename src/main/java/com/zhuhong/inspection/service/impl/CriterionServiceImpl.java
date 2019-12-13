@@ -13,6 +13,7 @@ import com.zhuhong.inspection.service.AnnexService;
 import com.zhuhong.inspection.service.CriterionService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.CriterionVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -62,6 +63,10 @@ public class CriterionServiceImpl implements CriterionService {
 
     @Override
     public PageInfo<CriterionVo> getCriterionPageList(CriterionCondition condition) {
+        if (StringUtils.isNotEmpty(condition.getStartDate())) {
+            condition.setStartDate(DateUtil.getDayStartTime(condition.getStartDate()));
+            condition.setEndDate(DateUtil.getDayEndTime(condition.getEndDate()));
+        }
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
         List<CriterionVo> list = criterionMapper.getCriterionListByCondition(condition);
         if (list.size() > 0) {

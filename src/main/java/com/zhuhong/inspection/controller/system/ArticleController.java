@@ -134,4 +134,24 @@ public class ArticleController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "增加文章的阅读量")
+    @ApiImplicitParam(name = "articleId", value = "文章ID")
+    @GetMapping("addArticleReadCount/{articleId}")
+    @SystemLog(description = "增加文章的阅读量", type = UserLog.USER_LOG_UPDATE)
+    public Result addArticleReadCount(@PathVariable(value = "articleId") Integer articleId) {
+        String logMsg = "调用增加文章的阅读量接口---addArticleReadCount()---，";
+        log.debug(logMsg + "上传参数：" + articleId);
+        Result result;
+        try {
+            articleService.addArticleReadCount(articleId);
+            result = Result.genSuccessResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
 }

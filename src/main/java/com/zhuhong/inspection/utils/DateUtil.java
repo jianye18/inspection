@@ -134,6 +134,26 @@ public class DateUtil {
         }
     }
 
+    /**
+     * 一天的起始时间: 00:00:00
+     *
+     * @param dateStr
+     * @return
+     */
+    public static String getDayStartTime(String dateStr) {
+        return dateStr + " 00:00:00";
+    }
+
+    /**
+     * 一天的结束时间: 23:59:59
+     *
+     * @param dateStr
+     * @return
+     */
+    public static String getDayEndTime(String dateStr) {
+        return dateStr + " 23:59:59";
+    }
+
     public static void main(String[] args) {
         System.out.println(addDay(2, "2019-10-19", DATE_FORMATER, DAYS, 1));
     }

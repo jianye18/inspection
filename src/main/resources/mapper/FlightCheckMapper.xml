@@ -42,9 +42,9 @@
             <if test="publishUnit != null and publishUnit != '' ">
                 and f.publish_unit = #{publishUnit}
             </if>
-            <!--<if test="startDate != null">
-                and f.publish_date between #{startDate} and #{endDate}
-            </if>-->
+            <if test="startDate != null and startDate != '' ">
+                and f.publish_date &gt;= #{startDate} and f.publish_date &lt;= #{endDate}
+            </if>
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and f.business_name like concat('%', #{searchPhrase}, '%')
             </if>

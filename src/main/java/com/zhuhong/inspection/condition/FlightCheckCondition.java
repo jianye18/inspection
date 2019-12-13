@@ -28,5 +28,9 @@ public class FlightCheckCondition extends BaseCondition {
     private String isDefect;
     @ApiModelProperty(name = "publishUnit", value = "发布单位", example = "3")
     private String publishUnit;
+    @ApiModelProperty(name = "startDate", value = "开始日期", example = "2019-01-01")
+    private String startDate;
+    @ApiModelProperty(name = "endDate", value = "结束日期", example = "2019-10-10")
+    private String endDate;
 
 }

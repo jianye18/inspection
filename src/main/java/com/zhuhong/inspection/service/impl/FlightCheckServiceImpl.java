@@ -14,6 +14,7 @@ import com.zhuhong.inspection.service.FlightCheckService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.FlightCheckVo;
 import com.zhuhong.inspection.vo.SelectionLabel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,6 +81,10 @@ public class FlightCheckServiceImpl implements FlightCheckService {
 
     @Override
     public PageInfo<FlightCheckVo> getFlightCheckPageList(FlightCheckCondition condition) {
+        if (StringUtils.isNotEmpty(condition.getStartDate())) {
+            condition.setStartDate(DateUtil.getDayStartTime(condition.getStartDate()));
+            condition.setEndDate(DateUtil.getDayEndTime(condition.getEndDate()));
+        }
         PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
         List<FlightCheckVo> list = flightCheckMapper.getFlightCheckPageList(condition);
         return new PageInfo<>(list);

@@ -86,4 +86,9 @@ public class ArticleServiceImpl implements ArticleService {
         article.setIsPublish(1);
         return articleMapper.selectCount(article);
     }
+
+    @Override
+    public void addArticleReadCount(Integer articleId) {
+        articleMapper.addArticleReadCount(articleId);
+    }
 }

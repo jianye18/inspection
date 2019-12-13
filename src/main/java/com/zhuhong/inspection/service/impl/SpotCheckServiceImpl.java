@@ -9,6 +9,7 @@ import com.zhuhong.inspection.service.SpotCheckService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SpotCheckVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,9 +37,13 @@ public class SpotCheckServiceImpl implements SpotCheckService {
     }
 
     @Override
-    public PageInfo<SpotCheckVo> getSpotCheckPageList(SpotCheckCondition spotCheckCondition) {
-        PageHelper.startPage(spotCheckCondition.getPageNum(), spotCheckCondition.getPageSize());
-        List<SpotCheckVo> list = spotCheckMapper.getSpotCheckListByCondition(spotCheckCondition);
+    public PageInfo<SpotCheckVo> getSpotCheckPageList(SpotCheckCondition condition) {
+        if (StringUtils.isNotEmpty(condition.getStartDate())) {
+            condition.setStartDate(DateUtil.getDayStartTime(condition.getStartDate()));
+            condition.setEndDate(DateUtil.getDayEndTime(condition.getEndDate()));
+        }
+        PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
+        List<SpotCheckVo> list = spotCheckMapper.getSpotCheckListByCondition(condition);
         return new PageInfo<>(list);
     }
 

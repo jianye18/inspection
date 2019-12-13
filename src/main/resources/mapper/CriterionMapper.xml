@@ -50,11 +50,11 @@
             <if test="status != null and status != '' ">
                 and c.status = #{status}
             </if>
-            <if test="startDate != null">
-                and c.implement_date between #{startDate} and #{endDate}
-            </if>
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and c.name like concat('%', #{searchPhrase}, '%')
+            </if>
+            <if test="startDate != null and startDate != '' ">
+                and c.publish_date &gt;= #{startDate} and c.publish_date &lt;= #{endDate}
             </if>
         <if test="orderName != null and orderName != '' ">
             order by c.${orderName} ${orderType}

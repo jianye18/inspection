@@ -45,6 +45,9 @@
             <if test="checkResult != null and checkResult != '' ">
                 and s.check_result = #{checkResult}
             </if>
+            <if test="startDate != null and startDate != '' ">
+                and s.publish_date &gt;= #{startDate} and s.publish_date &lt;= #{endDate}
+            </if>
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and (s.unit like concat('%', #{searchPhrase}, '%') or s.producer like concat('%', #{searchPhrase}, '%'))
             </if>

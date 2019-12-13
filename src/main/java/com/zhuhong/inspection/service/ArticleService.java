@@ -79,4 +79,12 @@ public interface ArticleService {
      */
     int getArticleTotalCount();
 
+    /**
+     * 增加文章的阅读量
+     * @param articleId
+     * @Author: jian.ye
+     * @Date: 2019/12/13 16:47
+     */
+    void addArticleReadCount(Integer articleId);
+
 }
