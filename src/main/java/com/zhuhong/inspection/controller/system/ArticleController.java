@@ -137,7 +137,6 @@ public class ArticleController extends BaseController {
     @ApiOperation(value = "增加文章的阅读量")
     @ApiImplicitParam(name = "articleId", value = "文章ID")
     @GetMapping("addArticleReadCount/{articleId}")
-    @SystemLog(description = "增加文章的阅读量", type = UserLog.USER_LOG_UPDATE)
     public Result addArticleReadCount(@PathVariable(value = "articleId") Integer articleId) {
         String logMsg = "调用增加文章的阅读量接口---addArticleReadCount()---，";
         log.debug(logMsg + "上传参数：" + articleId);
