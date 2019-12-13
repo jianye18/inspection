@@ -38,7 +38,7 @@
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and a.title like concat('%', #{searchPhrase}, '%')
             </if>
-        order by a.publish_time desc
+        order by a.update_time desc
     </select>
 
     <select id="getArticleById" resultType="com.zhuhong.inspection.vo.ArticleVo">
