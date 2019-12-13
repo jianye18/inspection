@@ -91,6 +91,13 @@ public class LawServiceImpl implements LawService {
         return lawVo;
     }
 
+    @Override
+    public int getLawTotalCount() {
+        Law law = new Law();
+        law.setUsable(Law.ENABLE_1);
+        return lawMapper.selectCount(law);
+    }
+
     private void initAnnex(LawVo lawVo) {
         List<Annex> annexList = annexService.getAnnexList(lawVo.getId(), Constants.BASE_TYPE_3);
         if (annexList.size() > 0) {

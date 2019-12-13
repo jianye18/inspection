@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -51,6 +53,14 @@ public class ShowPageController extends BaseController {
     private LinkService linkService;
     @Autowired
     private StatementService statementService;
+    @Autowired
+    private LawService lawService;
+    @Autowired
+    private CriterionService criterionService;
+    @Autowired
+    private SpotCheckService spotCheckService;
+    @Autowired
+    private FlightCheckService flightCheckService;
 
     @Value("${upload_path}")
     private String fileDir;
@@ -168,6 +178,28 @@ public class ShowPageController extends BaseController {
         Result result;
         try {
             result = Result.genSuccessResult(statementService.getOneViewStatement());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
+    @ApiOperation(value = "获取统计数量")
+    @GetMapping("getShowCount")
+    public Result getShowCount() {
+        String logMsg = "调用获取统计数量接口---getShowCount()---，";
+        Result result;
+        try {
+            Map<String, Integer> map = new HashMap<>();
+            map.put("lawCount", lawService.getLawTotalCount());
+            map.put("criterionCount", criterionService.getCriterionTotalCount());
+            map.put("spotCheckCount", spotCheckService.getSpotCheckTotalCount());
+            map.put("flightCheckCount", flightCheckService.getFlightCheckTotalCount());
+            map.put("articleCount", articleService.getArticleTotalCount());
+            result = Result.genSuccessResult(map);
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);

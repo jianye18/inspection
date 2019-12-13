@@ -110,7 +110,15 @@ public class CriterionServiceImpl implements CriterionService {
         if (annexList.size() > 0) {
             criterionVo.setAnnexList(annexList);
         }
+        criterionVo.setSummary(criterionVo.getSummary().replaceAll("\\r\\n", "<br/>"));
         return criterionVo;
+    }
+
+    @Override
+    public int getCriterionTotalCount() {
+        Criterion criterion = new Criterion();
+        criterion.setUsable(Criterion.ENABLE_1);
+        return criterionMapper.selectCount(criterion);
     }
 
 }

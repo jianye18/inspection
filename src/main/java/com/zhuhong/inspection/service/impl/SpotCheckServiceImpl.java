@@ -76,4 +76,11 @@ public class SpotCheckServiceImpl implements SpotCheckService {
         return spotCheckMapper.updateByPrimaryKeySelective(spotCheck) > 0;
     }
 
+    @Override
+    public int getSpotCheckTotalCount() {
+        SpotCheck spotCheck = new SpotCheck();
+        spotCheck.setUsable(SpotCheck.ENABLE_1);
+        return spotCheckMapper.selectCount(spotCheck);
+    }
+
 }

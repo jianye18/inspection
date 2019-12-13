@@ -38,7 +38,7 @@ public class FlightCheckServiceImpl implements FlightCheckService {
     public boolean saveFlightCheck(FlightCheckDto flightCheckDto, Integer currentUserId) {
         boolean flag = false;
         Date currentDate = DateUtil.getCurrentDate();
-        List<Annex> annexList = flightCheckDto.getAnnexList();
+        // List<Annex> annexList = flightCheckDto.getAnnexList();
         FlightCheck flightCheck = JSONObject.parseObject(JSONObject.toJSONString(flightCheckDto), FlightCheck.class);
         flightCheck.setUpdateId(currentUserId);
         flightCheck.setUpdateTime(currentDate);
@@ -73,7 +73,9 @@ public class FlightCheckServiceImpl implements FlightCheckService {
     public FlightCheckVo getFlightCheckById(Integer id) {
         FlightCheckCondition condition = new FlightCheckCondition();
         condition.setId(id);
-        return flightCheckMapper.getFlightCheckById(condition);
+        FlightCheckVo flightCheckVo = flightCheckMapper.getFlightCheckById(condition);
+        flightCheckVo.setProblem(flightCheckVo.getProblem().replaceAll("\\r\\n", "<br/>"));
+        return flightCheckVo;
     }
 
     @Override
@@ -106,5 +108,12 @@ public class FlightCheckServiceImpl implements FlightCheckService {
     @Override
     public List<SelectionLabel> getTypeList() {
         return flightCheckMapper.getTypeList();
+    }
+
+    @Override
+    public int getFlightCheckTotalCount() {
+        FlightCheck flightCheck = new FlightCheck();
+        flightCheck.setUsable(FlightCheck.ENABLE_1);
+        return flightCheckMapper.selectCount(flightCheck);
     }
 }

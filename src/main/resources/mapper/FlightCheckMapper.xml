@@ -48,7 +48,12 @@
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and f.business_name like concat('%', #{searchPhrase}, '%')
             </if>
-        order by f.update_time desc
+        <if test="orderName != null and orderName != '' ">
+            order by f.${orderName} ${orderType}
+        </if>
+        <if test="orderName == null or orderName == '' ">
+            order by f.update_time desc
+        </if>
     </select>
 
     <select id="getFlightCheckById" resultType="com.zhuhong.inspection.vo.FlightCheckVo"

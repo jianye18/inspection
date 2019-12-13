@@ -96,4 +96,12 @@ public interface FlightCheckService {
      */
     List<SelectionLabel> getTypeList();
 
+    /**
+     * 获取飞检总数
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/13 14:59
+     */
+    int getFlightCheckTotalCount();
+
 }

@@ -71,4 +71,12 @@ public interface ArticleService {
      */
     List<Article> getHomeArticleList(String orderName, Integer limit);
 
+    /**
+     * 获取文章总数
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/13 14:59
+     */
+    int getArticleTotalCount();
+
 }

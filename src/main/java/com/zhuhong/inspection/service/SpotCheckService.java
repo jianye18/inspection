@@ -80,4 +80,12 @@ public interface SpotCheckService {
      */
     boolean deleteSpotCheck(Integer id, Integer currentUserId);
 
+    /**
+     * 获取抽检数据总数
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/13 14:59
+     */
+    int getSpotCheckTotalCount();
+
 }

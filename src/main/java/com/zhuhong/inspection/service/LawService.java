@@ -54,4 +54,12 @@ public interface LawService {
      */
     LawVo getLawById(Integer id);
 
+    /**
+     * 获取法规总数
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/13 14:59
+     */
+    int getLawTotalCount();
+
 }
