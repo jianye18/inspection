@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "访客统计数据controller")
 @Slf4j
 @RestController
-@RequestMapping("/visitor/")
+@RequestMapping("/api/visitor/")
 public class VisitorController extends BaseController {
 
     @Autowired
