@@ -73,11 +73,12 @@ public interface ArticleService {
 
     /**
      * 获取文章总数
+     * @param isNew
      * @return int
      * @Author: jian.ye
      * @Date: 2019/12/13 14:59
      */
-    int getArticleTotalCount();
+    int getArticleTotalCount(Integer isNew);
 
     /**
      * 增加文章的阅读量

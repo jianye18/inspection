@@ -3,6 +3,7 @@ package com.zhuhong.inspection.mapper;
 import com.zhuhong.inspection.condition.CriterionCondition;
 import com.zhuhong.inspection.model.Criterion;
 import com.zhuhong.inspection.vo.CriterionVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -34,5 +35,14 @@ public interface CriterionMapper extends Mapper<Criterion> {
      * @Date: 2019/10/31 16:17
      */
     CriterionVo getCriterionById(CriterionCondition condition);
+
+    /**
+     * 根据条件获取标准数量
+     * @param isNew
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/16 11:38
+     */
+    int getCriterionCount(@Param(value = "isNew") Integer isNew);
 
 }

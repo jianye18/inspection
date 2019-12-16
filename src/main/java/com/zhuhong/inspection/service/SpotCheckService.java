@@ -82,10 +82,11 @@ public interface SpotCheckService {
 
     /**
      * 获取抽检数据总数
+     * @param isNew
      * @return int
      * @Author: jian.ye
      * @Date: 2019/12/13 14:59
      */
-    int getSpotCheckTotalCount();
+    int getSpotCheckTotalCount(Integer isNew);
 
 }

@@ -56,10 +56,11 @@ public interface LawService {
 
     /**
      * 获取法规总数
+     * @param isNew
      * @return int
      * @Author: jian.ye
      * @Date: 2019/12/13 14:59
      */
-    int getLawTotalCount();
+    int getLawTotalCount(Integer isNew);
 
 }

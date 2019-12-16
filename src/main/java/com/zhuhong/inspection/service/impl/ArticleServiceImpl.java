@@ -77,11 +77,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public int getArticleTotalCount() {
-        Article article = new Article();
-        article.setUsable(Article.ENABLE_1);
-        article.setIsPublish(1);
-        return articleMapper.selectCount(article);
+    public int getArticleTotalCount(Integer isNew) {
+        return articleMapper.getArticleCount(isNew);
     }
 
     @Override

@@ -120,10 +120,8 @@ public class CriterionServiceImpl implements CriterionService {
     }
 
     @Override
-    public int getCriterionTotalCount() {
-        Criterion criterion = new Criterion();
-        criterion.setUsable(Criterion.ENABLE_1);
-        return criterionMapper.selectCount(criterion);
+    public int getCriterionTotalCount(Integer isNew) {
+        return criterionMapper.getCriterionCount(isNew);
     }
 
 }

@@ -98,10 +98,11 @@ public interface FlightCheckService {
 
     /**
      * 获取飞检总数
+     * @param isNew
      * @return int
      * @Author: jian.ye
      * @Date: 2019/12/13 14:59
      */
-    int getFlightCheckTotalCount();
+    int getFlightCheckTotalCount(Integer isNew);
 
 }

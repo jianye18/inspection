@@ -82,10 +82,8 @@ public class SpotCheckServiceImpl implements SpotCheckService {
     }
 
     @Override
-    public int getSpotCheckTotalCount() {
-        SpotCheck spotCheck = new SpotCheck();
-        spotCheck.setUsable(SpotCheck.ENABLE_1);
-        return spotCheckMapper.selectCount(spotCheck);
+    public int getSpotCheckTotalCount(Integer isNew) {
+        return spotCheckMapper.getSpotCheckCount(isNew);
     }
 
 }

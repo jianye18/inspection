@@ -4,6 +4,7 @@ import com.zhuhong.inspection.condition.SpotCheckCondition;
 import com.zhuhong.inspection.model.SpotCheck;
 import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SpotCheckVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -50,5 +51,14 @@ public interface SpotCheckMapper extends Mapper<SpotCheck> {
      * @Date: 2019/11/13 20:59
      */
     List<SelectionLabel> getProductTypeList();
+
+    /**
+     * 根据条件获取抽检数量
+     * @param isNew
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/16 11:42
+     */
+    int getSpotCheckCount(@Param(value = "isNew") Integer isNew);
 
 }

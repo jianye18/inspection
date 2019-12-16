@@ -97,10 +97,8 @@ public class LawServiceImpl implements LawService {
     }
 
     @Override
-    public int getLawTotalCount() {
-        Law law = new Law();
-        law.setUsable(Law.ENABLE_1);
-        return lawMapper.selectCount(law);
+    public int getLawTotalCount(Integer isNew) {
+        return lawMapper.getLawCount(isNew);
     }
 
     private void initAnnex(LawVo lawVo) {

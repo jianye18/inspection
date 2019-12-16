@@ -70,4 +70,16 @@
         update tb_article set read_count = read_count + 1 where id = #{articleId}
     </update>
 
+    <select id="getArticleCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select
+            count(id)
+        from
+            tb_article
+        where
+            usable = 1
+            <if test="isNew == 1">
+                and to_days(create_time) = to_days(SYSDATE())
+            </if>
+    </select>
+
 </mapper>

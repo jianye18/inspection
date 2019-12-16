@@ -28,7 +28,7 @@ public class AnnexServiceImpl implements AnnexService {
             annex.setType(type);
             annexMapper.delete(annex);
         }
-        if (annexList.size() > 0) {
+        if (annexList != null && annexList.size() > 0) {
             for (Annex annex : annexList) {
                 annex.setPath(FILE_DIR + annex.getName());
                 annex.setBusinessId(businessId);

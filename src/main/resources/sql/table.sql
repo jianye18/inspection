@@ -411,5 +411,22 @@ CREATE TABLE `tb_statement`  (
  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '负责声明表' ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for tb_visitor
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_visitor`;
+CREATE TABLE `tb_visitor`  (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `type` tinyint(2) DEFAULT 0 COMMENT '访客统计类型：1-阅读，2-访客',
+ `ip` varchar(225) NULL DEFAULT NULL COMMENT 'IP地址',
+ `visit_date` date NULL DEFAULT NULL COMMENT '访问日期',
+ `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
+ `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+ `update_id` int(11) NULL DEFAULT NULL COMMENT '更新人ID',
+ `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+ `usable` tinyint(2) NULL DEFAULT 1 COMMENT '数据是否有效：0-无效，1-有效',
+ PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '访客统计表' ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;
 

@@ -3,6 +3,7 @@ package com.zhuhong.inspection.mapper;
 import com.zhuhong.inspection.condition.LawCondition;
 import com.zhuhong.inspection.model.Law;
 import com.zhuhong.inspection.vo.LawVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -34,5 +35,14 @@ public interface LawMapper extends Mapper<Law> {
      * @Date: 2019/11/1 14:10
      */
     LawVo getLawById(LawCondition condition);
+
+    /**
+     * 根据条件获取法规数量
+     * @param isNew
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/16 11:29
+     */
+    int getLawCount(@Param(value = "isNew") Integer isNew);
 
 }

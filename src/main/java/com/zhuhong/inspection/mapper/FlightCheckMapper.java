@@ -4,6 +4,7 @@ import com.zhuhong.inspection.condition.FlightCheckCondition;
 import com.zhuhong.inspection.model.FlightCheck;
 import com.zhuhong.inspection.vo.FlightCheckVo;
 import com.zhuhong.inspection.vo.SelectionLabel;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -62,5 +63,14 @@ public interface FlightCheckMapper extends Mapper<FlightCheck> {
      * @Date: 2019/12/9 20:01
      */
     List<SelectionLabel> getTypeList();
+
+    /**
+     * 根据条件获取飞检数量
+     * @param isNew
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/16 11:38
+     */
+    int getFlightCheckCount(@Param(value = "isNew") Integer isNew);
 
 }

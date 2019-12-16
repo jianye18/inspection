@@ -116,9 +116,7 @@ public class FlightCheckServiceImpl implements FlightCheckService {
     }
 
     @Override
-    public int getFlightCheckTotalCount() {
-        FlightCheck flightCheck = new FlightCheck();
-        flightCheck.setUsable(FlightCheck.ENABLE_1);
-        return flightCheckMapper.selectCount(flightCheck);
+    public int getFlightCheckTotalCount(Integer isNew) {
+        return flightCheckMapper.getFlightCheckCount(isNew);
     }
 }

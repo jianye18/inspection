@@ -62,10 +62,11 @@ public interface CriterionService {
 
     /**
      * 获取标准总数
+     * @param isNew
      * @return int
      * @Author: jian.ye
      * @Date: 2019/12/13 14:59
      */
-    int getCriterionTotalCount();
+    int getCriterionTotalCount(Integer isNew);
 
 }

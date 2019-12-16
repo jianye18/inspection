@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.condition.BannerCondition;
-import com.zhuhong.inspection.model.Annex;
-import com.zhuhong.inspection.model.Banner;
-import com.zhuhong.inspection.model.Link;
-import com.zhuhong.inspection.model.Statement;
+import com.zhuhong.inspection.model.*;
 import com.zhuhong.inspection.service.*;
 import com.zhuhong.inspection.utils.FileUtil;
 import io.swagger.annotations.Api;
@@ -16,6 +13,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -24,12 +22,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipOutputStream;
 
 /**
@@ -61,6 +57,8 @@ public class ShowPageController extends BaseController {
     private SpotCheckService spotCheckService;
     @Autowired
     private FlightCheckService flightCheckService;
+    @Autowired
+    private VisitorService visitorService;
 
     @Value("${upload_path}")
     private String fileDir;
@@ -188,16 +186,19 @@ public class ShowPageController extends BaseController {
     }
 
     @ApiOperation(value = "获取统计数量")
-    @GetMapping("getShowCount")
-    public Result getShowCount() {
+    @GetMapping("getShowCount/{isNew}")
+    @ApiImplicitParam(name = "isNew", value = "是否新增数据", example = "1")
+    public Result getShowCount(@PathVariable(value = "isNew") Integer isNew) {
         String logMsg = "调用获取统计数量接口---getShowCount()---，";
+        log.debug(logMsg + "上传参数：" + isNew);
         Result result;
         try {
             Map<String, Integer> map = new HashMap<>();
-            map.put("lawCount", lawService.getLawTotalCount());
-            map.put("criterionCount", criterionService.getCriterionTotalCount());
-            map.put("spotCheckCount", spotCheckService.getSpotCheckTotalCount());
-            map.put("flightCheckCount", flightCheckService.getFlightCheckTotalCount());
+            map.put("lawCount", lawService.getLawTotalCount(isNew));
+            map.put("criterionCount", criterionService.getCriterionTotalCount(isNew));
+            map.put("spotCheckCount", spotCheckService.getSpotCheckTotalCount(isNew));
+            map.put("flightCheckCount", flightCheckService.getFlightCheckTotalCount(isNew));
+            map.put("articleCount", articleService.getArticleTotalCount(isNew));
             result = Result.genSuccessResult(map);
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,6 +207,50 @@ public class ShowPageController extends BaseController {
         }
         log.debug(logMsg + "返回结果信息：" + result.toString());
         return result;
+    }
+
+    @ApiOperation(value = "统计访客情况")
+    @GetMapping("visitorCount")
+    public void visitorCount(HttpServletRequest request) {
+        try {
+            Visitor visitor = new Visitor();
+            visitor.setType(1);
+            String ip = request.getHeader("x-forwarded-for");
+            if (ipIsNullOrEmpty(ip)){
+                // apache http服务代理加上的ip
+                ip = request.getHeader("Proxy-Client-IP");
+            }
+            if (ipIsNullOrEmpty(ip)){
+                // weblogic插件加上的头
+                ip = request.getHeader("WL-Proxy-Client-IP");
+            }
+            if (ipIsNullOrEmpty(ip)){
+                // 真实ip
+                ip = request.getHeader("X-Real-IP");
+            }
+            if (ipIsNullOrEmpty(ip)){
+                // 最后真实的ip
+                ip = request.getRemoteAddr();
+            }
+            visitor.setIp(ip);
+            visitor.setVisitDate(new Date());
+            visitor.setCreateTime(new Date());
+            visitorService.insertVisitor(visitor);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 当前ip是否为空
+     * @param ip
+     * @return
+     */
+    public boolean ipIsNullOrEmpty(String ip){
+        if(ip == null || ip.length()==0 || "unknown".equalsIgnoreCase(ip)){
+            return true;
+        }
+        return false;
     }
 
 }

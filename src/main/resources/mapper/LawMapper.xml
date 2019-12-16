@@ -93,4 +93,16 @@
             and l.id = #{id}
     </select>
 
+    <select id="getLawCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select
+            count(id)
+        from
+            tb_law
+        where
+            usable = 1
+            <if test="isNew == 1">
+                and to_days(create_time) = to_days(SYSDATE())
+            </if>
+    </select>
+
 </mapper>

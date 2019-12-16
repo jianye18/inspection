@@ -51,4 +51,13 @@ public interface ArticleMapper extends Mapper<Article> {
      */
     int addArticleReadCount(@Param(value = "articleId") Integer articleId);
 
+    /**
+     * 根据条件获取文章数量
+     * @param isNew
+     * @return int
+     * @Author: jian.ye
+     * @Date: 2019/12/16 11:38
+     */
+    int getArticleCount(@Param(value = "isNew") Integer isNew);
+
 }
