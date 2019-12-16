@@ -13,7 +13,6 @@
         l.publish_date as publishDate,
         l.implement_date as implementDate,
         l.process as process,
-        l.content as content,
         l.source as source,
         l.create_id as createId,
         l.create_time as createTime,
@@ -76,6 +75,7 @@
             parameterType="com.zhuhong.inspection.condition.LawCondition">
         select
             <include refid="baseResult"/>,
+            l.content as content,
             s.name as categoryName,
             b.name as typeName,
             t.name as publishUnitName,

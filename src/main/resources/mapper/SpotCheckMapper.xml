@@ -51,7 +51,12 @@
             <if test="searchPhrase != null and searchPhrase != '' ">
                 and (s.unit like concat('%', #{searchPhrase}, '%') or s.producer like concat('%', #{searchPhrase}, '%'))
             </if>
-        order by s.publish_date desc
+        <if test="orderName != null and orderName != '' ">
+            order by s.${orderName} ${orderType}
+        </if>
+        <if test="orderName == null or orderName == '' ">
+            order by s.update_time desc
+        </if>
     </select>
 
     <select id="getSpotCheckById" resultType="com.zhuhong.inspection.vo.SpotCheckVo"

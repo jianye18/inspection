@@ -36,9 +36,6 @@ public class BannerController extends BaseController {
     @Autowired
     private BannerService bannerService;
 
-    @Value("${upload_path}")
-    private String fileDir;
-
     @ApiOperation(value = "上传轮播图文件", notes = "返回上传结果")
     @PostMapping("uploadBanner")
     public Result uploadBanner(@RequestParam("file") MultipartFile file, HttpServletRequest request) {

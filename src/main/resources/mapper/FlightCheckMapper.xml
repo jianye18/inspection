@@ -5,7 +5,6 @@
     <sql id="baseResult">
         f.id as id,
         f.business_name as businessName,
-        f.problem as problem,
         f.precautions as precautions,
         f.type as type,
         f.publish_unit as publishUnit,
@@ -60,6 +59,7 @@
             parameterType="com.zhuhong.inspection.condition.FlightCheckCondition">
         select
             <include refid="baseResult"/>
+            ,f.problem as problem
         from
             tb_flight_check f
         where

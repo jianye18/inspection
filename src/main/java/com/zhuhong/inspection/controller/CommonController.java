@@ -6,6 +6,7 @@ import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.utils.FileUtil;
+import com.zhuhong.inspection.utils.MD5;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 公共交互层
@@ -31,8 +34,32 @@ import java.time.LocalDate;
 @RequestMapping("/api/common/")
 public class CommonController extends BaseController {
 
-    @Value("${upload_path}")
-    private String fileDir;
+    @ApiOperation(value = "富文本上传图片", notes = "返回上传结果")
+    @PostMapping("upload")
+    public String uploadBanner(@RequestParam("file") MultipartFile file) {
+        log.debug("上传文件名：" + file.getOriginalFilename());
+        Result result;
+        try{
+            Map<String, String> map = new HashMap<>();
+            //获得path对象，也即是文件保存的路径对象
+            String[] arr = file.getOriginalFilename().split("\\.");
+            String suffix = arr[1];
+            String name = MD5.getMD5(String.valueOf(System.currentTimeMillis())) + "." + suffix;
+            String path = fileDir + "images/";
+            if (FileUtil.uploadFile(file, path, name)) {
+                map.put("url", "images/" + name);
+                result = Result.genSuccessResult(map);
+            } else {
+                map.put("msg", "上传图片失败!");
+                result = Result.genSuccessResult(map);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            result = Result.genFailResult(e.getMessage());
+            log.error("上传文件返回错误信息：", e);
+        }
+        return result.toString();
+    }
 
     @ApiOperation(value = "上传文件", notes = "返回上传结果")
     @PostMapping("uploadSingleFile")

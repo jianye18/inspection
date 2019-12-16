@@ -9,6 +9,7 @@ import com.zhuhong.inspection.condition.ArticleCondition;
 import com.zhuhong.inspection.model.Article;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.service.ArticleService;
+import com.zhuhong.inspection.utils.FileUtil;
 import com.zhuhong.inspection.vo.ArticleVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,8 +17,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author 叶剑

@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -24,6 +25,9 @@ import java.net.URLEncoder;
 public class BaseController {
 
     protected static final String FAIL_MESSAGE = "系统发生错误，请稍后重试！";
+
+    @Value("${upload_path}")
+    protected String fileDir;
 
     /**
      * 获取当前用户信息
