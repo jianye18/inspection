@@ -21,6 +21,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 
 @Aspect
@@ -45,7 +46,7 @@ public class LogAspect {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attributes.getRequest();
         String accessToken = CookieUtil.getCookieValue(Constants.TOKEN, request);
-        Session session = SecurityUtils.getSubject().getSession();
+        HttpSession session = request.getSession();
         User user = (User) session.getAttribute(accessToken);
         UserLog userLog = new UserLog();
         Integer userId = user.getId();

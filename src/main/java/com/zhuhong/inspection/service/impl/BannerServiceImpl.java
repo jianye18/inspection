@@ -1,14 +1,17 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.BannerCondition;
+import com.zhuhong.inspection.dto.BannerDto;
 import com.zhuhong.inspection.mapper.BannerMapper;
 import com.zhuhong.inspection.model.Banner;
 import com.zhuhong.inspection.service.BannerService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.utils.FileUtil;
 import com.zhuhong.inspection.vo.BannerVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,8 +32,14 @@ public class BannerServiceImpl implements BannerService {
     private String fileDir;
 
     @Override
-    public boolean saveBanner(Banner banner, Integer currentUserId) {
+    public boolean saveBanner(BannerDto bannerDto, Integer currentUserId) {
         Date current = DateUtil.getCurrentDate();
+        String oldBannerName = "";
+        if (StringUtils.isNotEmpty(bannerDto.getOldBannerName())) {
+            oldBannerName = bannerDto.getOldBannerName();
+        }
+        Banner banner = JSON.parseObject(JSON.toJSONString(bannerDto), Banner.class);
+        banner.setIsView(Banner.ENABLE_1);
         banner.setUpdateId(currentUserId);
         banner.setUpdateTime(current);
         if (banner.getId() == null) {
@@ -38,6 +47,9 @@ public class BannerServiceImpl implements BannerService {
             banner.setCreateTime(current);
             return bannerMapper.insertSelective(banner) > 0;
         } else {
+            if (StringUtils.isNotEmpty(oldBannerName)) {
+                FileUtil.delAllFile(fileDir + banner.getPath() + banner.getName());
+            }
             return bannerMapper.updateByPrimaryKeySelective(banner) > 0;
         }
     }

@@ -368,6 +368,7 @@ CREATE TABLE `tb_banner`  (
  `size` double  NULL DEFAULT NULL COMMENT '大小', 
  `type` varchar(16) NULL DEFAULT NULL COMMENT '图片类型',
  `is_view` tinyint(2) DEFAULT 1 COMMENT '是否展示：0-否，1-是',
+ `link` varchar(225) NULL DEFAULT NULL COMMENT '链接地址',
  `remark` varchar(225) NULL DEFAULT NULL COMMENT '备注',
  `create_id` int(11) NULL DEFAULT NULL COMMENT '创建人ID',
  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',

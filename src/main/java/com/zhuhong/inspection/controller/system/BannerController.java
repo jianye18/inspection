@@ -5,6 +5,7 @@ import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.condition.BannerCondition;
+import com.zhuhong.inspection.dto.BannerDto;
 import com.zhuhong.inspection.model.Banner;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.service.BannerService;
@@ -38,7 +39,7 @@ public class BannerController extends BaseController {
 
     @ApiOperation(value = "上传轮播图文件", notes = "返回上传结果")
     @PostMapping("uploadBanner")
-    public Result uploadBanner(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    public Result uploadBanner(@RequestParam("file") MultipartFile file) {
         Result result;
         log.debug("上传文件名：" + file.getOriginalFilename());
         try{
@@ -58,11 +59,7 @@ public class BannerController extends BaseController {
                     banner.setPath("banner/");
                     banner.setSize(file.getSize() / 1000);
                     banner.setType(file.getContentType());
-                    if (bannerService.saveBanner(banner, getCurrentUser(request).getId())) {
-                        result = Result.genSuccessResult();
-                    } else {
-                        result = Result.genFailResult("上传轮播图失败!");
-                    }
+                    result = Result.genSuccessResult(banner);
                 } else {
                     result = Result.genFailResult("上传轮播图失败!");
                 }
@@ -72,6 +69,28 @@ public class BannerController extends BaseController {
             result = Result.genFailResult(e.getMessage());
             log.error("上传文件返回错误信息：", e);
         }
+        return result;
+    }
+
+    @ApiOperation(value = "保存轮播图数据")
+    @ApiImplicitParam(name = "bannerDto", value = "保存轮播图参数", dataType = "BannerDto")
+    @PostMapping("saveBanner")
+    public Result saveBanner(@RequestBody BannerDto bannerDto, HttpServletRequest request) {
+        String logMsg = "调用保存轮播图数据接口---saveBanner()---，";
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(bannerDto));
+        Result result;
+        try {
+            if (bannerService.saveBanner(bannerDto, getCurrentUser(request).getId())) {
+                result = Result.genSuccessResult();
+            } else {
+                result = Result.genFailResult("保存轮播图失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
         return result;
     }
 

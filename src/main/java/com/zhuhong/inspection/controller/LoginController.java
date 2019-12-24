@@ -1,9 +1,12 @@
 package com.zhuhong.inspection.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.base.Result;
+import com.zhuhong.inspection.model.User;
 import com.zhuhong.inspection.model.UserLog;
+import com.zhuhong.inspection.service.UserService;
 import com.zhuhong.inspection.utils.CookieUtil;
 import com.zhuhong.inspection.utils.MD5;
 import io.swagger.annotations.Api;
@@ -14,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +34,9 @@ import java.util.Map;
 @RequestMapping("/login/")
 @Slf4j
 public class LoginController {
+
+    @Autowired
+    private UserService userService;
     
     @ApiOperation(value = "用户登录")
     @ApiImplicitParams({
@@ -37,13 +44,13 @@ public class LoginController {
             @ApiImplicitParam(name = "password", value = "用户登录密码", required = true, dataType = "String")
     })
     @RequestMapping(value = "loginIn", method = RequestMethod.POST)
-    public Result loginIn(@RequestBody Map<String, String> map) {
+    public Result loginIn(@RequestBody Map<String, String> map, HttpServletRequest request) {
         String logMsg = "调用系统用户登录接口---loginIn()---，";
-        Result result = Result.genSuccessResult();
+        Result result;
         String loginName = map.get("loginName");
         String password = map.get("password");
         log.info(logMsg + "上传参数{loginName=" + loginName + ",password=" + password + "}");
-        UsernamePasswordToken token = new UsernamePasswordToken(loginName, MD5.getMD5(password));
+        /*UsernamePasswordToken token = new UsernamePasswordToken(loginName, MD5.getMD5(password));
         token.setRememberMe(true);
         //获取当前的Subject
         Subject currentUser = SecurityUtils.getSubject();
@@ -57,6 +64,19 @@ public class LoginController {
         //验证是否登录成功
         if (!currentUser.isAuthenticated()) {
             result = Result.genFailResult("用户无权限");
+        }*/
+        User user = userService.getUserByNickName(loginName);
+        if (null == user) {
+            result = Result.genFailResult("用户不存在！");
+        } else if (Constants.SYS_USER_STATUS_2.equals(user.getUserStatus())) {
+            result = Result.genFailResult("账号禁用中，请联系管理员！");
+        } else if (!user.getPassword().equals(MD5.getMD5(password))) {
+            result = Result.genFailResult("密码不正确！");
+        } else {
+            String token = MD5.getMD5(JSON.toJSONString(user));
+            request.getSession().setAttribute(token, user);
+            request.getSession().setMaxInactiveInterval(24 * 60 * 60 * 1000);
+            result = Result.genSuccessResult(token);
         }
         log.info(logMsg + "返回结果信息：" + result.toString());
         return result;
@@ -70,8 +90,9 @@ public class LoginController {
         Result result = Result.genSuccessResult();
         try {
             CookieUtil.removeCookie(Constants.TOKEN, request, response);
-            Subject subject = SecurityUtils.getSubject();
-            subject.logout();
+            /*Subject subject = SecurityUtils.getSubject();
+            subject.logout();*/
+            request.getSession().invalidate();
         } catch (Exception e) {
             e.printStackTrace();
             log.error(logMsg + "返回错误信息：", e);

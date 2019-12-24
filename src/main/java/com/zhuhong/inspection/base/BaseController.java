@@ -12,6 +12,7 @@ import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -39,7 +40,7 @@ public class BaseController {
     protected User getCurrentUser(HttpServletRequest request) {
         String accessToken = CookieUtil.getCookieValue(Constants.TOKEN, request);
         log.debug("获取当前用户信息的cookie保存内容：" + accessToken);
-        Session session = SecurityUtils.getSubject().getSession();
+        HttpSession session = request.getSession();
         User user = (User) session.getAttribute(accessToken);
         log.debug("获取当前用户信息：" + JSON.toJSONString(user));
         return user;

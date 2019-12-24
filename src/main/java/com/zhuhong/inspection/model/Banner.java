@@ -29,6 +29,9 @@ public class Banner extends BaseModel {
     @ApiModelProperty(name = "isView", value = "是否展示：0-否，1-是", example = "1")
     @Column(name = "is_view")
     private Integer isView;
+    @ApiModelProperty(name = "link", value = "链接地址", example = "备注")
+    @Column(name = "link")
+    private String link;
     @ApiModelProperty(name = "remark", value = "备注", example = "备注")
     @Column(name = "remark")
     private String remark;

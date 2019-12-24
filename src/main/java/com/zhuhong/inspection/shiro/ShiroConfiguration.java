@@ -22,7 +22,7 @@ import java.util.Map;
  * @version 1.0
  * @Date 2018年08月08日 14:21
  */
-@Configuration
+// @Configuration
 public class ShiroConfiguration {
 
     /**

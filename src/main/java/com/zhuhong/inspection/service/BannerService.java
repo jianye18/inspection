@@ -2,6 +2,7 @@ package com.zhuhong.inspection.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.BannerCondition;
+import com.zhuhong.inspection.dto.BannerDto;
 import com.zhuhong.inspection.model.Banner;
 import com.zhuhong.inspection.vo.BannerVo;
 
@@ -14,13 +15,13 @@ public interface BannerService {
 
     /**
      * 保存轮播图信息
-     * @param banner
+     * @param bannerDto
      * @param currentUserId
      * @return boolean
      * @Author: jian.ye
      * @Date: 2019/11/29 15:22
      */
-    boolean saveBanner(Banner banner, Integer currentUserId);
+    boolean saveBanner(BannerDto bannerDto, Integer currentUserId);
 
     /**
      * 分页获取轮播图信息
