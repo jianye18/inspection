@@ -22,6 +22,16 @@
         u.usable
     </sql>
 
+    <select id="selectUserByNickName" resultType="com.zhuhong.inspection.model.User" parameterType="java.lang.String">
+        select
+            <include refid="baseSql"/>
+        from
+            tb_user u
+        where
+            u.usable = 1
+            and u.nick_name = #{nickName}
+    </select>
+
     <select id="getUserListByCondition" resultType="com.zhuhong.inspection.vo.UserVo" parameterType="com.zhuhong.inspection.condition.UserCondition">
         select
             <include refid="baseSql"/>,

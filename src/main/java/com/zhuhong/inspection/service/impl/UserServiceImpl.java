@@ -44,9 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByNickName(String nickName) {
-        User user = new User();
-        user.setNickName(nickName);
-        return userMapper.selectOne(user);
+        return userMapper.selectUserByNickName(nickName);
     }
 
     @Override
