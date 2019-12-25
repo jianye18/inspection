@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class BannerServiceImpl implements BannerService {
             return bannerMapper.insertSelective(banner) > 0;
         } else {
             if (StringUtils.isNotEmpty(oldBannerName)) {
-                FileUtil.delAllFile(fileDir + banner.getPath() + banner.getName());
+                new File(fileDir + banner.getPath() + oldBannerName).delete();
             }
             return bannerMapper.updateByPrimaryKeySelective(banner) > 0;
         }

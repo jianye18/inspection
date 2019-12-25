@@ -37,18 +37,12 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        String accessToken = CookieUtil.getCookieValue(Constants.TOKEN, request);
-        log.debug("获取当前用户信息的cookie保存内容：" + accessToken);
-        User user = (User) request.getSession().getAttribute(accessToken);
-        System.out.println(JSON.toJSONString(user));
+
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        String accessToken = CookieUtil.getCookieValue(Constants.TOKEN, request);
-        log.debug("获取当前用户信息的cookie保存内容：" + accessToken);
-        User user = (User) request.getSession().getAttribute(accessToken);
-        System.out.println(JSON.toJSONString(user));
+
     }
 
 }
