@@ -43,6 +43,16 @@ spring:
 # 端口号配置
 server:
  port: 8090
+# ssl:
+#   key-store: classpath:server.keystore
+#   key-store-password: yezhuhong1307404
+#   key-alias: tomcat
+#   enabled: true
+#   key-store-type: PKCS12
+#   ciphers: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+#   key-store: classpath:www.yezhuhongblog.com.pfx
+#   key-store-password: nY0v8tz1
+#   key-store-type: PKCS12
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

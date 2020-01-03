@@ -10,6 +10,7 @@
         b.size as size,
         b.remark as remark,
         b.is_view as isView,
+        b.link as link,
         b.create_id as createId,
         b.create_time as createTime,
         b.update_id as updateId,

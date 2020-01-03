@@ -25,6 +25,8 @@
             parameterType="com.zhuhong.inspection.condition.LawCondition">
         select
             <include refid="baseResult"/>,
+            l.name as title,
+            l.implement_date as publishTime,
             s.name as categoryName,
             b.name as typeName,
             t.name as publishUnitName,

@@ -28,7 +28,9 @@
     <select id="getSpotCheckListByCondition" resultType="com.zhuhong.inspection.vo.SpotCheckVo"
             parameterType="com.zhuhong.inspection.condition.SpotCheckCondition">
         select
-            <include refid="baseSql"/>
+            <include refid="baseSql"/>,
+            s.sample as title,
+            s.publish_date as publishTime
         from
             tb_spot_check s
         where

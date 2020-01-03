@@ -22,7 +22,7 @@ public class CriterionCondition extends BaseCondition {
     @ApiModelProperty(name = "type", value = "二级分类", example = "1")
     private String type;
     @ApiModelProperty(name = "status", value = "状态", example = "1")
-    private Integer status;
+    private String status;
     @ApiModelProperty(name = "publishUnit", value = "发布单位", example = "1")
     private String publishUnit;
     @ApiModelProperty(name = "startDate", value = "开始日期", example = "2019-01-01")

@@ -21,7 +21,9 @@
     <select id="getFlightCheckPageList" resultType="com.zhuhong.inspection.vo.FlightCheckVo"
             parameterType="com.zhuhong.inspection.condition.FlightCheckCondition">
         select
-            <include refid="baseResult"/>
+            <include refid="baseResult"/>,
+            f.business_name as title,
+            f.publish_date as publishTime
         from
             tb_flight_check f
         where
