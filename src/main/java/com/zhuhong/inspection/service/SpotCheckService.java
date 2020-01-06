@@ -71,6 +71,13 @@ public interface SpotCheckService {
     List<SelectionLabel> getProductTypeList();
 
     /**
+     * 获取样品名称集合
+     * @Author: jian.ye
+     * @Date: 2019/11/13 20:59
+     */
+    List<SelectionLabel> getSampleTypeList();
+
+    /**
      * 删除抽检数据
      * @param id
      * @param currentUserId

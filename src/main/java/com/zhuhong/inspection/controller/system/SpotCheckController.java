@@ -147,6 +147,22 @@ public class SpotCheckController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "获取抽检数据的样品名称集合")
+    @GetMapping("getAllSample")
+    public Result<SelectionLabel> getAllSample() {
+        String logMsg = "调用获取抽检数据的样品名称集合接口---getAllSample()---，";
+        Result result;
+        try {
+            result = Result.genSuccessResult(spotCheckService.getSampleTypeList());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
     @ApiOperation(value = "删除抽检数据")
     @ApiImplicitParam(name = "id", value = "抽检数据ID", example = "1")
     @DeleteMapping("deleteSpotCheck/{id}")

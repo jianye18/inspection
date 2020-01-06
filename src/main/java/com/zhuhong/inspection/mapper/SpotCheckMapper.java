@@ -53,6 +53,13 @@ public interface SpotCheckMapper extends Mapper<SpotCheck> {
     List<SelectionLabel> getProductTypeList();
 
     /**
+     * 获取样品名称集合
+     * @Author: jian.ye
+     * @Date: 2019/11/13 20:59
+     */
+    List<SelectionLabel> getSampleTypeList();
+
+    /**
      * 根据条件获取抽检数量
      * @param isNew
      * @return int

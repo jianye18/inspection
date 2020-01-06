@@ -94,6 +94,17 @@
             product_type
     </select>
 
+    <select id="getSampleTypeList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            sample as code,
+            sample as value,
+            sample as label
+        from
+            tb_spot_check
+        group by
+            sample
+    </select>
+
     <select id="getSpotCheckCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         select
             count(id)
