@@ -72,7 +72,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getHomeArticleList(String orderName, Integer limit) {
+    public List<ArticleVo> getHomeArticleList(String orderName, Integer limit) {
         return articleMapper.getArticleListWithOrder(orderName, limit);
     }
 

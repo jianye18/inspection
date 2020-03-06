@@ -41,7 +41,7 @@ public interface ArticleMapper extends Mapper<Article> {
      * @Author: jian.ye
      * @Date: 2019/11/29 14:37
      */
-    List<Article> getArticleListWithOrder(@Param(value = "orderName") String orderName, @Param(value = "limit") Integer limit);
+    List<ArticleVo> getArticleListWithOrder(@Param(value = "orderName") String orderName, @Param(value = "limit") Integer limit);
 
     /**
      * 增加文章的阅读量

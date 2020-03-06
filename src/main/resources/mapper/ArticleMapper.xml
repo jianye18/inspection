@@ -59,17 +59,20 @@
             and a.id = #{articleId}
     </select>
 
-    <select id="getArticleListWithOrder" resultType="com.zhuhong.inspection.model.Article">
+    <select id="getArticleListWithOrder" resultType="com.zhuhong.inspection.vo.ArticleVo">
         select
             a.id as id,
             a.title as title,
-            a.author as author
+            a.publish_time as publishTime,
+            a.author as author,
+            s.name as typeName
         from
             tb_article a
+        left join tb_system_data s on s.code = a.type_code
         where
             a.usable = 1
             and a.is_publish = 1
-        order by ${orderName} desc
+        order by a.${orderName} desc
         limit ${limit}
     </select>
 

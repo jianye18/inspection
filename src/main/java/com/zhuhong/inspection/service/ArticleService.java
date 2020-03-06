@@ -69,7 +69,7 @@ public interface ArticleService {
      * @Author: jian.ye
      * @Date: 2019/11/29 14:35
      */
-    List<Article> getHomeArticleList(String orderName, Integer limit);
+    List<ArticleVo> getHomeArticleList(String orderName, Integer limit);
 
     /**
      * 获取文章总数
