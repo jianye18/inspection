@@ -95,4 +95,10 @@ public class Constants {
     public static final String FLIGHT_CHECK = "flight_check";
     public static final String PRECAUTIONS = "precautions";
 
+    /**
+     * 数据库操作类型：1-备份，2-恢复
+     */
+    public static final Integer DATABASE_BAK_TYPE_1 = 1;
+    public static final Integer DATABASE_BAK_TYPE_2 = 2;
+
 }
