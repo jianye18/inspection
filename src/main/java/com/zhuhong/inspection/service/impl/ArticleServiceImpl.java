@@ -1,10 +1,16 @@
 package com.zhuhong.inspection.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhuhong.inspection.base.Constants;
 import com.zhuhong.inspection.condition.ArticleCondition;
+import com.zhuhong.inspection.dto.ArticleDto;
 import com.zhuhong.inspection.mapper.ArticleMapper;
+import com.zhuhong.inspection.model.Annex;
 import com.zhuhong.inspection.model.Article;
+import com.zhuhong.inspection.model.Criterion;
+import com.zhuhong.inspection.service.AnnexService;
 import com.zhuhong.inspection.service.ArticleService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.ArticleVo;
@@ -23,24 +29,43 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private AnnexService annexService;
 
     @Override
-    public boolean saveArticle(Article article, Integer currentUserId) {
+    public boolean saveArticle(ArticleDto articleDto, Integer currentUserId) {
+        boolean flag = false;
         Date currentDate = DateUtil.getCurrentDate();
+        List<Annex> annexList = articleDto.getAnnexList();
+        Article article = JSONObject.parseObject(JSONObject.toJSONString(articleDto), Article.class);
         article.setUpdateId(currentUserId);
         article.setUpdateTime(currentDate);
         if (article.getId() == null) {
             article.setCreateId(currentUserId);
             article.setCreateTime(currentDate);
-            return articleMapper.insertSelective(article) > 0;
+            int r = articleMapper.insertSelective(article);
+            if (r > 0) {
+                flag = true;
+                annexService.saveAnnex(false, annexList, article.getId(), Constants.BASE_TYPE_5);
+            }
         } else {
-            return articleMapper.updateByPrimaryKeySelective(article) > 0;
+            int r = articleMapper.updateByPrimaryKeySelective(article);
+            if (r > 0) {
+                flag = true;
+                annexService.saveAnnex(true, annexList, article.getId(), Constants.BASE_TYPE_5);
+            }
         }
+        return flag;
     }
 
     @Override
     public ArticleVo getArticleById(Integer articleId) {
-        return articleMapper.getArticleById(articleId);
+        ArticleVo articleVo = articleMapper.getArticleById(articleId);
+        List<Annex> annexList = annexService.getAnnexList(articleVo.getId(), Constants.BASE_TYPE_5);
+        if (annexList.size() > 0) {
+            articleVo.setAnnexList(annexList);
+        }
+        return articleVo;
     }
 
     @Override

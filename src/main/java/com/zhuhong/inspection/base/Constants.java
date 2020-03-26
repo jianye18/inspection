@@ -47,12 +47,13 @@ public class Constants {
     public static final Integer PERMISSION_TYPE_3 = 3;
 
     /**
-     * 基础分类：1-抽检、2-标准、3-法规、4-飞检
+     * 基础分类：1-抽检、2-标准、3-法规、4-飞检、5-文章
      */
     public static final Integer BASE_TYPE_1 = 1;
     public static final Integer BASE_TYPE_2 = 2;
     public static final Integer BASE_TYPE_3 = 3;
     public static final Integer BASE_TYPE_4 = 4;
+    public static final Integer BASE_TYPE_5 = 5;
     public static final String BASE_TYPE_SC = "SC";
     public static final String BASE_TYPE_CC = "CC";
     public static final String BASE_TYPE_LW = "LW";

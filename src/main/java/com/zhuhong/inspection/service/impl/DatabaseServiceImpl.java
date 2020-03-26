@@ -60,7 +60,6 @@ public class DatabaseServiceImpl implements DatabaseService {
                 System.currentTimeMillis() +
                 "-bak.sql";
         String pathSql = rootPath +
-                "database-bak/" +
                 name;
         File sqlBak = new File(pathSql);
         try {

@@ -2,6 +2,7 @@ package com.zhuhong.inspection.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zhuhong.inspection.condition.ArticleCondition;
+import com.zhuhong.inspection.dto.ArticleDto;
 import com.zhuhong.inspection.model.Article;
 import com.zhuhong.inspection.vo.ArticleVo;
 
@@ -15,13 +16,13 @@ public interface ArticleService {
 
     /**
      * 保存文章数据
-     * @param article
+     * @param articleDto
      * @param currentUserId
      * @return boolean
      * @Author: jian.ye
      * @Date: 2019/11/19 14:15
      */
-    boolean saveArticle(Article article, Integer currentUserId);
+    boolean saveArticle(ArticleDto articleDto, Integer currentUserId);
 
     /**
      * 根据id获取文章信息

@@ -6,6 +6,7 @@ import com.zhuhong.inspection.aop.SystemLog;
 import com.zhuhong.inspection.base.BaseController;
 import com.zhuhong.inspection.base.Result;
 import com.zhuhong.inspection.condition.ArticleCondition;
+import com.zhuhong.inspection.dto.ArticleDto;
 import com.zhuhong.inspection.model.Article;
 import com.zhuhong.inspection.model.UserLog;
 import com.zhuhong.inspection.service.ArticleService;
@@ -55,15 +56,15 @@ public class ArticleController extends BaseController {
     }
 
     @ApiOperation(value = "保存文章数据")
-    @ApiImplicitParam(name = "article", value = "文章数据", dataType = "Article")
+    @ApiImplicitParam(name = "articleDto", value = "文章数据", dataType = "ArticleDto")
     @PostMapping("saveArticle")
     @SystemLog(description = "保存文章数据", type = UserLog.USER_LOG_SAVE)
-    public Result saveArticle(@RequestBody Article article, HttpServletRequest request) {
+    public Result saveArticle(@RequestBody ArticleDto articleDto, HttpServletRequest request) {
         String logMsg = "调用保存文章数据接口---saveArticle()---，";
-        log.debug(logMsg + "上传参数：" + JSON.toJSONString(article));
+        log.debug(logMsg + "上传参数：" + JSON.toJSONString(articleDto));
         Result result = Result.genFailResult(FAIL_MESSAGE);
         try {
-            boolean flag = articleService.saveArticle(article, getCurrentUser(request).getId());
+            boolean flag = articleService.saveArticle(articleDto, getCurrentUser(request).getId());
             if (flag) {
                 result = Result.genSuccessResultMsg("保存文章数据成功");
             }
