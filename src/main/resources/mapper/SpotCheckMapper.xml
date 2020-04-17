@@ -51,7 +51,7 @@
                 and s.publish_date &gt;= #{startDate} and s.publish_date &lt;= #{endDate}
             </if>
             <if test="searchPhrase != null and searchPhrase != '' ">
-                and (s.unit like concat('%', #{searchPhrase}, '%') or s.producer like concat('%', #{searchPhrase}, '%'))
+                and (s.unit like concat('%', #{searchPhrase}, '%') or s.producer like concat('%', #{searchPhrase}, '%') or s.sample like concat('%', #{searchPhrase}, '%'))
             </if>
         <if test="orderName != null and orderName != '' ">
             order by s.${orderName} ${orderType}

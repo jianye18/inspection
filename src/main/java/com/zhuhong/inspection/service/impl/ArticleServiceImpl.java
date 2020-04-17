@@ -15,6 +15,7 @@ import com.zhuhong.inspection.service.ArticleService;
 import com.zhuhong.inspection.utils.DateUtil;
 import com.zhuhong.inspection.vo.ArticleVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -31,6 +32,8 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
     @Autowired
     private AnnexService annexService;
+    @Value("${http_url}")
+    private String httpUrl;
 
     @Override
     public boolean saveArticle(ArticleDto articleDto, Integer currentUserId) {
@@ -61,6 +64,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleVo getArticleById(Integer articleId) {
         ArticleVo articleVo = articleMapper.getArticleById(articleId);
+        articleVo.setContent(articleVo.getContent().replaceAll("src=\\\"", "src=\\\"" + httpUrl));
         List<Annex> annexList = annexService.getAnnexList(articleVo.getId(), Constants.BASE_TYPE_5);
         if (annexList.size() > 0) {
             articleVo.setAnnexList(annexList);

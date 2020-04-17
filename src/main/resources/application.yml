@@ -71,3 +71,5 @@ logging:
 
 # upload_path: E:/inspection/
 upload_path: /home/resources/
+
+http_url: https://www.yezhuhongblog.com
