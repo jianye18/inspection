@@ -30,7 +30,7 @@ public class AnnexServiceImpl implements AnnexService {
         }
         if (annexList != null && annexList.size() > 0) {
             for (Annex annex : annexList) {
-                annex.setPath(FILE_DIR + annex.getName());
+                annex.setPath(FILE_DIR + "docs/" + annex.getName());
                 annex.setBusinessId(businessId);
                 annex.setType(type);
             }

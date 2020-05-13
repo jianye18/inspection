@@ -31,7 +31,7 @@ public class VisitorServiceImpl implements VisitorService {
                 .andEqualTo("usable", 1)
                 .andEqualTo("visitDate", DateUtil.toDateString(LocalDate.now(), DateUtil.DATE_FORMATER));
         List<Visitor> list = visitorMapper.selectByExample(example);
-        if (list.size() < 2) {
+        if (list.size() < 1) {
             visitor.setId(null);
             visitor.setType(2);
             if (list.size() == 1) {
