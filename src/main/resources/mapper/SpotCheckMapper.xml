@@ -83,6 +83,17 @@
             institution
     </select>
 
+    <select id="getSubjectList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
+        select
+            subject as code,
+            subject as value,
+            subject as label
+        from
+            tb_spot_check
+        group by
+            subject
+    </select>
+
     <select id="getProductTypeList" resultType="com.zhuhong.inspection.vo.SelectionLabel">
         select
             product_type as code,

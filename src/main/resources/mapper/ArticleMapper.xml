@@ -26,7 +26,7 @@
             ,s.name as typeName
         from
             tb_article a
-        left join tb_system_data s on s.code = a.type_code
+        left join tb_system_data s on s.code = a.type_code and s.type_code = 'WZ_typeCode'
         where
             a.usable = 1
             <if test="typeCode != null and typeCode != ''">

@@ -46,6 +46,13 @@ public interface SpotCheckMapper extends Mapper<SpotCheck> {
     List<SelectionLabel> getInstitutionList();
 
     /**
+     * 获取不合格项目集合
+     * @Author: jian.ye
+     * @Date: 2020/05/26 17:59
+     */
+    List<SelectionLabel> getSubjectList();
+
+    /**
      * 获取产品类型集合
      * @Author: jian.ye
      * @Date: 2019/11/13 20:59

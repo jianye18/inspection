@@ -85,11 +85,11 @@
             a.name as statusName
         from
             tb_law l
-        left join tb_system_data s on s.code = l.category
+        left join tb_system_data s on s.code = l.category and s.type_code = 'FG_category'
         left join tb_law_type b on b.value = l.type and b.code = l.category
-        left join tb_system_data t on t.code = l.publish_unit
-        left join tb_system_data d on d.code = l.source
-        left join tb_system_data a on a.code = l.status
+        left join tb_system_data t on t.code = l.publish_unit and t.type_code = 'FG_publishUnit'
+        left join tb_system_data d on d.code = l.source and d.type_code = 'FG_source'
+        left join tb_system_data a on a.code = l.status and a.type_code = 'FG_status'
         where
             l.usable = 1
             and l.id = #{id}

@@ -131,6 +131,22 @@ public class SpotCheckController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "获取抽检数据的不合格项目")
+    @GetMapping("getAllSubject")
+    public Result<SelectionLabel> getAllSubject() {
+        String logMsg = "调用获取抽检数据的不合格项目接口---getAllSubject()---，";
+        Result result;
+        try {
+            result = Result.genSuccessResult(spotCheckService.getAllSubject());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
     @ApiOperation(value = "获取抽检数据的产品类型集合")
     @GetMapping("getAllProductType")
     public Result<SelectionLabel> getAllProductType() {

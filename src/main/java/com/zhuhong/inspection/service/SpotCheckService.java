@@ -64,6 +64,14 @@ public interface SpotCheckService {
     List<SelectionLabel> getAllInstitution();
 
     /**
+     * 获取抽检数据的不合格项目
+     * @return List<SelectionLabel>
+     * @Author: jian.ye
+     * @Date: 2020/5/26 0026 17:39
+     */
+    List<SelectionLabel> getAllSubject();
+
+    /**
      * 获取产品类型集合
      * @Author: jian.ye
      * @Date: 2019/11/13 20:59

@@ -67,6 +67,11 @@ public class SpotCheckServiceImpl implements SpotCheckService {
     }
 
     @Override
+    public List<SelectionLabel> getAllSubject() {
+        return spotCheckMapper.getSubjectList();
+    }
+
+    @Override
     public List<SelectionLabel> getProductTypeList() {
         return spotCheckMapper.getProductTypeList();
     }
