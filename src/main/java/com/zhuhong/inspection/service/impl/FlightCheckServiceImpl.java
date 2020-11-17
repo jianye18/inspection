@@ -19,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 飞检数据业务逻辑实现层
@@ -118,5 +120,14 @@ public class FlightCheckServiceImpl implements FlightCheckService {
     @Override
     public int getFlightCheckTotalCount(Integer isNew) {
         return flightCheckMapper.getFlightCheckCount(isNew);
+    }
+
+    @Override
+    public Map getCountByBusinessName(String businessName) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("total", flightCheckMapper.getCountByBusinessName(businessName, null));
+        map.put("hasCount", flightCheckMapper.getCountByBusinessName(businessName, "有"));
+        map.put("noCount", flightCheckMapper.getCountByBusinessName(businessName, "无"));
+        return map;
     }
 }

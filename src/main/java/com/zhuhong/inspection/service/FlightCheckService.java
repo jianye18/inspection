@@ -8,6 +8,7 @@ import com.zhuhong.inspection.vo.FlightCheckVo;
 import com.zhuhong.inspection.vo.SelectionLabel;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 飞检数据业务逻辑接口层
@@ -104,5 +105,12 @@ public interface FlightCheckService {
      * @Date: 2019/12/13 14:59
      */
     int getFlightCheckTotalCount(Integer isNew);
+
+    /**
+     * 根据企业名称获取相关统计数据
+     * @param businessName
+     * @return Map
+     */
+    Map getCountByBusinessName(String businessName);
 
 }

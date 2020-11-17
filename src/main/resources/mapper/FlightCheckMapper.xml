@@ -114,4 +114,17 @@
             </if>
     </select>
 
+    <select id="getCountByBusinessName" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_flight_check
+        WHERE
+            usable = 1
+            AND business_name = #{businessName}
+            <if test="isDefect != null and isDefect != ''">
+                and is_defect = #{isDefect}
+            </if>
+    </select>
+
 </mapper>

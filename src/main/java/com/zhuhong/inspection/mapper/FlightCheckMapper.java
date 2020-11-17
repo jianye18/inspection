@@ -73,4 +73,6 @@ public interface FlightCheckMapper extends Mapper<FlightCheck> {
      */
     int getFlightCheckCount(@Param(value = "isNew") Integer isNew);
 
+    int getCountByBusinessName(@Param(value = "businessName") String businessName, @Param(value = "isDefect") String isDefect);
+
 }

@@ -217,4 +217,22 @@ public class FlightCheckController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "根据企业名称获取相关统计数据")
+    @ApiImplicitParam(name = "businessName", value = "企业名称", example = "上海裕华日用化学品厂")
+    @GetMapping("getCountByBusinessName")
+    public Result getCountByBusinessName(String businessName) {
+        String logMsg = "调用根据企业名称获取相关统计数据接口---getCountByBusinessName()---，";
+        log.debug(logMsg + "上传参数：businessName=" + businessName);
+        Result result;
+        try {
+            result = Result.genSuccessResult(flightCheckService.getCountByBusinessName(businessName));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
 }

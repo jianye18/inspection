@@ -7,6 +7,7 @@ import com.zhuhong.inspection.vo.SelectionLabel;
 import com.zhuhong.inspection.vo.SpotCheckVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 抽检数据业务接口层
@@ -103,5 +104,12 @@ public interface SpotCheckService {
      * @Date: 2019/12/13 14:59
      */
     int getSpotCheckTotalCount(Integer isNew);
+
+    /**
+     * 根据企业名称获取相关统计数据
+     * @param producer
+     * @return Map
+     */
+    Map getCountByProducer(String producer);
 
 }

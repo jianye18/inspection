@@ -128,4 +128,17 @@
             </if>
     </select>
 
+    <select id="getCountByProducer" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            tb_spot_check
+        WHERE
+            usable = 1
+            AND producer = #{producer}
+            <if test="checkResult != null and checkResult != ''">
+                and check_result = #{checkResult}
+            </if>
+    </select>
+
 </mapper>

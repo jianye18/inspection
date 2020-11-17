@@ -200,4 +200,22 @@ public class SpotCheckController extends BaseController {
         return result;
     }
 
+    @ApiOperation(value = "根据企业名称获取相关统计数据")
+    @ApiImplicitParam(name = "producer", value = "抽检数据的标称生产企业/进口代理商名称", example = "阿撒娜（上海）贸易有限公司")
+    @GetMapping("getCountByProducer")
+    public Result getCountByProducer(String producer) {
+        String logMsg = "调用根据企业名称获取相关统计数据接口---getCountByProducer()---，";
+        log.debug(logMsg + "上传参数：producer=" + producer);
+        Result result;
+        try {
+            result = Result.genSuccessResult(spotCheckService.getCountByProducer(producer));
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error(logMsg + "返回错误信息：", e);
+            result = Result.genFailResult(e.getMessage());
+        }
+        log.debug(logMsg + "返回结果信息：" + result.toString());
+        return result;
+    }
+
 }

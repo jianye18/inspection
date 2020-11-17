@@ -75,4 +75,11 @@ public interface SpotCheckMapper extends Mapper<SpotCheck> {
      */
     int getSpotCheckCount(@Param(value = "isNew") Integer isNew);
 
+    /**
+     * 根据企业名称获取相关统计数据
+     * @param producer
+     * @return Map
+     */
+    int getCountByProducer(@Param(value = "producer") String producer, @Param(value = "checkResult") String checkResult);
+
 }

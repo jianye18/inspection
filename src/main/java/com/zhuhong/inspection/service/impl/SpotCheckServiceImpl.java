@@ -13,7 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 抽检数据业务实现类
@@ -94,6 +96,15 @@ public class SpotCheckServiceImpl implements SpotCheckService {
     @Override
     public int getSpotCheckTotalCount(Integer isNew) {
         return spotCheckMapper.getSpotCheckCount(isNew);
+    }
+
+    @Override
+    public Map getCountByProducer(String producer) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("total", spotCheckMapper.getCountByProducer(producer, null));
+        map.put("hgCount", spotCheckMapper.getCountByProducer(producer, "合格"));
+        map.put("bhgCount", spotCheckMapper.getCountByProducer(producer, "不合格"));
+        return map;
     }
 
 }
